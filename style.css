@@ -4,7 +4,7 @@ body {
     font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #f4f4f4;
     color: #333;
     line-height: 1.6;
 }
@@ -16,27 +16,26 @@ body {
 
 /* สไตล์สำหรับนาฬิกา */
 #clock {
-    font-size: 24px;
+    font-size: 28px;
     text-align: center;
-    margin-top: 25px;
     padding: 40px 20px;
-    max-width: 1200px;
-    margin: 20px auto;
-    background-color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     transform: translateY(0);
 }
 
 #clock:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 /* สไตล์สำหรับวันที่ */
 #date {
-    font-size: 18px;
+    font-size: 20px;
     text-align: center;
     color: #555;
 }
@@ -45,7 +44,7 @@ header {
     background: linear-gradient(45deg, #4CAF50, #388E3C);
     color: white;
     padding: 20px 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     width: 100%;
@@ -63,7 +62,7 @@ header .container {
 
 header h1 {
     margin: 0;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 700;
 }
 
@@ -92,23 +91,23 @@ nav ul li a:hover {
 }
 
 section {
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: 20px auto;
-    background-color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    padding: 40px 30px;
+    max-width: 1000px;
+    margin: 40px auto;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     transform: translateY(0);
 }
 
 section:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
-    font-size: 24px;
+    font-size: 28px;
     margin-top: 0;
     font-weight: 700;
     color: #333;
@@ -118,21 +117,52 @@ p {
     font-size: 20px;
     margin: 10px 0;
     font-weight: 400;
-    color: #333;
+    color: #555;
 }
 
 footer {
     background-color: #4CAF50;
     color: white;
     text-align: center;
-    padding: 10px 0;
+    padding: 20px 0;
     position: fixed;
     bottom: 0;
     width: 100%;
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
 }
 
 footer p {
     margin: 0;
     font-size: 14px;
+}
+
+/* ปรับปรุงลิงก์ */
+a {
+    color: #4CAF50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #388E3C;
+    text-decoration: underline;
+}
+
+/* เพิ่มการใช้เฟรมเวิร์ก */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
