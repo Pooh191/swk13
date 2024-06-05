@@ -16,7 +16,7 @@ body {
 
 /* สไตล์สำหรับนาฬิกา */
 #clock {
-    font-size: 28px;
+    font-size: 32px;
     text-align: center;
     padding: 40px 20px;
     max-width: 800px;
@@ -62,7 +62,7 @@ header .container {
 
 header h1 {
     margin: 0;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 700;
 }
 
@@ -91,7 +91,7 @@ nav ul li a:hover {
 }
 
 section {
-    padding: 40px 30px;
+    padding: 50px 30px;
     max-width: 1000px;
     margin: 40px auto;
     background-color: #fff;
@@ -165,4 +165,47 @@ a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+/* สไตล์เพิ่มเติม */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #388E3C;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform: translateY(0);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.card p {
+    margin: 0;
+    font-size: 16px;
+    color: #777;
 }
