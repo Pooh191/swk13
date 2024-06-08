@@ -24,4 +24,4 @@ function updateClock() {
     document.getElementById('clock').innerText = fullDateTimeString;
 }
 
-setInterval(updateClock, 1000);
+setInterval(updateClock, 1000); 
