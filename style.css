@@ -1,39 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
 
 body {
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: 'Roboto', 'Montserrat', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
     color: #333;
     line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease;
 }
 
 ::selection {
-    background: black;
-    color: white;
+    background: #333;
+    color: #fff;
 }
 
-/* สไตล์สำหรับนาฬิกา */
 #clock {
     font-size: 32px;
     text-align: center;
     padding: 40px 20px;
     max-width: 800px;
     margin: 40px auto;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    transform: translateY(0);
 }
 
 #clock:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
-/* สไตล์สำหรับวันที่ */
 #date {
     font-size: 20px;
     text-align: center;
@@ -41,14 +42,15 @@ body {
 }
 
 header {
-    background: linear-gradient(45deg, #4CAF50, #388E3C);
+    background: linear-gradient(45deg, #43A047, #388E3C);
     color: white;
     padding: 20px 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     width: 100%;
     z-index: 1000;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 header .container {
@@ -94,19 +96,20 @@ section {
     padding: 50px 30px;
     max-width: 1000px;
     margin: 40px auto;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    transform: translateY(0);
 }
 
 section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
 h2 {
+    font-family: 'Montserrat', sans-serif;
     font-size: 28px;
     margin-top: 0;
     font-weight: 700;
@@ -114,6 +117,7 @@ h2 {
 }
 
 p {
+    font-family: 'Roboto', sans-serif;
     font-size: 20px;
     margin: 10px 0;
     font-weight: 400;
@@ -121,14 +125,14 @@ p {
 }
 
 footer {
-    background-color: #4CAF50;
+    background-color: #43A047;
     color: white;
     text-align: center;
     padding: 20px 0;
     position: fixed;
     bottom: 0;
     width: 100%;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.1);
 }
 
 footer p {
@@ -136,19 +140,17 @@ footer p {
     font-size: 14px;
 }
 
-/* ปรับปรุงลิงก์ */
 a {
-    color: #4CAF50;
+    color: #43A047;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #388E3C;
+    color: #2E7D32;
     text-decoration: underline;
 }
 
-/* เพิ่มการใช้เฟรมเวิร์ก */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -167,35 +169,35 @@ a:hover {
     align-items: center;
 }
 
-/* สไตล์เพิ่มเติม */
 button {
-    background-color: #4CAF50;
+    background-color: #43A047;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 12px 24px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 button:hover {
-    background-color: #388E3C;
+    background-color: #2E7D32;
+    transform: scale(1.05);
 }
 
 .card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin: 20px 0;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    transform: translateY(0);
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
 .card h3 {
@@ -208,4 +210,121 @@ button:hover {
     margin: 0;
     font-size: 16px;
     color: #777;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.header-bg {
+    background: url('https://www.example.com/path/to/your/sw.jpg') no-repeat center center/cover;
+}
+
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    section {
+        padding: 30px 20px;
+    }
+
+    .flex {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+.marquee-container {
+    width: 50%;
+    position: absolute;
+    left: 50%;
+    top: 10%; /* Adjust this value to move the container higher or lower */
+    transform: translate(-50%, -10%);
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 10px 0;
+    box-sizing: border-box;
+}
+
+.marquee-text {
+    display: inline-block;
+    padding-left: 100%; /* This ensures the text starts from the middle */
+    animation: marquee 20s linear infinite;
+    font-size: 20px;
+    color: #333;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+
+
+
+/* Additional styling */
+blockquote {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(245, 245, 245, 0.9);
+    border-left: 5px solid #43A047;
+    color: #555;
+}
+
+blockquote p {
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-family: 'Roboto', sans-serif;
+}
+
+table th {
+    background-color: #43A047;
+    color: white;
+    font-weight: 700;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
 }
