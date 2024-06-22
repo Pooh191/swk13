@@ -8,6 +8,11 @@ body {
     margin: 0;
 }
 
+::selection {
+    background: #333;
+    color: #fff;
+}
+
 .login-container {
     background: white;
     padding: 30px;
