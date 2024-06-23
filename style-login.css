@@ -1,69 +1,109 @@
-body {
+/* Reset and basic styling */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+
+/* Body styling */
+body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
+    background: linear-gradient(135deg, #3494e6, #ec6ead); /* Gradient background */
+    overflow: hidden; /* Prevent scrolling on mobile devices */
 }
 
-::selection {
-    background: #333;
-    color: #fff;
-}
-
+/* Login container */
 .login-container {
-    background: white;
-    padding: 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    padding: 40px;
     border-radius: 10px;
-    max-width: 400px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.login-container h2 {
-    margin: 0 0 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
     text-align: center;
-    color: #333;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 2; /* Ensure the form is on top of the background */
+    overflow: hidden; /* Hide overflow */
 }
 
-.login-container label {
+/* Headings */
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 28px; /* Larger font size */
+    text-transform: uppercase; /* Uppercase text */
+}
+
+/* Labels */
+label {
     display: block;
+    text-align: left;
     margin: 10px 0 5px;
-    color: #333;
+    color: #555;
+    font-size: 14px; /* Smaller font size */
 }
 
-.login-container input {
+/* Inputs */
+input[type="text"],
+input[type="password"],
+button {
     width: 100%;
-    padding: 10px;
-    margin: 5px 0 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.login-container input:focus {
-    border-color: #9b59b6;
-    outline: none;
-}
-
-.login-container button {
-    width: 100%;
-    padding: 15px;
-    background-color: #9b59b6;
-    color: white;
+    padding: 16px; /* Increased padding */
     border: none;
     border-radius: 5px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.9); /* Lighter background color */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transitions */
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    background-color: #f0f0f0; /* Slightly darker background on focus */
+    transform: scale(1.02); /* Scale effect on focus */
+}
+
+/* Button */
+button {
+    background-color: #8e2de2; /* Purple background color */
+    color: #fff;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    padding: 16px 0; /* Padding top and bottom */
+    margin-top: 20px; /* Spacing from inputs */
+    border-radius: 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     font-size: 16px;
 }
 
-.login-container button:hover {
-    background-color: #8e44ad;
+button:hover {
+    background-color: #7213b8; /* Darker shade of purple on hover */
+    transform: scale(1.05); /* Scale effect on hover */
 }
 
-.login-container button:focus {
-    outline: none;
+/* Links */
+.login-container a {
+    color: #ec6ead; /* Pink color */
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
+
+.login-container a:hover {
+    color: #ff7aa1; /* Lighter shade of pink on hover */
+}
+
+/* Lists */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 10px 0;
+}
+
