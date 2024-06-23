@@ -57,17 +57,17 @@ input[type="text"],
 input[type="password"],
 button {
     width: 100%;
-    padding: 16px; /* Increased padding */
+    padding: 15px; /* Adjusted padding for better spacing */
     border: none;
     border-radius: 5px;
     font-size: 16px;
-    background-color: rgba(255, 255, 255, 0.9); /* Lighter background color */
+    background-color: #f2f2f2; /* Lighter background color */
     transition: background-color 0.3s ease, transform 0.3s ease; /* Transitions */
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-    background-color: #f0f0f0; /* Slightly darker background on focus */
+    background-color: #e0e0e0; /* Slightly darker background on focus */
     transform: scale(1.02); /* Scale effect on focus */
 }
 
@@ -77,18 +77,20 @@ button {
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    padding: 16px 0; /* Padding top and bottom */
+    padding: 15px 0; /* Adjusted padding top and bottom */
     margin-top: 20px; /* Spacing from inputs */
     border-radius: 25px;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 16px;
+    border: 2px solid transparent; /* Added border for button */
 }
 
 button:hover {
     background-color: #7213b8; /* Darker shade of purple on hover */
     transform: scale(1.05); /* Scale effect on hover */
+    border-color: #7213b8; /* Change border color on hover */
 }
 
 /* Links */
@@ -115,4 +117,3 @@ ul li {
 .contact-info {
     color: red;
 }
-
