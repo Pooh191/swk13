@@ -16,6 +16,11 @@ body {
     overflow: hidden; /* Prevent scrolling on mobile devices */
 }
 
+::selection {
+    background: #333;
+    color: #fff;
+}
+
 /* Login container */
 .login-container {
     background-color: #ffffff;
