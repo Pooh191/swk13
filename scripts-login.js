@@ -1,69 +1,122 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // ป้องกันฟอร์มส่งข้อมูล
+/* Reset and basic styling */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
+/* Body styling */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #3494e6, #ec6ead); /* Gradient background */
+    overflow: hidden; /* Prevent scrolling on mobile devices */
+}
 
-    // เช็ค username และ password ในที่นี้เราจะใช้ข้อมูลจากอาร์เรย์ (ในทางปฏิบัติ ควรเก็บข้อมูลนี้ในฐานข้อมูลหรือที่ปลอดภัยกว่านี้)
-    var users = [
-        { username: "admin", password: "admin" },
-        { username: "00000", password: "00000" },
-        { username: "48698", password: "48698" },
-        { username: "48699", password: "48699" },
-        { username: "48700", password: "48700" },
-        { username: "48701", password: "48701" },
-        { username: "48703", password: "48703" },
-        { username: "48704", password: "48704" },
-        { username: "48705", password: "48705" },
-        { username: "48706", password: "48706" },
-        { username: "48707", password: "48707" },
-        { username: "48708", password: "48708" },
-        { username: "48709", password: "48709" },
-        { username: "48710", password: "48710" },
-        { username: "48711", password: "48711" },
-        { username: "48712", password: "48712" },
-        { username: "48713", password: "48713" },
-        { username: "48715", password: "48715" },
-        { username: "48716", password: "48716" },
-        { username: "48717", password: "48717" },
-        { username: "48718", password: "48718" },
-        { username: "48719", password: "48719" },
-        { username: "48720", password: "48720" },
-        { username: "48721", password: "48721" },
-        { username: "48722", password: "48722" },
-        { username: "48723", password: "48723" },
-        { username: "48724", password: "48724" },
-        { username: "48725", password: "48725" },
-        { username: "48726", password: "48726" },
-        { username: "48727", password: "48727" },
-        { username: "48728", password: "48728" },
-        { username: "48729", password: "48729" },
-        { username: "48730", password: "48730" },
-        { username: "48731", password: "48731" },
-        { username: "48732", password: "48732" },
-        { username: "48733", password: "48733" },
-        { username: "48734", password: "48734" },
-        { username: "48735", password: "48735" },
-        { username: "48736", password: "48736" },
-        { username: "48737", password: "48737" }
-        
-        // สามารถเพิ่ม username และ password ตามต้องการเพิ่มได้
-    ];
+::selection {
+    background: #333;
+    color: #fff;
+}
 
-    var authenticatedUser = users.find(function(user) {
-        return user.username === username && user.password === password;
-    });
+/* Login container */
+.login-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 2; /* Ensure the form is on top of the background */
+    overflow: hidden; /* Hide overflow */
+}
 
-    if (authenticatedUser) {
-        // ถ้าเข้าสู่ระบบสำเร็จ บันทึกชื่อผู้ใช้ใน localStorage
-        localStorage.setItem('loggedInUsername', authenticatedUser.username);
-        // แสดงป็อปอัพเมื่อเข้าสู่ระบบสำเร็จ
-        alert("เข้าสู่ระบบสำเร็จ!");
-        // ไปยังหน้าหลัก (index.html)
-        window.location.href = 'data.html';
-    } else {
-        // แสดงป็อปอัพเมื่อรหัสผ่านไม่ถูกต้อง
-        alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
-    }
+/* Headings */
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 28px; /* Larger font size */
+    text-transform: uppercase; /* Uppercase text */
+}
 
-});
+/* Labels */
+label {
+    display: block;
+    text-align: left;
+    margin: 10px 0 5px;
+    color: #555;
+    font-size: 14px; /* Smaller font size */
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"],
+button {
+    width: 100%;
+    padding: 15px; /* Adjusted padding for better spacing */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f2f2f2; /* Lighter background color */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transitions */
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    background-color: #e0e0e0; /* Slightly darker background on focus */
+    transform: scale(1.02); /* Scale effect on focus */
+}
+
+/* Button */
+button {
+    background-color: #8e2de2; /* Purple background color */
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    padding: 15px 0; /* Adjusted padding top and bottom */
+    margin-top: 20px; /* Spacing from inputs */
+    border-radius: 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 16px;
+    border: 2px solid transparent; /* Added border for button */
+}
+
+button:hover {
+    background-color: #7213b8; /* Darker shade of purple on hover */
+    transform: scale(1.05); /* Scale effect on hover */
+    border-color: #7213b8; /* Change border color on hover */
+}
+
+/* Links */
+.login-container a {
+    color: #ec6ead; /* Pink color */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.login-container a:hover {
+    color: #ff7aa1; /* Lighter shade of pink on hover */
+}
+
+/* Lists */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 10px 0;
+}
+
+/* Contact info */
+.contact-info {
+    color: red;
+    margin-top: 20px; /* Add margin to separate from button */
+    font-weight: bold; /* Bold text */
+}
