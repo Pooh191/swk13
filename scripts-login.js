@@ -6,7 +6,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     // เช็ค username และ password ในที่นี้เราจะใช้ข้อมูลจากอาร์เรย์ (ในทางปฏิบัติ ควรเก็บข้อมูลนี้ในฐานข้อมูลหรือที่ปลอดภัยกว่านี้)
     var users = [
-        { username: "admin", password: "admin" },
+        { username: "admin", password: "admin", title: "นาย", firstName: "เทสที่สร้าง", lastName: "ร่างที่เป็น" },
         { username: "00000", password: "00000" },
         { username: "48698", password: "48698" },
         { username: "48699", password: "48699" },
