@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="SWK-LogoNoBG.png">
+    <title>มัธยมศึกษาปีที่2/13 | เข้าสู่ระบบ </title>
+    <link rel="stylesheet" href="style-login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>เข้าสู่ระบบ</h2>
+        <form id="loginForm">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="ชื่อผู้ใช้" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="รหัสผ่าน" required>
+            
+            <button type="submit">เข้าสู่ระบบ</button>
+            
+
+
+            <p><b>หรือ</b></p>
+
+            <ul>
+                <li><a href="index.html">กลับไปที่หน้าหลัก</a></li>
+            </ul>
+
+            <!-- ใช้คลาสเพื่อให้ข้อความ "ชื่อ Username และ Password ติดต่อหัวหน้าห้อง 2/13" เป็นสีแดง -->
+            <p class="contact-info"><b>ชื่อ Username และ Password ติดต่อหัวหน้าห้อง 2/13</b></p>
+        </form>
+    </div>
+    
+    <div class="popup">
+        <p>This is a popup message.</p>
+        <button class="close-btn">Close</button>
+    </div>
+
+
+    <script src="scripts-login.js"></script>
+</body>
+</html>
