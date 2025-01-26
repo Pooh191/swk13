@@ -33,11 +33,27 @@
         <p>กำลังอยู่ขั้นตอนพัฒนาระบบ<span class="ellipsis">...</span></p>
     </section>
 
-    <footer>
-        <p>&copy; 2024 มัธยมศึกษาปีที่ 2/13. สงวนลิขสิทธิ์.</p>
+        <footer>
+        <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
     </footer>
 
     <script src="scripts.js"></script>
+    <script>
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
 
+        document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    (function() {
+        const element = new Image();
+        Object.defineProperty(element, 'id', {
+            get() {
+                alert('DevTools Detected');
+            }
+        });
+        console.log(element);
+    })();
+    </script>
 </body>
 </html>
