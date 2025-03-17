@@ -110,28 +110,28 @@
 
     // ฟังก์ชันส่งข้อมูลไปยัง Google Apps Script
     function submitForm() {
-        var user = document.getElementById('user').value;
-        var candidate = document.getElementById('candidate').value;
-        
-        // สร้างข้อมูลที่ต้องการส่ง
-        var formData = new FormData();
-        formData.append('user', user);
-        formData.append('candidate', candidate);
-        
-        // ส่งข้อมูลไปยัง Google Apps Script
-        fetch('https://script.google.com/macros/s/AKfycbziqJfbXIPZ8xA5ZUE8wbEbMVjHEMWEjukGKFBpg1trDgnnDXQ6g6h7UpK-RSOiIViTZw/exec', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            // เมื่อส่งข้อมูลสำเร็จ ให้แสดง Popup
-            showPopup();
-        })
-        .catch(error => {
-            alert('เกิดข้อผิดพลาดในการส่งข้อมูล');
-        });
-    }
+    var user = document.getElementById('user').value;
+    var candidate = document.getElementById('candidate').value;
+    
+    // สร้างข้อมูลที่ต้องการส่ง
+    var formData = new FormData();
+    formData.append('user', user);
+    formData.append('candidate', candidate);
+    
+    // ส่งข้อมูลไปยัง Google Apps Script
+    fetch('https://script.google.com/macros/s/AKfycbxqP2n14VWe_TRT2X7Qfy_UATl9Fuuw_hywlPKfjxllWVTOJ2JUsusg5K5YmCfu7588Rw/exec', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert('ข้อมูลถูกส่งสำเร็จ');
+    })
+    .catch(error => {
+        alert('เกิดข้อผิดพลาดในการส่งข้อมูล');
+    });
+}
+
 
     // ฟังก์ชันแสดง Popup
     function showPopup() {
