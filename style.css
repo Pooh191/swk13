@@ -26,7 +26,7 @@ body {
 }
 
 ::selection {
-    background: var(--text-color);
+    background: #333;
     color: var(--white);
 }
 
@@ -287,36 +287,6 @@ sections:hover {
     box-shadow: 0 12px 30px var(--shadow-hover);
 }
 
-.marquee-container {
-    overflow: hidden;
-    background-color: #f0f0f0; /* Light background color */
-    padding: 10px; /* Padding */
-    border: 2px solid #ddd; /* Border around marquee */
-    font-family: Arial, sans-serif; /* Font style */
-    font-size: 16px; /* Font size */
-    color: #333; /* Text color */
-    box-sizing: border-box;
-    margin: 0; /* Remove margin to fit exactly within section */
-}
-
-.marquee {
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    box-sizing: border-box;
-}
-
-.marquee p {
-    display: inline-block;
-    padding-left: 100%;
-    animation: marquee 15s linear infinite;
-}
-
-@keyframes marquee {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(-100%, 0); }
-}
-
 .moving-text {
     display: inline-block;
     font-size: 1.2em;
@@ -428,9 +398,31 @@ table tbody tr:hover {
     align-items: center;
     justify-content: center;
 }
-
-
-
-
-
+.marquee {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+    padding: 10px 0;
+  }
+  
+  .marquee p {
+    display: inline-block;
+    padding-left: 100%;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    animation: scroll 13.5s linear infinite;
+  }
+  
+  @keyframes scroll {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  
 
