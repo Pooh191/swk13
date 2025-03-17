@@ -85,6 +85,16 @@
     >กลับหน้าหลัก</button>
 </div>
 
+    <footer>
+        <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
+    </footer>
+
+    <script>
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    </script>
+
+
 <script>
     // เมื่อผู้ใช้กดปุ่ม "ถัดไป" จะซ่อนขั้นตอนที่ 1 และแสดงขั้นตอนที่ 2
     function showNextStep() {
