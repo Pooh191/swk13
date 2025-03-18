@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>นับเวลาถอยหลังสู่การเลือกตั้ง</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #countdown {
+            font-size: 2em;
+            color: red;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>3/13</h1>
+            <button id="menu-toggle" class="menu-toggle">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="dashbord.html">หน้าหลัก</a></li>
+                    <li><a href="rabeb.html">ระเบียบการเลือกตั้ง</a></li>
+                    <li><a href="coutdown.html">เลือกตั้งหัวหน้าห้อง</a></li>
+                    <li><a href="#">ผลการเลือกตั้ง</a></li>
+                </ul>
+                
+            </nav>
+        </div>
+    </header>
+
+    <center>
+
+    <h1>เหลือเวลาอีกกี่นาทีจนถึงการเปิดหีบเลือกตั้ง</h1>
+    <div id="countdown"></div>
+    
+    </center>
+
+    <footer>
+        <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
+    </footer>
+
+    <script src="scripts.js"></script>
+
+    <script>
+        // กำหนดวันเวลาที่จะเปิดหีบเลือกตั้ง (เปลี่ยนตามต้องการ)
+        const electionStartTime = new Date("2025-05-18T08:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeLeft = electionStartTime - now;
+
+            if (timeLeft <= 0) {
+                // ถ้าถึงเวลาแล้ว ให้เปลี่ยนหน้าอัตโนมัติ
+                window.location.href = "voteleader.html";
+            } else {
+                // คำนวณวัน ชั่วโมง นาที วินาที
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerText = 
+                    `เหลือเวลาอีก ${days} วัน ${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
+            }
+        }
+
+        // อัปเดตนับถอยหลังทุกๆ วินาที
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // เรียกครั้งแรกทันที
+    </script>
+</body>
+</html>
