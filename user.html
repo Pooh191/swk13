@@ -1,12 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="16x16" href="SWK-LogoNoBG.png">
-    <title>มัธยมศึกษาปีที่3/13 | แดร์ชบอร์ด</title>
+    <title>ค้นหาผู้มีสิทธิ์เลือกตั้ง</title>
     <link rel="stylesheet" href="style.css">
-    
+    <style>
+        input {
+            padding: 10px;
+            width: 300px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: left;
+        }
+        .not-found {
+            color: red;
+            font-weight: bold;
+        }
+        .status {
+            font-weight: bold;
+        }
+        .has-right {
+            color: green;
+        }
+        .no-right {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,7 +47,7 @@
                 <ul>
                     <li><a href="dashbord.html">หน้าหลัก</a></li>
                     <li><a href="rabeb.html">ระเบียบการเลือกตั้ง</a></li>
-                    <li><a href="user.html">ผู้ที่สามารถลงรับสมัครเลือกตั้งได้</a></li>
+                    <li><a href="user.html">ค้นหาผู้ที่สมัครรับเลือกตั้ง</a></li>
                     <li><a href="Searchname.html">ค้นหาผู้ที่มีสิทธิ์เลือกตั้ง</a></li>
                     <li><a href="coutdown.html">เลือกตั้ง</a></li>
                     <li><a href="results.html">ผลการเลือกตั้ง</a></li>
@@ -25,41 +55,56 @@
             </nav>
         </div>
     </header>
-    
-    <div id="clock"></div>
-    <div id="date"></div>
-    
+        
     <section>
-        <h4>ผู้ที่สามารถลงรับเลือกตั้งได้</h4>
-        <h4>Those who can run for election</h4>
-        <p>
-           <ol>
-            <li>เด็กหญิงกฤตพร หงษ์ทอง</li>
-            <li>เด็กหญิงกุลนัฐฐา ยอดดี</li>
-            <li>เด็กหญิงจอมขวัญ บรรจุงาม</li>
-            <li>เด็กหญิงชลดาวรรณ มีแก้ว</li>
-            <li>เด็กชายไชยอนันต์ สำราญ</li>
-            <li>เด็กชายธนัช เทียนมีวัฒนา</li>
-            <li>เด็กชายธนากร แซ่จอง</li>
-            <li>เด็กหญิงปรียาภรณ์ โมราษฎร์</li>
-            <li>เด็กชายปวริศร จันทร์เขียว</li>
-            <li>เด็กหญิงปัณณรัตน์ มงคลตันติวัฒน์</li>
-            <li>เด็กหญิงพรพรรณ ลดาวัลย์สุนทร</li>
-            <li>เด็กชายภูดิศ ลุนพรม</li>
-            <li>เด็กหญิงวันวิสา อินทร์จันทร์</li>
-            <li>เด็กชายศิวกร วงค์สุคนธนิตย์</li>
-            <li>เด็กชายสรนันท์ อยู่นาน</li>
-        </ol>
-        </p>
-        <h5>วันที่สร้าง วันศุกร์ที่ 16 พฤษภาคม 2568</h5>
-    </section> <br><br><br>
+    <h2>ค้นหาผู้มีสิทธิ์เลือกตั้ง</h2>
+    <input type="text" id="searchInput" placeholder="พิมพ์ชื่อ-นามสกุล หรือ เลขประจำตัวนักเรียน">
+    <button onclick="searchData()">ค้นหา</button>
+    </section>
 
+    <section>
+    <div id="result"></div>
+    </section>
 
     <footer>
         <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
     </footer>
 
-    <script src="scripts.js"></script>
+    <script>
+        async function searchData() {
+            const searchValue = document.getElementById("searchInput").value.trim();
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "กำลังค้นหา...";
+
+            if (!searchValue) {
+                resultDiv.innerHTML = "<p class='not-found'>กรุณากรอกข้อมูลที่ต้องการค้นหา</p>";
+                return;
+            }
+
+            try {
+                const response = await fetch("https://script.google.com/macros/s/AKfycbwReyCXigBm6cKN9CFYuSNlFbZO0wz8IGvP8tpv5y12teuVai56wdAlz_PJorR6TBhD/exec"); // ใส่ลิงก์ Google Apps Script ของคุณ
+                const data = await response.json();
+
+                const found = data.find(item => item.name === searchValue || item.student_id === searchValue);
+
+                if (found) {
+                    const statusClass = found.status === "มีสิทธิ์สมัครรับเลือกตั้ง" ? "has-right" : "no-right";
+                    resultDiv.innerHTML = `
+                        <div class="result">
+                            <p><strong>ชื่อ:</strong> ${found.name}</p>
+                            <p><strong>เลขประจำตัวนักเรียน:</strong> ${found.student_id}</p>
+                            <p><strong class="status ${statusClass}">${found.status}</strong></p>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = "<p class='not-found'>ไม่พบข้อมูลในระบบ</p>";
+                }
+            } catch (error) {
+                resultDiv.innerHTML = "<p class='not-found'>เกิดข้อผิดพลาดในการโหลดข้อมูล</p>";
+                console.error("Error fetching data:", error);
+            }
+        }
+    </script>
 
 </body>
 </html>
