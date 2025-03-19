@@ -27,6 +27,15 @@
             color: red;
             font-weight: bold;
         }
+        .status {
+            font-weight: bold;
+        }
+        .has-right {
+            color: green;
+        }
+        .no-right {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -82,11 +91,12 @@
                 const found = data.find(item => item.name === searchValue || item.student_id === searchValue);
 
                 if (found) {
+                    const statusClass = found.status === "มีสิทธิ์เลือกตั้ง" ? "has-right" : "no-right";
                     resultDiv.innerHTML = `
-                        <div class="result">
+                        <div class="result ${statusClass}">
                             <p><strong>ชื่อ:</strong> ${found.name}</p>
                             <p><strong>เลขประจำตัวนักเรียน:</strong> ${found.student_id}</p>
-                            <p><strong>สถานะการเลือกตั้ง:</strong> ${found.status}</p>
+                            <p><strong>สถานะการเลือกตั้ง:</strong> <span class="status ${statusClass}">${found.status}</span></p>
                         </div>
                     `;
                 } else {
