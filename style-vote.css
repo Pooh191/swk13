@@ -94,8 +94,8 @@ button:hover {
     display: none;
 }
 ::selection {
-    background: #333;
-    color: var(--white);
+    background: #ffffff00;
+    color: #ffd700;
 }
 
         /* สไตล์ของ popup */
