@@ -22,11 +22,13 @@
                     <li><a href="notify.html">ประกาศ</a></li>
                     <li><a href="timetable.html">ตารางเรียน</a></li>
                     <li><a href="tidtorraw.html">ติดต่อเรา</a></li>
+                    <li><a href="login.html">เข้าสู่ระบบ</a></li>
                 </ul>
                 
             </nav>
         </div>
     </header>
+
 
     <div id="clock"></div>
     <div id="date"></div>
@@ -42,6 +44,23 @@
     </footer>
 
     <script src="scripts.js"></script>
+    <script>
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+        document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    (function() {
+        const element = new Image();
+        Object.defineProperty(element, 'id', {
+            get() {
+                alert('DevTools Detected');
+            }
+        });
+        console.log(element);
+    })();
+    </script>
 
 </body>
 </html>
