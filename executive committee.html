@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายชื่อคณะกรรมการบริหาร</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>3/13</h1>
+            <button id="menu-toggle" class="menu-toggle">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">หน้าหลัก</a></li>
+                    <li><a href="kewkap.html">เกี่ยวกับเรา</a></li>
+                      <!-- Dropdown Menu -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">ข้อมูลภายในห้องเรียน ▼</a>
+                    <div class="dropdown-content">
+                        <a href="member.html">สมาชิกห้อง</a>
+                        <a href="advisor.html">ครูที่ปรึกษา</a>
+                        <a href="kru.html">ครูผู้สอน</a>
+                        <a href="executive committee.html">คณะกรรมการบริหารห้องเรียน</a>
+                    </div>
+                </li>
+                
+                    <li><a href="notify.html">ประกาศ</a></li>
+                    <li><a href="timetable.html">ตารางเรียน</a></li>
+                    <li><a href="tidtorraw.html">ติดต่อเรา</a></li>
+                    <li><a href="login.html">เข้าสู่ระบบ</a></li>
+                </ul>
+                
+            </nav>
+        </div>
+    </header>
+
+    <section>
+        <h1>รายชื่อคณะกรรมการบริหาร (ชุดรักษาการณ์)</h1>
+
+    <main>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ลำดับ</th>
+                    <th>ชื่อ - นามสกุล</th>
+                    <th>ตำแหน่ง</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>เด็กชายธฯากร แซ่จอง</td>
+                    <td>หัวหน้าห้อง</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>เด็กหญิงปัณรัตน์ มงคลตันติวัฒน์</td>
+                    <td>รองหัวหน้าห้อง</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>เด็กหญิงกฤตพร หงษ์ทอง</td>
+                    <td>เลขาธิการ</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>เด็กหญิงณัฐชนันท์ ภูมิฐาน</td>
+                    <td>เหรัญญิก</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>เด็กชายไชยอนันต์ สำราญ</td>
+                    <td>ผู้ช่วยเลขานุการ</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    </section>
+
+    <footer>
+        <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
+    </footer>
+
+    <script>
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+        document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+    </script>
+</body>
+</html>

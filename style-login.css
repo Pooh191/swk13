@@ -1,0 +1,203 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #34D399, #FFEB3B); /* Green to Yellow gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    flex-direction: column; /* เพิ่มการจัดเรียงในแนวตั้ง */
+}
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.login-container:hover {
+    transform: scale(1.03);
+}
+
+.login-container h2 {
+    margin-bottom: 30px;
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.login-container label {
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: block;
+    color: #444;
+    font-weight: 600;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 18px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login-container input:focus {
+    border-color: #34D399;
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+}
+
+.login-container button {
+    width: 100%;
+    padding: 14px;
+    background-color: #34D399; /* Green button */
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-container button:hover {
+    background-color: #FFEB3B; /* Yellow button on hover */
+    transform: scale(1.05);
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 12px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.login-container input:invalid {
+    border-color: #FFEB3B;
+}
+
+.login-container input:invalid ~ .error-message {
+    opacity: 1;
+}
+
+@media (max-width: 450px) {
+    .login-container {
+        padding: 25px;
+        width: 90%;
+    }
+
+    .login-container h2 {
+        font-size: 28px;
+    }
+
+    .login-container input,
+    .login-container button {
+        font-size: 16px;
+        padding: 12px;
+    }
+}
+/* ป็อปอัพ */
+#welcomePopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 40px 30px;
+    background: linear-gradient(135deg, #34D399, #6EE7B7); /* Soft Green Gradient */
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    text-align: center;
+    max-width: 500px;
+    width: 80%;
+    animation: slideIn 0.6s ease-out, fadeIn 0.8s ease-out;
+}
+
+/* ป็อปอัพ overlay */
+#popupOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Slide-in animation */
+@keyframes slideIn {
+    from {
+        transform: translate(-50%, -60%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ปุ่มปิดป็อปอัพ */
+#closePopup {
+    background-color: #FFEB3B; /* Yellow */
+    color: white;
+    border: none;
+    padding: 14px 25px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#closePopup:hover {
+    background-color: #F57F17; /* Darker Yellow */
+    transform: scale(1.1);
+}
+
+/* ปรับความสูงของข้อความต้อนรับ */
+#welcomePopup h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+#welcomePopup p {
+    font-size: 18px;
+    color: white;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+/* Popup overlay */
+#popupOverlay {
+    animation: fadeIn 0.6s ease-out;
+}

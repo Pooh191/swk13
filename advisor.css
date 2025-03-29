@@ -1,0 +1,58 @@
+/* สไตล์ของ Navbar */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+/* ปรับขนาดรูปภาพให้เล็กลง และให้มีเอฟเฟกต์เมื่อชี้เมาส์ */
+table img {
+    width: 50px; /* ปรับขนาดรูปให้เล็กลงกว่าเดิม */
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* เมื่อเมาส์ชี้ที่รูปภาพ ให้ขยายเล็กน้อย */
+table img:hover {
+    transform: scale(1.2);
+}
+
+/* สไตล์สำหรับภาพขยาย (Modal Popup) */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none; /* ปิด modal ตอนแรก */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* รูปภาพที่แสดงใน Popup */
+.modal-content {
+    max-width: 90%;  /* ปรับให้ใหญ่ขึ้นโดยเพิ่มขนาดสูงสุด */
+    max-height: 90%; /* ปรับให้ใหญ่ขึ้นโดยเพิ่มขนาดสูงสุด */
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+}
+
+/* ปุ่มปิด (X) */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+/* เมื่อชี้ที่ปุ่มปิด จะเปลี่ยนเป็นสีแดง */
+.close-btn:hover {
+    color: red;
+}
