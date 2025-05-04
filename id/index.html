@@ -189,43 +189,45 @@
     })();
   </script>
 
-  <script>
-    async function searchData() {
-      const searchValue = document.getElementById("searchInput").value.trim();
-      const resultDiv = document.getElementById("result");
-      resultDiv.innerHTML = "<div class='loading-box'>⏳ กำลังค้นหา...</div>";
-  
-      if (!searchValue) {
-        resultDiv.innerHTML = "<div class='not-found-box'>⚠️ กรุณากรอกข้อมูลที่ต้องการค้นหา</div>";
-        return;
-      }
-  
-      try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbz5d6Qb-kmdjORt8dDQ6tziJSkvUBqIZta8BiMG7a7glRTXAkz-9dTpzCj34gWmOfRC/exec");
-        const data = await response.json();
-  
-        const found = data.find(item =>
-          item.name === searchValue || item.student_id === searchValue
-        );
-  
-        if (found) {
-          resultDiv.innerHTML = `
-            <div class="result">
-              <p><strong>📌 เลขที่:</strong> ${found.number}</p>
-              <p><strong>🎓 เลขประจำตัวนักเรียน:</strong> ${found.student_id}</p>
-              <p><strong>🆔 เลขบัตรประชาชน:</strong> ${found.citizen_id}</p>
-              <p><strong>👤 ชื่อ:</strong> ${found.name}</p>
-            </div>
-          `;
-        } else {
-          resultDiv.innerHTML = "<div class='not-found-box'>❌ ไม่พบข้อมูลในระบบ</div>";
-        }   
-      } catch (error) {
-        resultDiv.innerHTML = "<div class='not-found-box'>⚠️ เกิดข้อผิดพลาดในการโหลดข้อมูล</div>";
-        console.error("Error fetching data:", error);
-      }
+<script>
+  async function searchData() {
+    const searchValue = document.getElementById("searchInput").value.trim().toLowerCase();
+    const resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = "<div class='loading-box'>⏳ กำลังค้นหา...</div>";
+
+    if (!searchValue) {
+      resultDiv.innerHTML = "<div class='not-found-box'>⚠️ กรุณากรอกข้อมูลที่ต้องการค้นหา</div>";
+      return;
     }
-  </script>
+
+    try {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbw7NGJJhl7c0-fHoyehvkm7Qw8rUiz7ee9uES7p5mJlxZ19rGxp_Kl7ubUTOOMww6Mv8w/exec");
+      const data = await response.json();
+
+      const found = data.find(item =>
+        (item.full_name && item.full_name.toLowerCase().includes(searchValue)) ||
+        (item.search_name && item.search_name.toLowerCase().includes(searchValue)) ||
+        (item.student_id && item.student_id.toLowerCase().includes(searchValue))
+      );
+
+      if (found) {
+        resultDiv.innerHTML = `
+          <div class="result">
+            <p><strong>📌 เลขที่:</strong> ${found.number}</p>
+            <p><strong>🎓 เลขประจำตัวนักเรียน:</strong> ${found.student_id}</p>
+            <p><strong>🆔 เลขบัตรประชาชน:</strong> ${found.citizen_id}</p>
+            <p><strong>👤 ชื่อ:</strong> ${found.full_name}</p>
+          </div>
+        `;
+      } else {
+        resultDiv.innerHTML = "<div class='not-found-box'>❌ ไม่พบข้อมูลในระบบ</div>";
+      }   
+    } catch (error) {
+      resultDiv.innerHTML = "<div class='not-found-box'>⚠️ เกิดข้อผิดพลาดในการโหลดข้อมูล</div>";
+      console.error("Error fetching data:", error);
+    }
+  }
+</script>
 
 </body>
 </html>
