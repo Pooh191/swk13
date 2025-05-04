@@ -127,12 +127,36 @@
         width: 90%;
       }
     }
+
     ::selection {
-    background: #ffffff00;
-    color: #ffd700;
-}
+      background: #ffffff00;
+      color: #ffd700;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #01579b;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    footer a {
+      color: #ffeb3b;
+      text-decoration: none;
+    }
+
+    
   </style>
 </head>
+
+<header>
+  <a href="https://swk13.onrender.com">กลับหน้าหลัก</a>
+</header>
+
 <body>
   <h1>🔍 ค้นหาข้อมูลนักเรียน</h1>
 
@@ -141,6 +165,29 @@
   <button onclick="searchData()">ค้นหา</button>
 
   <div id="result"></div>
+
+  <footer>
+    <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
+  </footer>
+
+
+  <script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    });
+
+    (function() {
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+        get() {
+            alert('DevTools Detected');
+        }
+    });
+    console.log(element);
+    })();
+  </script>
 
   <script>
     async function searchData() {
@@ -179,5 +226,6 @@
       }
     }
   </script>
+
 </body>
 </html>
