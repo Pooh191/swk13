@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/logo/SWK-LogoNoBG.png">
+    <title>มัธยมศึกษาปีที่3/13 | สมาชิกห้อง</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+        <div class="container">
+            <h1>3/13</h1>
+            <button id="menu-toggle" class="menu-toggle">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="/">หน้าหลัก</a></li>
+                    <li><a href="/html/kewkap.html">เกี่ยวกับเรา</a></li>
+                      <!-- Dropdown Menu -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">ข้อมูลภายในห้องเรียน ▼</a>
+                    <div class="dropdown-content">
+                        <a href="/html/member.html">สมาชิกห้อง</a>
+                        <a href="/html/advisor.html">ครูที่ปรึกษา</a>
+                        <a href="/html/kru.html">ครูผู้สอน</a>
+                        <a href="/html/executive committee.html">คณะกรรมการบริหารห้องเรียน</a>
+                    </div>
+                </li>
+                
+                    <li><a href="/html/notify.html">ประกาศ</a></li>
+                    <li><a href="/html/timetable.html">ตารางเรียน</a></li>
+                    <li><a href="/html/tidtorraw.html">ติดต่อเรา</a></li>
+                    <li><a href="/html/login.html">เข้าสู่ระบบ</a></li>
+                </ul>
+                
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- วันที่และเวลา -->
+
+    <div id="clock"></div>
+    <div id="date"></div>
+
+    <!-- ชื่อสมาชิก -->
+
+
+    <section id="members">
+        <h2>สมาชิกห้อง</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>เลขที่</th>
+                    <th>คำนำหน้า</th>
+                    <th>ชื่อ</th>
+                    <th>นามสกุล</th>
+                    <th>ชื่อเล่น</th>
+                    <th>ตำแหน่ง</th>
+                    <th>หมายเหตุ</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>01</td>
+                    <td>เด็กหญิง</td>
+                    <td>กฤตพร</td>
+                    <td>หงษ์ทอง</td>
+                    <td>เคลีย</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>02</td>
+                    <td>เด็กหญิง</td>
+                    <td>กุลนัฐฐา</td>
+                    <td>ยอดดี</td>
+                    <td>เกิ้ล</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>03</td>
+                    <td>เด็กหญิง</td>
+                    <td>จอมขวัญ</td>
+                    <td>บรรจุงาม</td>
+                    <td>จอม</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>04</td>
+                    <td>เด็กหญิง</td>
+                    <td>ชลดาวรรณ</td>
+                    <td>มีแก้ว</td>
+                    <td>ยีน</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>05</td>
+                    <td>เด็กชาย</td>
+                    <td>ไชยอนันท์</td>
+                    <td>สำราญ</td>
+                    <td>กันต์</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>06</td>
+                    <td>เด็กชาย</td>
+                    <td>ณฐภัทร</td>
+                    <td>ยิ่งมีมา</td>
+                    <td>ปัน</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>07</td>
+                    <td>เด็กชาย</td>
+                    <td>ณัฐกฤต</td>
+                    <td>คงบุญ</td>
+                    <td>บิทเทอร์</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>08</td>
+                    <td>เด็กหญิง</td>
+                    <td>ณัฐชนัน</td>
+                    <td>ภูมิฐาน</td>
+                    <td>ปิ่น</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>09</td>
+                    <td>เด็กชาย</td>
+                    <td>ณัฐภัทร</td>
+                    <td>มุลาลินท์</td>
+                    <td>ปิง</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>เด็กชาย</td>
+                    <td>ทัศชณะพร</td>
+                    <td>ธะปะวัติ</td>
+                    <td>ทัศ</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>เด็กชาย</td>
+                    <td>ธนกร</td>
+                    <td>แก่นสาร์</td>
+                    <td>เติ้ล</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>เด็กชาย</td>
+                    <td>ธนวิชญ์</td>
+                    <td>โตวณิชพันธ์</td>
+                    <td>วา</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>เด็กชาย</td>
+                    <td>ธนัช</td>
+                    <td>เทียนมีวัฒนา</td>
+                    <td>เคนโด้</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td>เด็กชาย</td>
+                    <td>ธนากร</td>
+                    <td>แซ่จอง</td>
+                    <td>ภู</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                
+                <tr>
+                    <td>15</td>
+                    <td>เด็กชาย</td>
+                    <td>ธีรวัฒน์</td>
+                    <td>ต้นทอง</td>
+                    <td>ต้นคูณ</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td>เด็กชาย</td>
+                    <td>ธีรุตม์</td>
+                    <td>เสาร์ชัย</td>
+                    <td>ตัง</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>17</td>
+                    <td>เด็กชาย</td>
+                    <td>นพคุณ</td>
+                    <td>ม้วนปรุ</td>
+                    <td>โชกุน</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>18</td>
+                    <td>เด็กหญิง</td>
+                    <td>นิชาภา</td>
+                    <td>ดีเสมอ</td>
+                    <td>ออมสิน</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>19</td>
+                    <td>เด็กหญิง</td>
+                    <td>ปรียาภรณ์</td>
+                    <td>อ่อนตา</td>
+                    <td>พอใจ</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>20</td>
+                    <td>เด็กชาย</td>
+                    <td>ปวริศร</td>
+                    <td>จันทร์เขียว</td>
+                    <td>เคน</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>21</td>
+                    <td>เด็กหญิง</td>
+                    <td>ปัณณรัตน์</td>
+                    <td>มงคลตันติวัฒน์</td>
+                    <td>อิง</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>22</td>
+                    <td>เด็กชาย</td>
+                    <td>พงศ์พัฒน์</td>
+                    <td>จันทร์เพ็ญ</td>
+                    <td>เพลง</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>23</td>
+                    <td>เด็กหญิง</td>
+                    <td>พรพรรณ</td>
+                    <td>ลดาวัลย์สุนทร</td>
+                    <td>ขวัญข้าว</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>24</td>
+                    <td>เด็กชาย</td>
+                    <td>พัทธดลย์</td>
+                    <td>ภูมิสูง</td>
+                    <td>โชกุน</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>25</td>
+                    <td>เด็กหญิง</td>
+                    <td>พิมลวรรณ</td>
+                    <td>ศักดิ์ศรีชัย</td>
+                    <td>เปรี้ยว</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>26</td>
+                    <td>เด็กชาย</td>
+                    <td>พีรพัฒน์</td>
+                    <td>สายศร</td>
+                    <td>ตูน</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>27</td>
+                    <td>เด็กชาย</td>
+                    <td>พุฒิธร</td>
+                    <td>ควรอาจ</td>
+                    <td>อาร์ท</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>28</td>
+                    <td>เด็กหญิง</td>
+                    <td>ภัทราวดี</td>
+                    <td>ยังมี</td>
+                    <td>แก้วตา</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>29</td>
+                    <td>เด็กชาย</td>
+                    <td>ภูดิศ</td>
+                    <td>ลุนพรม</td>
+                    <td>ภูมิ</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>30</td>
+                    <td>เด็กชาย</td>
+                    <td>ภูวิศ</td>
+                    <td>ดาทอง</td>
+                    <td>ตะวัน</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>31</td>
+                    <td>เด็กหญิง</td>
+                    <td>วันวิสา</td>
+                    <td>อินทร์จันทร์</td>
+                    <td>นุ่น</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>32</td>
+                    <td>เด็กชาย</td>
+                    <td>ศิรภัทร</td>
+                    <td>ทองตัน</td>
+                    <td>กาย</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>33</td>
+                    <td>เด็กชาย</td>
+                    <td>ศิวกร</td>
+                    <td>วงศ์สุคนธนิตย์</td>
+                    <td>คุณ</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>34</td>
+                    <td>เด็กชาย</td>
+                    <td>สรนันท์</td>
+                    <td>อยู่นาน</td>
+                    <td>มาร์ค</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>35</td>
+                    <td>เด็กชาย</td>
+                    <td>สินธนา</td>
+                    <td>ปิ่นเกตุ</td>
+                    <td>ต้นคูณ</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>36</td>
+                    <td>เด็กหญิง</td>
+                    <td>อภิญญา</td>
+                    <td>โภคทรัพย์</td>
+                    <td>ดี</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+                <tr>
+                    <td>37</td>
+                    <td>เด็กชาย</td>
+                    <td>เอกกฤต</td>
+                    <td>สุขสมาน</td>
+                    <td>ตุล</td>
+                    <td>สมาชิกห้อง</td>
+                </tr>
+
+            </tbody>
+            </table>
+
+    </section>
+    <br><br>
+
+    
+
+    <footer>
+        <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
+    </footer>
+
+    <script src="/js/scripts.js"></script>
+</body>
+</html>

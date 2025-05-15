@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/logo/SWK-LogoNoBG.png">
+    <title>มัธยมศึกษาปีที่3/13 | หน้าหลัก</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>3/13</h1>
+            <button id="menu-toggle" class="menu-toggle">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">หน้าหลัก</a></li>
+                    <li><a href="/html/kewkap.html">เกี่ยวกับเรา</a></li>
+                      <!-- Dropdown Menu -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">ข้อมูลภายในห้องเรียน ▼</a>
+                    <div class="dropdown-content">
+                        <a href="/html/member.html">สมาชิกห้อง</a>
+                        <a href="/html/advisor.html">ครูที่ปรึกษา</a>
+                        <a href="/html/kru.html">ครูผู้สอน</a>
+                        <a href="/html/executive committee.html">คณะกรรมการบริหารห้องเรียน</a>
+                    </div>
+                </li>
+                
+                    <li><a href="/html/notify.html">ประกาศ</a></li>
+                    <li><a href="/html/timetable.html">ตารางเรียน</a></li>
+                    <li><a href="/html/tidtorraw.html">ติดต่อเรา</a></li>
+                    <li><a href="/html/login.html">เข้าสู่ระบบ</a></li>
+                </ul>
+                
+            </nav>
+        </div>
+    </header>
+    <div id="clock"></div>
+    <div id="date"></div>
+
+    <section>
+        <marquee class="pt-3" behavior="scroll" width="100%" height="100%" scrollamount="1" scrolldelay="15" loop="-1" truespeed="truespeed" onmouseover="this.stop()" onmouseout="this.start()" style="display: inline-block; white-space: nowrap;">
+            <p>🌟 ยินดีต้อนรับสู่เว็บไซต์ห้องเรียนมัธยมศึกษาปีที่ 3/13 🌟
+                ครูที่ปรึกษา
+                1.นายไผ่ พรมเพชร
+                2.นางสาวสุวนันท์ ฉิมพลีพันธ์
+            </p>
+        </marquee>
+    </section>
+
+    <section id="home">
+        <h4>เว็บไซต์โรงเรียน / dbschool</h4>
+        <h4>School Website</h4>
+        <p>School Website : <a href="https://sura.ac.th" target="_blank">https://sura.ac.th/web/</a></p>
+        <p>dbschool Website : <a href="http://dbschool.sura.ac.th/" target="_blank">http://dbschool.sura.ac.th/</a></p>
+        <h5>วันที่สร้าง : วันศุกร์ที่ 16 พฤษภาคม พ.ศ.2568</h5>
+    </section>
+
+    <section id="Website Old">
+        <h4>เว็บไซต์เก่าของชั้นมัธยมศึกษาปีที่2/13</h4>
+        <h4>Old website of Mathayom 2/13</h4>
+        <p>เว็บไซต์เก่าของชั้นมัธยมศึกษาปีที่2/13 : <a href="https://swk213.onrender.com" target="_blank">https://swk213.onrender.com</a></p>
+        <h5>วันที่สร้าง : วันศุกร์ที่ 16 พฤษภาคม พ.ศ.2568</h5>
+    </section>
+
+    <section id="calendar" style="width: 720px; height: 400px; margin: auto; border: 1px solid #ccc; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <center><b style="font-size: 1.5em; color: #333;">ปฏิทินห้อง</b></center><br>
+        <iframe src="https://calendar.google.com/calendar/embed?src=surawittayakarntub13%40gmail.com&ctz=Asia%2FBangkok" style="border: 0; width: 100%; height: 300px;" frameborder="0" scrolling="no"></iframe> </section>
+        
+        
+        <br><br><br>
+    <footer>
+        <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
+    </footer>
+
+    <script src="/js/scripts.js"></script>
+    <script src="/js/cooldown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

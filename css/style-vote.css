@@ -1,0 +1,193 @@
+/* ตั้งค่าพื้นฐานสำหรับหน้า */
+
+:root {
+    --primary-color: #43A047;
+    --primary-dark: #388E3C;
+    --secondary-color: #FFD700;
+    --background-gradient: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+    --text-color: #333;
+    --text-light: #555;
+    --white: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.15);
+    --shadow-hover: rgba(0, 0, 0, 0.25);
+}
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+/* ตั้งค่าโลโก้หรือชื่อหัวเรื่อง */
+h1 {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* สไตล์สำหรับขั้นตอนที่ 1 และ 2 */
+div#step1, div#step2 {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+/* สไตล์สำหรับข้อความหัวข้อในแต่ละขั้นตอน */
+h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* สไตล์สำหรับ label และ select */
+label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+    display: block;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* สไตล์สำหรับปุ่ม */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* สไตล์สำหรับข้อความเตือน */
+.alert {
+    color: red;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/* สไตล์เมื่อฟอร์มซ่อน */
+#step2 {
+    display: none;
+}
+::selection {
+    background: #ffffff00;
+    color: #ffd700;
+}
+
+        /* สไตล์ของ popup */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* สีพื้นหลังโปร่งใส */
+            z-index: 9999; /* ให้ popup อยู่ด้านบนสุด */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #popup .popup-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* เพิ่มแอนิเมชันสำหรับการแสดง popup */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* สไตล์ปุ่มใน popup */
+        #popup button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        #popup button:hover {
+            background-color: #45a049;
+        }
+
+        /* สไตล์ของหน้าหลังการเลือกตั้งเสร็จสิ้น */
+        #finished {
+            display: none;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #finished button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #finished button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 20px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+        
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        

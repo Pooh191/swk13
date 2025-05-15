@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>มัธยมศึกษาปีที่ 3/13 | เข้าสู่ระบบ</title>
+    <link rel="stylesheet" href="/css/style-login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>เข้าสู่ระบบ</h2>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" placeholder="กรุณากรอกเลขประจำตัว" required />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="กรุณากรอกเลขประจำตัว" required />
+            
+            <button type="submit">เข้าสู่ระบบ</button> <br><br> 
+
+            <a href="/" style="color:#34D399">กลับหน้าหลัก </a>
+
+        </form>
+        <p id="error-message" style="color:red;"></p>
+    </div>
+
+    <div id="popupOverlay"></div>
+    <div id="welcomePopup">
+        <h2>ยินดีต้อนรับ!</h2>
+        <p>ข้อความต้อนรับจะปรากฏที่นี่</p>
+        <button id="closePopup">ปิด</button>
+    </div>
+    
+
+    <script src="/js/login.js"></script>
+</body>
+</html>
