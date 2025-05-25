@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>ระบบเวรประจำวัน</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap " rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    #popupMessage {
+      visibility: hidden;
+      min-width: 250px;
+      background-color: #4BB543;
+      color: white;
+      text-align: center;
+      border-radius: 8px;
+      padding: 15px;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      font-size: 16px;
+      z-index: 1000;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    #popupMessage.show {
+      visibility: visible;
+      opacity: 1;
+    }
+    #popupMessage.error {
+      background-color: #E94B3C;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>เลือกวันและกำหนดเวรประจำวัน</h2>
+  <label for="daySelect">เลือกวัน:</label>
+  <select id="daySelect" name="day" required>
+    <option value="">-- เลือกวัน --</option>
+    <option value="จันทร์">จันทร์</option>
+    <option value="อังคาร">อังคาร</option>
+    <option value="พุธ">พุธ</option>
+    <option value="พฤหัสบดี">พฤหัสบดี</option>
+    <option value="ศุกร์">ศุกร์</option>
+  </select>
+  <form id="dutyForm" style="display:none; margin-top: 15px;">
+    <label for="sweep1">กวาดพื้น 1:</label>
+    <select id="sweep1" name="sweep1" required></select>
+    <label for="sweep2">กวาดพื้น 2:</label>
+    <select id="sweep2" name="sweep2" required></select>
+    <label for="mop">ถูพื้น:</label>
+    <select id="mop" name="mop" required></select>
+    <label for="wet">ชุบน้ำ:</label>
+    <select id="wet" name="wet" required></select>
+    <label for="trash">ทิ้งขยะ:</label>
+    <select id="trash" name="trash" required></select>
+    <label for="table1">จัดโต๊ะ 1:</label>
+    <select id="table1" name="table1" required></select>
+    <label for="table2">จัดโต๊ะ 2:</label>
+    <select id="table2" name="table2" required></select>
+    <label for="table3">จัดโต๊ะ 3:</label>
+    <select id="table3" name="table3" required></select>
+    <label for="photoInput">อัปโหลดรูปภาพ (JPEG, PNG ขนาดไม่เกิน 1MB):</label>
+    <input type="file" id="photoInput" name="photoInput" accept="image/jpeg, image/png" />
+    <button type="button" id="submitBtn" style="margin-top:10px;">ส่งข้อมูลเวร</button>
+  </form>
+  <div id="result" style="margin-top:10px; color: green;"></div>
+</div>
+<div id="popupMessage"></div>
+
+<script>
+  const scriptURL = "https://script.google.com/macros/s/AKfycbweByVr-iCM1GnfKtMDVr5VEYxs2mFYxu5uPpOgOo9NsvPK-TLHmDmpo3IDFoJHHB4Jng/exec";
+  const daySelect = document.getElementById('daySelect');
+  const dutyForm = document.getElementById('dutyForm');
+  const selects = {
+    sweep1: document.getElementById('sweep1'),
+    sweep2: document.getElementById('sweep2'),
+    mop: document.getElementById('mop'),
+    wet: document.getElementById('wet'),
+    trash: document.getElementById('trash'),
+    table1: document.getElementById('table1'),
+    table2: document.getElementById('table2'),
+    table3: document.getElementById('table3'),
+  };
+
+  daySelect.addEventListener('change', async () => {
+    const day = daySelect.value;
+    if (!day) {
+      dutyForm.style.display = 'none';
+      Object.values(selects).forEach(sel => sel.innerHTML = '<option value="">-- เลือก --</option>');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${scriptURL}?day=${encodeURIComponent(day)}`);
+      const names = await res.json();
+      if (!Array.isArray(names) || names.length === 0) {
+        alert("ไม่มีข้อมูลคนเวรสำหรับวันนั้น");
+        dutyForm.style.display = 'none';
+        return;
+      }
+      dutyForm.style.display = 'block';
+      Object.values(selects).forEach(sel => {
+        sel.innerHTML = '<option value="">-- เลือก --</option>';
+        names.forEach(name => {
+          sel.innerHTML += `<option value="${name}">${name}</option>`;
+        });
+      });
+    } catch(err) {
+      alert("เกิดข้อผิดพลาดในการโหลดข้อมูล");
+      dutyForm.style.display = 'none';
+      console.error(err);
+    }
+  });
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  function showPopupMessage(message, isError = false) {
+    const popup = document.getElementById('popupMessage');
+    popup.textContent = message;
+    if (isError) popup.classList.add('error');
+    else popup.classList.remove('error');
+    popup.classList.add('show');
+    setTimeout(() => popup.classList.remove('show'), 3000);
+  }
+
+  document.getElementById('submitBtn').addEventListener('click', async () => {
+    const day = daySelect.value;
+    if (!day) {
+      showPopupMessage("กรุณาเลือกวัน", true);
+      return;
+    }
+
+    const data = {};
+    for (const key in selects) {
+      const val = selects[key].value;
+      if (!val) {
+        showPopupMessage(`กรุณาเลือกคนทำเวรสำหรับ "${key}"`, true);
+        return;
+      }
+      data[key] = val;
+    }
+
+    const photoInput = document.getElementById('photoInput');
+    let photoBase64 = "", photoType = "";
+    if (photoInput.files.length > 0) {
+      const file = photoInput.files[0];
+      if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+        showPopupMessage("รองรับเฉพาะไฟล์ JPEG และ PNG", true);
+        return;
+      }
+      if (file.size > 1048576) {
+        showPopupMessage("ไฟล์ต้องมีขนาดไม่เกิน 1 MB", true);
+        return;
+      }
+      photoBase64 = await toBase64(file);
+      photoType = file.type;
+    }
+
+    try {
+      const res = await fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify({
+          day,
+          ...data,
+          photoBase64,
+          photoType
+        }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const text = await res.text();
+      document.getElementById('result').textContent = text;
+      showPopupMessage("ส่งข้อมูลเวรสำเร็จ");
+
+      // Reset form
+      daySelect.value = "";
+      dutyForm.style.display = 'none';
+      for (const key in selects) {
+        selects[key].innerHTML = '<option value="">-- เลือก --</option>';
+      }
+      photoInput.value = "";
+    } catch (err) {
+      showPopupMessage("เกิดข้อผิดพลาดในการส่งข้อมูล", true);
+      console.error(err);
+    }
+  });
+</script>
+</body>
+</html>
