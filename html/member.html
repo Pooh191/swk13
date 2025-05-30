@@ -109,34 +109,44 @@
 
     <script src="/js/scripts.js"></script>
 
+
 <script>
   const loadingDiv = document.getElementById("loading");
   const tbody = document.getElementById("members-body");
 
   fetch("https://script.google.com/macros/s/AKfycbwxly2hMZlGN1d9fNxCg941FCMg1UsKvvD7sZz4SXgYdXpUljsa4_bGPF5o7-b-Z4mp/exec")
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(row => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${row["เลขที่"]}</td>
-          <td>${row["คำนำหน้า"]}</td>
-          <td>${row["ชื่อ"]}</td>
-          <td>${row["นามสกุล"]}</td>
-          <td>${row["ชื่อเล่น"]}</td>
-          <td>${row["ตำแหน่ง"]}</td>
-          <td>${row["หมายเหตุ"] || ""}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    })
-    .catch(err => {
-      loadingDiv.textContent = "เกิดข้อผิดพลาดในการโหลดข้อมูล";
-      console.error("Error loading member data:", err);
-    })
-    .finally(() => {
-    loadingDiv.parentElement.style.display = "none";
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(row => {
+      const tr = document.createElement("tr");
+
+      // ตรวจสอบว่าตำแหน่งควรจะเป็นตัวหนาหรือไม่
+      let position = row["ตำแหน่ง"] || "";
+      const highlightPositions = ["หัวหน้าห้อง", "รองหัวหน้าห้อง", "เลขานุการ", "ผู้ช่วยเลขานุการ", "นายทะเบียน", "เหรัญญิก"];
+      if (highlightPositions.includes(position.trim())) {
+        position = `<strong>${position}</strong>`;
+      }
+
+      tr.innerHTML = `
+        <td>${row["เลขที่"]}</td>
+        <td>${row["คำนำหน้า"]}</td>
+        <td>${row["ชื่อ"]}</td>
+        <td>${row["นามสกุล"]}</td>
+        <td>${row["ชื่อเล่น"]}</td>
+        <td>${position}</td>
+        <td>${row["หมายเหตุ"] || ""}</td>
+      `;
+      tbody.appendChild(tr);
     });
+  })
+  .catch(err => {
+    loadingDiv.textContent = "เกิดข้อผิดพลาดในการโหลดข้อมูล";
+    console.error("Error loading member data:", err);
+  })
+  .finally(() => {
+    loadingDiv.parentElement.style.display = "none";
+  });
+
 
 </script>
 
