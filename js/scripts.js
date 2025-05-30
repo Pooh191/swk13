@@ -39,17 +39,3 @@ document.getElementById('menu-toggle').addEventListener('click', function() {
 // ลิขสิทธิ์ปัจจุบัน
 
 document.getElementById("currentYear").textContent = new Date().getFullYear();
-
-        document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-    });
-
-    (function() {
-        const element = new Image();
-        Object.defineProperty(element, 'id', {
-            get() {
-                alert('DevTools Detected');
-            }
-        });
-        console.log(element);
-    })();
