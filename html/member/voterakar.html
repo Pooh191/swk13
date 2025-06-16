@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/style-vote.css">
 </head>
 <body>
-    <h1>เลือกตั้งเลขานุการ</h1>
+    <h1>เลือกเลขานุการ</h1>
     <!-- ฟอร์มสำหรับเลือกชื่อผู้ใช้สิทธิ์ -->
     <div id="step1">
         <h2>ขั้นตอนที่ 1: เลือกชื่อผู้ใช้สิทธิ์</h2>
@@ -48,6 +48,119 @@
             <option value="เด็กหญิงวันวิสา อินทร์จันทร์">เด็กหญิงวันวิสา อินทร์จันทร์</option>
             <option value="เด็กชายศิรภัทร ทองตัน">เด็กชายศิรภัทร ทองตัน</option>
             <option value="เด็กชายศิวกร วงค์สุคนธนิตย์">เด็กชายศิวกร วงค์สุคนธนิตย์</option>
+            <option value="เด็กชายสรนันท์ อยู่นาน">เด็กชายสรนันท์ อยู่นาน</option>
+            <option value="เด็กชายสินธนา ปิ่นเกตุ">เด็กชายสินธนา ปิ่นเกตุ</option>
+            <option value="เด็กหญิงอภิญญา โภคทรัพย์">เด็กหญิงอภิญญา โภคทรัพย์</option>
+            <option value="เด็กชายเอกกฤต สุขสมาน">เด็กชายเอกกฤต สุขสมาน</option>
+        </select><br><br>
+        
+        <button type="button" onclick="showNextStep()">ถัดไป</button>
+    </div>
+    
+  <!-- ฟอร์มสำหรับเลือกผู้สมัคร -->
+  <div id="step2" style="display: none;">
+    <h2>ขั้นตอนที่ 2: เลือกผู้สมัคร</h2>
+    <label for="candidate">เลือกผู้สมัคร: </label>
+    <select id="candidate" name="candidate" required>
+        <option value="" disabled selected>เลือกผู้สมัคร</option>
+        <option value="ศิรภัทร ทองตัน">ศิรภัทร ทองตัน</option>
+        <option value="กฤตพร หงษ์ทอง">กฤตพร หงษ์ทอง</option>
+        <option value="ภูดิศ ลุนพรม">ภูดิศ ลุนพรม</option>
+        
+    </select><br><br>
+
+    <button type="button" onclick="submitForm()">ส่งข้อมูล</button>
+</div>
+
+<!-- Modal สำหรับแสดงข้อความว่าเลือกตั้งเสร็จสิ้น -->
+<div id="popup">
+    <div class="popup-content">
+        <h3>เลือกตั้งเสร็จสิ้น</h3>
+        <button onclick="closePopup()">ปิด</button>
+    </div>
+</div>
+
+<!-- หน้าเลือกตั้งเสร็จสิ้น -->
+<div id="finished">
+    <h2>การเลือกตั้งเสร็จสิ้น</h2>
+    <button onclick="window.location.href='/'">
+    กลับหน้าหลัก</button>
+</div>
+
+    <footer>
+        <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
+    </footer>
+
+    <script>
+        document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    </script>
+
+
+<script>
+    // เมื่อผู้ใช้กดปุ่ม "ถัดไป" จะซ่อนขั้นตอนที่ 1 และแสดงขั้นตอนที่ 2
+    function showNextStep() {
+        var user = document.getElementById('user').value;
+        
+        if (user) {
+            document.getElementById('step1').style.display = 'none'; // ซ่อนขั้นตอนที่ 1
+            document.getElementById('step2').style.display = 'block'; // แสดงขั้นตอนที่ 2
+        } else {
+            alert('กรุณาเลือกชื่อผู้ใช้สิทธิ์');
+        }
+    }
+
+    function submitForm() {
+        var user = document.getElementById('user').value;
+        var candidate = document.getElementById('candidate').value;
+
+        // สร้างข้อมูลที่ต้องการส่ง
+        var formData = new FormData();
+        formData.append('user', user);
+        formData.append('candidate', candidate);
+
+        // ส่งข้อมูลไปยัง Google Apps Script
+        fetch('https://script.google.com/macros/s/AKfycbzz26LWqWIsO-7tZsPBLOGF5VM3mmiWfpz_Vs27paCJsFatWH8Qf_B4RX83eqg329uYaA/exec', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            // เมื่อส่งข้อมูลสำเร็จ ให้แสดง Popup
+            showPopup();
+        })
+        .catch(error => {
+            alert('เกิดข้อผิดพลาดในการส่งข้อมูล');
+        });
+    }
+
+    // ฟังก์ชันแสดง Popup
+    function showPopup() {
+        document.getElementById("popup").style.display = "flex"; // แสดง popup
+    }
+
+    // ฟังก์ชันปิด Popup และไปยังหน้าการเลือกตั้งเสร็จสิ้น
+    function closePopup() {
+        document.getElementById("popup").style.display = "none"; // ซ่อน Popup
+        document.getElementById("step1").style.display = "none"; // ซ่อนขั้นตอนที่ 1
+        document.getElementById("step2").style.display = "none"; // ซ่อนขั้นตอนที่ 2
+        document.getElementById("finished").style.display = "block"; // แสดงหน้าการเลือกตั้งเสร็จสิ้น
+    }
+
+    // ฟังก์ชันกลับไปหน้าหลัก
+    function goBackHome() {
+        document.getElementById("finished").style.display = "none"; // ซ่อนหน้าการเลือกตั้งเสร็จสิ้น
+        document.getElementById("step1").style.display = "block"; // แสดงขั้นตอนที่ 1
+    }
+
+    // อย่าให้ popup แสดงเมื่อโหลดหน้าเว็บ
+    document.addEventListener("DOMContentLoaded", function() {
+        // เริ่มต้น popup ไม่แสดง
+        document.getElementById("popup").style.display = "none";
+    });
+</script>
+</body>
+</html>ายศิวกร วงค์สุคนธนิตย์">เด็กชายศิวกร วงค์สุคนธนิตย์</option>
             <option value="เด็กชายสรนันท์ อยู่นาน">เด็กชายสรนันท์ อยู่นาน</option>
             <option value="เด็กชายสินธนา ปิ่นเกตุ">เด็กชายสินธนา ปิ่นเกตุ</option>
             <option value="เด็กหญิงอภิญญา โภคทรัพย์">เด็กหญิงอภิญญา โภคทรัพย์</option>
