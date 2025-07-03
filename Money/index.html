@@ -3,554 +3,457 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบเงินห้องเรียน</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>ระบบเงินห้องเรียน | ม.3/13 สุรวิทยาคาร</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #4e73df;
-            --secondary-color: #f8f9fc;
-            --accent-color: #2e59d9;
-        }
-        
         body {
-            background-color: #f8f9fc;
-            font-family: 'Kanit', sans-serif;
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
         }
-        
+        .container {
+            max-width: 960px;
+        }
         .card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            background-color: #ffffff;
+            border-radius: 1rem; /* More rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Stronger shadow */
         }
-        
-        .card-header {
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: 10px 10px 0 0 !important;
-            padding: 1rem;
-        }
-        
         .btn-primary {
-            background-color: var(--primary-color);
-            border: none;
-            border-radius: 5px;
-            padding: 8px 20px;
+            background-color: #4f46e5; /* Indigo */
+            border-color: #4f46e5;
+            transition: background-color 0.3s ease;
         }
-        
         .btn-primary:hover {
-            background-color: var(--accent-color);
+            background-color: #4338ca; /* Darker indigo */
         }
-        
-        .form-control {
-            border-radius: 5px;
-            padding: 10px 15px;
+        .btn-success {
+            background-color: #10b981; /* Emerald */
+            border-color: #10b981;
         }
-        
-        .table {
-            border-radius: 10px;
-            overflow: hidden;
+        .btn-success:hover {
+            background-color: #059669; /* Darker emerald */
         }
-        
-        .table th {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
+        .btn-danger {
+            background-color: #ef4444; /* Red */
+            border-color: #ef4444;
         }
-        
-        .table td, .table th {
-            padding: 12px;
+        .btn-danger:hover {
+            background-color: #dc2626; /* Darker red */
+        }
+        .btn-edit { /* New style for edit button */
+            background-color: #f59e0b; /* Amber */
+            border-color: #f59e0b;
+            transition: background-color 0.3s ease;
+        }
+        .btn-edit:hover {
+            background-color: #d97706; /* Darker amber */
+        }
+        .table th, .table td {
+            padding: 1rem;
             vertical-align: middle;
         }
-        
-        .table tr:nth-child(even) {
-            background-color: #f8f9fc;
+        .table th {
+            background-color: #e2e8f0; /* Light gray for table header */
+            color: #334155; /* Darker text for header */
+            text-align: left;
         }
-        
-        .total-box {
-            background-color: #1cc88a;
-            color: white;
-            border-radius: 10px;
-            padding: 15px;
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f8fafc; /* Lighter stripe */
+        }
+        .summary-card {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-left: 8px solid #6366f1; /* Indigo border on the left */
+        }
+        .form-control, .form-select {
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1; /* Light gray border */
+            padding: 0.75rem 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #6366f1; /* Indigo on focus */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25); /* Light indigo glow */
+            outline: none;
+        }
+        .status-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
             text-align: center;
-            margin-bottom: 15px;
         }
-        
-        .total-box h5 {
-            margin-bottom: 5px;
+        .status-success {
+            background-color: #d1fae5; /* Green-100 */
+            color: #065f46; /* Green-800 */
         }
-        
-        .total-box .amount {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        
-        .badge-income {
-            background-color: #1cc88a;
-        }
-        
-        .badge-expense {
-            background-color: #e74a3b;
-        }
-        
-        .action-btn {
-            padding: 5px 8px;
-            margin: 0 2px;
-            font-size: 0.8rem;
+        .status-error {
+            background-color: #fee2e2; /* Red-100 */
+            color: #991b1b; /* Red-800 */
         }
     </style>
 </head>
-<body>
-    <div class="container py-4">
-        <!-- School Information -->
-        <div class="row mb-3">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0"><i class="fas fa-school me-2"></i>ข้อมูลโรงเรียนและห้องเรียน</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="schoolName" class="form-label">ชื่อโรงเรียน</label>
-                                <input type="text" class="form-control" id="schoolName" placeholder="กรอกชื่อโรงเรียน">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="className" class="form-label">ชื่อห้องเรียน</label>
-                                <input type="text" class="form-control" id="className" placeholder="กรอกชื่อห้องเรียน">
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary w-100" id="saveSchoolInfo">
-                                    <i class="fas fa-save me-2"></i>บันทึกข้อมูลโรงเรียน
-                                </button>
-                            </div>
+<body class="flex flex-col min-h-screen">
+    <div class="container mx-auto p-6 flex-grow">
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-extrabold text-gray-800 mb-4">
+                <i class="fas fa-wallet text-indigo-600 mr-3"></i>
+                ระบบเงินห้องเรียน
+            </h1>
+            <p class="text-xl text-gray-600">ชั้นมัธยมศึกษาปีที่ 3/13 โรงเรียนสุรวิทยาคาร</p>
+        </header>
+
+        <main class="grid grid-cols-1 gap-8">
+            <!-- Transaction Form -->
+            <div class="card p-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">บันทึกรายการใหม่</h2>
+                <form id="transactionForm" class="space-y-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label for="transactionDate" class="block text-gray-700 text-lg font-medium mb-2">วันที่:</label>
+                            <input type="date" id="transactionDate" class="form-control w-full" required>
+                        </div>
+                        <div>
+                            <label for="transactionType" class="block text-gray-700 text-lg font-medium mb-2">ประเภท:</label>
+                            <select id="transactionType" class="form-select w-full" required>
+                                <option value="income">รายรับ</option>
+                                <option value="expense">รายจ่าย</option>
+                            </select>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Summary Section -->
-        <div class="row mb-3">
-            <div class="col-md-4">
-                <div class="total-box">
-                    <h5 class="mb-1"><i class="fas fa-coins me-2"></i>ยอดเงินคงเหลือ</h5>
-                    <div class="amount" id="totalBalance">0.00</div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="total-box" style="background-color: #1cc88a;">
-                    <h5 class="mb-1"><i class="fas fa-arrow-down me-2"></i>รายรับทั้งหมด</h5>
-                    <div class="amount" id="totalIncome">0.00</div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="total-box" style="background-color: #e74a3b;">
-                    <h5 class="mb-1"><i class="fas fa-arrow-up me-2"></i>รายจ่ายทั้งหมด</h5>
-                    <div class="amount" id="totalExpense">0.00</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Transaction Form -->
-        <div class="row mb-3">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0"><i class="fas fa-exchange-alt me-2"></i>บันทึกรายการเงิน</h5>
+                    <div>
+                        <label for="transactionAmount" class="block text-gray-700 text-lg font-medium mb-2">จำนวนเงิน (บาท):</label>
+                        <input type="number" id="transactionAmount" class="form-control w-full" min="0.01" step="0.01" required>
                     </div>
-                    <div class="card-body">
-                        <form id="transactionForm">
-                            <input type="hidden" id="editId" value="">
-                            <div class="row">
-                                <div class="col-md-3 mb-3">
-                                    <label for="transactionType" class="form-label">ประเภท</label>
-                                    <select class="form-select" id="transactionType" required>
-                                        <option value="" selected disabled>เลือกประเภท</option>
-                                        <option value="income">รายรับ</option>
-                                        <option value="expense">รายจ่าย</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="amount" class="form-label">จำนวนเงิน</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">฿</span>
-                                        <input type="number" class="form-control" id="amount" placeholder="0.00" step="0.01" min="0" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="transactionDate" class="form-label">วันที่</label>
-                                    <input type="date" class="form-control" id="transactionDate" required>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="category" class="form-label">หมวดหมู่</label>
-                                    <input type="text" class="form-control" id="category" placeholder="เช่น ค่าอุปกรณ์, เงินบริจาค">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="receiver" class="form-label">ผู้รับเงิน</label>
-                                    <input type="text" class="form-control" id="receiver" placeholder="ชื่อผู้รับเงิน">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="provider" class="form-label">ผู้มอบเงิน</label>
-                                    <input type="text" class="form-control" id="provider" placeholder="ชื่อผู้มอบเงิน">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="note" class="form-label">หมายเหตุ</label>
-                                    <input type="text" class="form-control" id="note" placeholder="หมายเหตุเพิ่มเติม">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary me-2" id="submitBtn">
-                                        <i class="fas fa-plus-circle me-2"></i>เพิ่มรายการ
-                                    </button>
-                                    <button type="button" class="btn btn-secondary" id="cancelEdit" style="display: none;">
-                                        <i class="fas fa-times me-2"></i>ยกเลิกการแก้ไข
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                    <div>
+                        <label for="transactionParty" class="block text-gray-700 text-lg font-medium mb-2" id="partyLabel">ผู้มอบเงิน:</label>
+                        <input type="text" id="transactionParty" class="form-control w-full" placeholder="ชื่อผู้มอบเงิน" required>
+                    </div>
+                    <div>
+                        <label for="transactionNotes" class="block text-gray-700 text-lg font-medium mb-2">หมายเหตุ:</label>
+                        <textarea id="transactionNotes" class="form-control w-full" rows="3" placeholder="รายละเอียดเพิ่มเติม (เช่น ค่าอะไร)"></textarea>
+                    </div>
+                    <button type="submit" id="submitButton" class="btn-primary w-full py-3 text-xl font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+                        <i class="fas fa-plus-circle mr-2"></i> บันทึกรายการ
+                    </button>
+                    <div id="transactionStatusMessage" class="status-message hidden"></div>
+                </form>
+            </div>
+
+            <!-- Transaction List -->
+            <div class="card p-8 mt-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">รายการทั้งหมด</h2>
+                <div class="overflow-x-auto rounded-lg shadow-md">
+                    <table class="w-full text-lg table-auto">
+                        <thead>
+                            <tr>
+                                <th class="py-4 px-6">วันที่</th>
+                                <th class="py-4 px-6">ประเภท</th>
+                                <th class="py-4 px-6">ผู้รับ/ผู้มอบ</th>
+                                <th class="py-4 px-6">หมายเหตุ</th>
+                                <th class="py-4 px-6 text-right">จำนวนเงิน</th>
+                                <th class="py-4 px-6 text-right">คงเหลือ</th>
+                                <th class="py-4 px-6">จัดการ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionTableBody">
+                            <!-- Transactions will be inserted here by JavaScript -->
+                            <tr class="text-gray-600">
+                                <td colspan="7" class="text-center py-8">ยังไม่มีรายการ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Summary Card -->
+            <div class="summary-card p-8 mt-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">สรุปยอดเงิน</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div class="p-4 bg-green-50 rounded-lg shadow-sm">
+                        <p class="text-xl text-gray-600 font-medium mb-2">รวมรายรับ</p>
+                        <p id="totalIncome" class="text-4xl font-bold text-green-700">0.00 บาท</p>
+                    </div>
+                    <div class="p-4 bg-red-50 rounded-lg shadow-sm">
+                        <p class="text-xl text-gray-600 font-medium mb-2">รวมรายจ่าย</p>
+                        <p id="totalExpense" class="text-4xl font-bold text-red-700">0.00 บาท</p>
+                    </div>
+                    <div class="p-4 bg-indigo-50 rounded-lg shadow-sm">
+                        <p class="text-xl text-gray-600 font-medium mb-2">คงเหลือสุทธิ</p>
+                        <p id="netBalance" class="text-4xl font-bold text-indigo-700">0.00 บาท</p>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Transaction List -->
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0"><i class="fas fa-list-alt me-2"></i>รายการเงินทั้งหมด</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>วันที่</th>
-                                        <th>ประเภท</th>
-                                        <th>หมวดหมู่</th>
-                                        <th>จำนวนเงิน</th>
-                                        <th>ผู้รับเงิน</th>
-                                        <th>ผู้มอบเงิน</th>
-                                        <th>หมายเหตุ</th>
-                                        <th>การจัดการ</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="transactionTableBody">
-                                    <!-- Transactions will be added here dynamically -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </main>
     </div>
-    
-    <!-- Bootstrap JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <footer class="bg-gray-800 text-white text-center p-6 mt-10">
+        <p class="text-lg">&copy; Copyright 2024 - <span id="currentYear"></span> ระบบเงินห้อง ชั้นมัธยมศึกษาปีที่ 3/13 โรงเรียนสุรวิทยาคาร</p>
+    </footer>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize variables
-            let transactions = [];
-            let schoolInfo = { schoolName: '', className: '' };
-            let isEditing = false;
-            let currentEditId = null;
-            
-            // DOM Elements
+        document.addEventListener('DOMContentLoaded', () => {
             const transactionForm = document.getElementById('transactionForm');
+            const transactionDateInput = document.getElementById('transactionDate');
+            const transactionTypeSelect = document.getElementById('transactionType');
+            const transactionAmountInput = document.getElementById('transactionAmount');
+            const transactionPartyInput = document.getElementById('transactionParty');
+            const transactionNotesInput = document.getElementById('transactionNotes');
+            const partyLabel = document.getElementById('partyLabel');
             const transactionTableBody = document.getElementById('transactionTableBody');
-            const totalBalanceElement = document.getElementById('totalBalance');
-            const totalIncomeElement = document.getElementById('totalIncome');
-            const totalExpenseElement = document.getElementById('totalExpense');
-            const schoolNameInput = document.getElementById('schoolName');
-            const classNameInput = document.getElementById('className');
-            const saveSchoolInfoBtn = document.getElementById('saveSchoolInfo');
-            const submitBtn = document.getElementById('submitBtn');
-            const cancelEditBtn = document.getElementById('cancelEdit');
-            const editIdInput = document.getElementById('editId');
-            
-            // Set today's date as default
-            document.getElementById('transactionDate').valueAsDate = new Date();
-            
-            // Load data from localStorage
-            loadData();
-            
-            // Event Listeners
-            transactionForm.addEventListener('submit', handleTransactionSubmit);
-            saveSchoolInfoBtn.addEventListener('click', saveSchoolInfo);
-            cancelEditBtn.addEventListener('click', cancelEdit);
-            
-            // Functions
-            function loadData() {
-                // Load transactions
-                const savedTransactions = localStorage.getItem('classroomTransactions');
-                if (savedTransactions) {
-                    transactions = JSON.parse(savedTransactions);
-                    renderTransactions();
-                    updateSummary();
-                }
-                
-                // Load school info
-                const savedSchoolInfo = localStorage.getItem('classroomSchoolInfo');
-                if (savedSchoolInfo) {
-                    schoolInfo = JSON.parse(savedSchoolInfo);
-                    schoolNameInput.value = schoolInfo.schoolName;
-                    classNameInput.value = schoolInfo.className;
-                }
+            const totalIncomeDisplay = document.getElementById('totalIncome');
+            const totalExpenseDisplay = document.getElementById('totalExpense');
+            const netBalanceDisplay = document.getElementById('netBalance');
+            const currentYearSpan = document.getElementById('currentYear');
+            const submitButton = document.getElementById('submitButton'); // Get the submit button
+
+            const transactionStatusMessage = document.getElementById('transactionStatusMessage');
+
+            // *** วาง Google Apps Script Web App URL ของคุณที่นี่ ***
+            // คุณสามารถหา URL นี้ได้หลังจาก Deploy Google Apps Script ตามขั้นตอนที่แนะนำ
+            const appsScriptUrl = 'https://script.google.com/macros/s/AKfycbyxeagWrkzFOteWCVm9_F3mvr1lMhdFt494AgHW0zy9kMqRvPGid0-PPdvoWWkYbeYn/exec'; // เช่น 'https://script.google.com/macros/s/AKfycbz123abc/exec'
+
+            let transactions = [];
+            let balance = 0;
+            let totalIncome = 0;
+            let totalExpense = 0;
+            let editingIndex = null; // New: To keep track of the transaction being edited
+
+            // Set current year in footer
+            currentYearSpan.textContent = new Date().getFullYear();
+
+            // Set today's date as default for transaction date
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months start at 0!
+            const dd = String(today.getDate()).padStart(2, '0');
+            transactionDateInput.value = `${yyyy}-${mm}-${dd}`;
+
+            // Function to show status messages
+            function showStatusMessage(element, message, type) {
+                element.textContent = message;
+                element.classList.remove('hidden', 'status-success', 'status-error');
+                element.classList.add(type === 'success' ? 'status-success' : 'status-error');
+                setTimeout(() => {
+                    element.classList.add('hidden');
+                }, 5000); // Hide after 5 seconds
             }
-            
-            function saveData() {
-                localStorage.setItem('classroomTransactions', JSON.stringify(transactions));
-                localStorage.setItem('classroomSchoolInfo', JSON.stringify(schoolInfo));
-            }
-            
-            function saveSchoolInfo() {
-                schoolInfo = {
-                    schoolName: schoolNameInput.value.trim(),
-                    className: classNameInput.value.trim()
-                };
-                saveData();
-                
-                // Show success message
-                alert('บันทึกข้อมูลโรงเรียนเรียบร้อยแล้ว');
-            }
-            
-            function handleTransactionSubmit(e) {
-                e.preventDefault();
-                
-                // Get form values
-                const type = document.getElementById('transactionType').value;
-                const amount = parseFloat(document.getElementById('amount').value);
-                const date = document.getElementById('transactionDate').value;
-                const category = document.getElementById('category').value.trim();
-                const receiver = document.getElementById('receiver').value.trim();
-                const provider = document.getElementById('provider').value.trim();
-                const note = document.getElementById('note').value.trim();
-                
-                if (isEditing) {
-                    // Update existing transaction
-                    const index = transactions.findIndex(t => t.id === currentEditId);
-                    if (index !== -1) {
-                        transactions[index] = {
-                            id: currentEditId,
-                            type,
-                            amount,
-                            date,
-                            category,
-                            receiver,
-                            provider,
-                            note
-                        };
-                    }
-                    
-                    // Reset edit mode
-                    cancelEdit();
+
+            // Function to update party label based on transaction type
+            transactionTypeSelect.addEventListener('change', () => {
+                if (transactionTypeSelect.value === 'income') {
+                    partyLabel.textContent = 'ผู้มอบเงิน:';
+                    transactionPartyInput.placeholder = 'ชื่อผู้มอบเงิน';
                 } else {
-                    // Create new transaction object
-                    const transaction = {
-                        id: Date.now(),
-                        type,
-                        amount,
-                        date,
-                        category,
-                        receiver,
-                        provider,
-                        note
-                    };
-                    
-                    // Add to transactions array
-                    transactions.push(transaction);
+                    partyLabel.textContent = 'ผู้รับเงิน:';
+                    transactionPartyInput.placeholder = 'ชื่อผู้รับเงิน';
                 }
-                
-                // Save and update UI
-                saveData();
-                renderTransactions();
-                updateSummary();
-                
-                // Reset form
-                transactionForm.reset();
-                document.getElementById('transactionDate').valueAsDate = new Date();
-            }
-            
-            function renderTransactions() {
-                // Clear table
-                transactionTableBody.innerHTML = '';
-                
-                // Sort transactions by date (newest first)
-                transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
-                
-                // Add each transaction to the table
-                transactions.forEach(transaction => {
+            });
+
+            // Load transactions from localStorage (for demonstration/temporary persistence)
+            const loadTransactions = () => {
+                const storedTransactions = localStorage.getItem('classroomMoneyTransactions');
+                if (storedTransactions) {
+                    transactions = JSON.parse(storedTransactions);
+                    calculateSummary();
+                    renderTransactions();
+                }
+            };
+
+            // Save transactions to localStorage
+            const saveTransactions = () => {
+                localStorage.setItem('classroomMoneyTransactions', JSON.stringify(transactions));
+            };
+
+            // Calculate current balance and summary totals
+            const calculateSummary = () => {
+                balance = 0;
+                totalIncome = 0;
+                totalExpense = 0;
+
+                transactions.forEach(t => {
+                    if (t.type === 'income') {
+                        balance += t.amount;
+                        totalIncome += t.amount;
+                    } else {
+                        balance -= t.amount;
+                        totalExpense += t.amount;
+                    }
+                });
+
+                totalIncomeDisplay.textContent = `${totalIncome.toFixed(2)} บาท`;
+                totalExpenseDisplay.textContent = `${totalExpense.toFixed(2)} บาท`;
+                netBalanceDisplay.textContent = `${balance.toFixed(2)} บาท`; // Net balance is the same as current balance
+            };
+
+            // Render transactions to the table
+            const renderTransactions = () => {
+                transactionTableBody.innerHTML = ''; // Clear existing rows
+                if (transactions.length === 0) {
+                    transactionTableBody.innerHTML = `
+                        <tr class="text-gray-600">
+                            <td colspan="7" class="text-center py-8">ยังไม่มีรายการ</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                let runningBalance = 0;
+                transactions.forEach((t, index) => {
+                    if (t.type === 'income') {
+                        runningBalance += t.amount;
+                    } else {
+                        runningBalance -= t.amount;
+                    }
+
                     const row = document.createElement('tr');
-                    
-                    // Format date
-                    const dateObj = new Date(transaction.date);
-                    const formattedDate = dateObj.toLocaleDateString('th-TH', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                    });
-                    
-                    // Format amount with 2 decimal places
-                    const formattedAmount = transaction.amount.toFixed(2);
-                    
-                    // Create row HTML
+                    row.classList.add('border-b', 'border-gray-200', 'hover:bg-gray-50');
                     row.innerHTML = `
-                        <td>${formattedDate}</td>
-                        <td>
-                            <span class="badge rounded-pill ${transaction.type === 'income' ? 'badge-income' : 'badge-expense'}">
-                                ${transaction.type === 'income' ? 'รายรับ' : 'รายจ่าย'}
+                        <td class="py-4 px-6">${t.date}</td>
+                        <td class="py-4 px-6">
+                            <span class="px-3 py-1 rounded-full text-sm font-semibold ${t.type === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                ${t.type === 'income' ? 'รายรับ' : 'รายจ่าย'}
                             </span>
                         </td>
-                        <td>${transaction.category || '-'}</td>
-                        <td class="${transaction.type === 'income' ? 'text-success' : 'text-danger'} fw-bold">
-                            ${transaction.type === 'income' ? '+' : '-'}${formattedAmount}
+                        <td class="py-4 px-6">${t.party}</td>
+                        <td class="py-4 px-6">${t.notes || '-'}</td>
+                        <td class="py-4 px-6 text-right font-medium ${t.type === 'income' ? 'text-green-600' : 'text-red-600'}">
+                            ${t.type === 'income' ? '+' : '-'} ${t.amount.toFixed(2)}
                         </td>
-                        <td>${transaction.receiver || '-'}</td>
-                        <td>${transaction.provider || '-'}</td>
-                        <td>${transaction.note || '-'}</td>
-                        <td>
-                            <button class="btn btn-sm btn-warning action-btn edit-btn" data-id="${transaction.id}" title="แก้ไข">
-                                <i class="fas fa-edit"></i>
+                        <td class="py-4 px-6 text-right font-bold">${runningBalance.toFixed(2)}</td>
+                        <td class="py-4 px-6 flex space-x-2">
+                            <button class="btn-edit px-3 py-1 rounded-md text-white text-sm" onclick="editTransaction(${index})">
+                                <i class="fas fa-edit"></i> แก้ไข
                             </button>
-                            <button class="btn btn-sm btn-danger action-btn delete-btn" data-id="${transaction.id}" title="ลบ">
-                                <i class="fas fa-trash"></i>
+                            <button class="btn-danger px-3 py-1 rounded-md text-white text-sm" onclick="deleteTransaction(${index})">
+                                <i class="fas fa-trash-alt"></i> ลบ
                             </button>
                         </td>
                     `;
-                    
-                    // Add row to table
                     transactionTableBody.appendChild(row);
                 });
-                
-                // Add event listeners to delete buttons
-                document.querySelectorAll('.delete-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const id = parseInt(this.getAttribute('data-id'));
-                        deleteTransaction(id);
+            };
+
+            // New: Function to handle editing a transaction
+            window.editTransaction = (index) => {
+                editingIndex = index; // Set the index of the transaction being edited
+                const transactionToEdit = transactions[index];
+
+                // Populate the form with the transaction data
+                transactionDateInput.value = transactionToEdit.date;
+                transactionTypeSelect.value = transactionToEdit.type;
+                // Manually trigger change to update party label
+                transactionTypeSelect.dispatchEvent(new Event('change'));
+                transactionAmountInput.value = transactionToEdit.amount;
+                transactionPartyInput.value = transactionToEdit.party;
+                transactionNotesInput.value = transactionToEdit.notes;
+
+                // Change submit button text and icon
+                submitButton.innerHTML = '<i class="fas fa-sync-alt mr-2"></i> อัปเดตรายการ';
+                submitButton.classList.remove('btn-primary');
+                submitButton.classList.add('btn-edit'); // Use edit button style
+                transactionDateInput.focus(); // Focus on the first field
+            };
+
+            // Function to send data to Google Sheets via Apps Script
+            async function sendToGoogleSheets(transactionData) {
+                if (appsScriptUrl === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE' || !appsScriptUrl) {
+                    showStatusMessage(transactionStatusMessage, 'กรุณาใส่ Google Apps Script Web App URL ในโค้ด JavaScript ก่อน!', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(appsScriptUrl, {
+                        method: 'POST',
+                        mode: 'no-cors', // Required for simple requests to Apps Script
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(transactionData),
                     });
-                });
-                
-                // Add event listeners to edit buttons
-                document.querySelectorAll('.edit-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const id = parseInt(this.getAttribute('data-id'));
-                        editTransaction(id);
-                    });
-                });
-            }
-            
-            function deleteTransaction(id) {
-                if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?')) {
-                    transactions = transactions.filter(transaction => transaction.id !== id);
-                    saveData();
-                    renderTransactions();
-                    updateSummary();
+                    // Due to 'no-cors' mode, we cannot read the response directly here.
+                    // Assume success if no network error.
+                    showStatusMessage(transactionStatusMessage, 'บันทึกข้อมูลลง Google Sheets แล้ว (ตรวจสอบใน Sheet ของคุณ)', 'success');
+                    console.log('Data sent to Google Sheets (via Apps Script proxy).');
+                } catch (error) {
+                    showStatusMessage(transactionStatusMessage, 'เกิดข้อผิดพลาดในการส่งข้อมูลไป Google Sheets: ' + error.message, 'error');
+                    console.error('Error sending data to Google Sheets:', error);
                 }
             }
-            
-            function editTransaction(id) {
-                const transaction = transactions.find(t => t.id === id);
-                if (!transaction) return;
-                
-                // Set form values
-                document.getElementById('transactionType').value = transaction.type;
-                document.getElementById('amount').value = transaction.amount;
-                document.getElementById('transactionDate').value = transaction.date;
-                document.getElementById('category').value = transaction.category || '';
-                document.getElementById('receiver').value = transaction.receiver || '';
-                document.getElementById('provider').value = transaction.provider || '';
-                document.getElementById('note').value = transaction.note || '';
-                editIdInput.value = id;
-                
-                // Change UI to edit mode
-                isEditing = true;
-                currentEditId = id;
-                submitBtn.innerHTML = '<i class="fas fa-save me-2"></i>บันทึกการแก้ไข';
-                cancelEditBtn.style.display = 'inline-block';
-                
-                // Scroll to form
-                document.getElementById('transactionForm').scrollIntoView({ behavior: 'smooth' });
-            }
-            
-            function cancelEdit() {
-                // Reset form
-                transactionForm.reset();
-                document.getElementById('transactionDate').valueAsDate = new Date();
-                editIdInput.value = '';
-                
-                // Reset edit mode
-                isEditing = false;
-                currentEditId = null;
-                submitBtn.innerHTML = '<i class="fas fa-plus-circle me-2"></i>เพิ่มรายการ';
-                cancelEditBtn.style.display = 'none';
-            }
-            
-            function updateSummary() {
-                // Calculate totals
-                const totalIncome = transactions
-                    .filter(t => t.type === 'income')
-                    .reduce((sum, t) => sum + t.amount, 0);
-                
-                const totalExpense = transactions
-                    .filter(t => t.type === 'expense')
-                    .reduce((sum, t) => sum + t.amount, 0);
-                
-                const totalBalance = totalIncome - totalExpense;
-                
-                // Update UI
-                totalIncomeElement.textContent = totalIncome.toFixed(2);
-                totalExpenseElement.textContent = totalExpense.toFixed(2);
-                totalBalanceElement.textContent = totalBalance.toFixed(2);
-            }
-            
-            // Add some sample data if localStorage is empty (for demo purposes)
-            if (transactions.length === 0 && localStorage.getItem('classroomTransactions') === null) {
-                const today = new Date();
-                const yesterday = new Date(today);
-                yesterday.setDate(yesterday.getDate() - 1);
-                
-                transactions = [
-                    {
-                        id: 1,
-                        type: 'income',
-                        amount: 500,
-                        date: yesterday.toISOString().split('T')[0],
-                        category: 'เงินบริจาค',
-                        receiver: 'ครูประจำชั้น',
-                        provider: 'ผู้ปกครองนักเรียน',
-                        note: 'เงินบริจาคสำหรับกิจกรรมห้องเรียน'
-                    },
-                    {
-                        id: 2,
-                        type: 'expense',
-                        amount: 120.50,
-                        date: today.toISOString().split('T')[0],
-                        category: 'วัสดุการเรียน',
-                        receiver: 'ร้านค้าอุปกรณ์การเรียน',
-                        provider: 'ครูประจำชั้น',
-                        note: 'ซื้อกระดาษและอุปกรณ์ศิลปะ'
-                    }
-                ];
-                
-                if (schoolInfo.schoolName === '' && localStorage.getItem('classroomSchoolInfo') === null) {
-                    schoolInfo = {
-                        schoolName: 'โรงเรียนตัวอย่าง',
-                        className: 'ห้อง ม.1/1'
-                    };
+
+            // Add or Update transaction
+            transactionForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const updatedTransaction = {
+                    date: transactionDateInput.value,
+                    type: transactionTypeSelect.value,
+                    amount: parseFloat(transactionAmountInput.value),
+                    party: transactionPartyInput.value.trim(),
+                    notes: transactionNotesInput.value.trim()
+                };
+
+                if (editingIndex !== null) {
+                    // Update existing transaction
+                    transactions[editingIndex] = updatedTransaction;
+                    editingIndex = null; // Reset editing state
+                    showStatusMessage(transactionStatusMessage, 'อัปเดตรายการเรียบร้อยแล้ว!', 'success');
+                } else {
+                    // Add new transaction
+                    transactions.push(updatedTransaction);
+                    showStatusMessage(transactionStatusMessage, 'บันทึกรายการใหม่เรียบร้อยแล้ว!', 'success');
                 }
-                
-                saveData();
+
+                saveTransactions();
+                calculateSummary();
                 renderTransactions();
-                updateSummary();
-            }
+
+                // Clear form and reset button
+                transactionForm.reset();
+                transactionDateInput.value = `${yyyy}-${mm}-${dd}`; // Reset date to today
+                transactionTypeSelect.value = 'income'; // Reset type to income
+                partyLabel.textContent = 'ผู้มอบเงิน:'; // Reset label
+                transactionPartyInput.placeholder = 'ชื่อผู้มอบเงิน'; // Reset placeholder
+                submitButton.innerHTML = '<i class="fas fa-plus-circle mr-2"></i> บันทึกรายการ';
+                submitButton.classList.remove('btn-edit');
+                submitButton.classList.add('btn-primary');
+                transactionAmountInput.focus(); // Focus on amount for quick entry
+
+                // Send data to Google Sheets (always send the latest state or just the new/updated one)
+                // For simplicity, we send the new/updated transaction.
+                sendToGoogleSheets(updatedTransaction);
+            });
+
+            // Delete transaction (global function for onclick)
+            window.deleteTransaction = (index) => {
+                if (confirm('คุณต้องการลบรายการนี้ใช่หรือไม่?')) {
+                    transactions.splice(index, 1);
+                    saveTransactions();
+                    calculateSummary();
+                    renderTransactions();
+                    showStatusMessage(transactionStatusMessage, 'ลบรายการเรียบร้อยแล้ว!', 'success');
+                    // Reset form and button if the deleted item was being edited
+                    if (editingIndex === index) {
+                        editingIndex = null;
+                        transactionForm.reset();
+                        transactionDateInput.value = `${yyyy}-${mm}-${dd}`;
+                        transactionTypeSelect.value = 'income';
+                        partyLabel.textContent = 'ผู้มอบเงิน:';
+                        transactionPartyInput.placeholder = 'ชื่อผู้มอบเงิน';
+                        submitButton.innerHTML = '<i class="fas fa-plus-circle mr-2"></i> บันทึกรายการ';
+                        submitButton.classList.remove('btn-edit');
+                        submitButton.classList.add('btn-primary');
+                    }
+                }
+            };
+
+            // Initial load
+            loadTransactions();
         });
     </script>
 </body>
