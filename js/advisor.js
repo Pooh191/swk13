@@ -1,59 +1,33 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const images = document.querySelectorAll("table img");
-  const modal = document.getElementById("imageModal");
-  const modalImg = document.getElementById("modalImg");
-  const downloadBtn = document.getElementById("downloadBtn");
-  const shareBtn = document.getElementById("shareBtn");
-  const closeBtn = document.querySelector(".close-btn");
+    const images = document.querySelectorAll("table img");
 
-  images.forEach(img => {
-    img.addEventListener("click", function () {
-      openModal(img);
-    });
-  });
-
-  closeBtn.addEventListener("click", closeModal);
-
-  window.addEventListener("click", function (event) {
-    if (event.target === modal) {
-      closeModal();
-    }
-  });
-
-  shareBtn.addEventListener("click", async function () {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'ครูที่ปรึกษา',
-          text: 'ดูภาพครูที่ปรึกษา',
-          url: modalImg.src
+    // เปิด Modal เมื่อคลิกที่รูปภาพ
+    images.forEach(img => {
+        img.addEventListener("click", function () {
+            openModal(img);
         });
-      } catch (err) {
-        alert("ไม่สามารถแชร์ได้: " + err);
-      }
-    } else {
-      alert("เบราว์เซอร์ของคุณไม่รองรับการแชร์");
-    }
-  });
+    });
+
+    // ปิด Modal เมื่อคลิกที่ปุ่ม X หรือคลิกที่พื้นที่ว่าง
+    document.querySelector(".close-btn").addEventListener("click", closeModal);
+    window.addEventListener("click", function (event) {
+        let modal = document.getElementById("imageModal");
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
 });
 
+// เปิด Modal และแสดงรูปภาพ
 function openModal(imgElement) {
-  const modal = document.getElementById("imageModal");
-  const modalImg = document.getElementById("modalImg");
-  const downloadBtn = document.getElementById("downloadBtn");
+    let modal = document.getElementById("imageModal");
+    let modalImg = document.getElementById("modalImg");
 
-  modal.style.display = "flex";
-  modalImg.src = imgElement.src;
-
-  const filename = imgElement.src.split("/").pop();
-  downloadBtn.onclick = () => {
-    const a = document.createElement("a");
-    a.href = imgElement.src;
-    a.download = filename;
-    a.click();
-  };
+    modal.style.display = "flex"; // เปลี่ยนเป็น 'flex' เพื่อแสดง modal
+    modalImg.src = imgElement.src;
 }
 
+// ปิด Modal
 function closeModal() {
-  document.getElementById("imageModal").style.display = "none";
+    document.getElementById("imageModal").style.display = "none";
 }
