@@ -1,85 +1,88 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/logo/SWK-LogoNoBG.png">
-    <title>มัธยมศึกษาปีที่ 3/13 | ครูที่ปรึกษา</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/advisor.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/img/logo/SWK-LogoNoBG.png" />
+  <title>มัธยมศึกษาปีที่ 3/13 | ครูที่ปรึกษา</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/advisor.css" />
 </head>
 <body>
-    
-   <header>
-        <div class="container">
-            <h1>3/13</h1>
-            <button id="menu-toggle" class="menu-toggle">☰</button>
-            <nav>
-                <ul>
-                    <li><a href="/">หน้าหลัก</a></li>
-                    <li><a href="/html/kewkap.html">เกี่ยวกับเรา</a></li>
-                      <!-- Dropdown Menu -->
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">ข้อมูลภายในห้องเรียน ▼</a>
-                    <div class="dropdown-content">
-                        <a href="/html/member.html">สมาชิกห้อง</a>
-                        <a href="/html/advisor.html">ครูที่ปรึกษา</a>
-                        <a href="/html/kru.html">ครูผู้สอน</a>
-                        <a href="/html/executive committee.html">คณะกรรมการบริหารห้องเรียน</a>
-                    </div>
-                </li>
-                
-                    <li><a href="/html/notify.html">ประกาศ</a></li>
-                    <li><a href="/html/timetable.html">ตารางเรียน</a></li>
-                    <li><a href="/html/tidtorraw.html">ติดต่อเรา</a></li>
-                    <li><a href="/html/login.html">เข้าสู่ระบบ</a></li>
-                </ul>
-                
-            </nav>
-        </div>
-    </header>
 
-    <div id="clock"></div>
-    <div id="date"></div>
-
-    <section id="kru">
-        <h2>ครูที่ปรึกษา</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>คำนำหน้า</th>
-                    <th>ชื่อ</th>
-                    <th>นามสกุล</th>
-                    <th>สอนวิชา</th>
-                    <th>รูปภาพ</th>
-                    <th>หมายเหตุ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>นาย</td>
-                    <td>ไผ่</td>
-                    <td>พรมเพชร</td>
-                    <td>การงานอาชีพ</td>
-                    <td><img src="/img/kru/kru_pai.jpg" alt="ครูไผ่" width="100" class="img-thumbnail" title="กดเพื่อดูรูปภาพ"></td>
-                    <td></td>
-                </tr>
-        </table>
-    </section> <br><br>
-
-    <!-- Modal สำหรับแสดงภาพ -->
-    <div id="imageModal" class="modal">
-        <span class="close-btn">&times;</span>
-        <img class="modal-content" id="modalImg">
+  <header>
+    <div class="container">
+      <h1>3/13</h1>
+      <button id="menu-toggle" class="menu-toggle">☰</button>
+      <nav>
+        <ul>
+          <li><a href="/">หน้าหลัก</a></li>
+          <li><a href="/html/kewkap.html">เกี่ยวกับเรา</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropbtn">ข้อมูลภายในห้องเรียน ▼</a>
+            <div class="dropdown-content">
+              <a href="/html/member.html">สมาชิกห้อง</a>
+              <a href="/html/advisor.html">ครูที่ปรึกษา</a>
+              <a href="/html/kru.html">ครูผู้สอน</a>
+              <a href="/html/executive committee.html">คณะกรรมการบริหารห้องเรียน</a>
+            </div>
+          </li>
+          <li><a href="/html/notify.html">ประกาศ</a></li>
+          <li><a href="/html/timetable.html">ตารางเรียน</a></li>
+          <li><a href="/html/tidtorraw.html">ติดต่อเรา</a></li>
+          <li><a href="/html/login.html">เข้าสู่ระบบ</a></li>
+        </ul>
+      </nav>
     </div>
-    
+  </header>
 
-    <footer>
-        <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
-    </footer>
+  <div id="clock"></div>
+  <div id="date"></div>
 
-    <script src="/js/scripts.js"></script>
-    <script src="/js/advisor.js"></script>
+  <section id="kru">
+    <h2>ครูที่ปรึกษา</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>คำนำหน้า</th>
+          <th>ชื่อ</th>
+          <th>นามสกุล</th>
+          <th>สอนวิชา</th>
+          <th>รูปภาพ</th>
+          <th>หมายเหตุ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>นาย</td>
+          <td>ไผ่</td>
+          <td>พรมเพชร</td>
+          <td>การงานอาชีพ</td>
+          <td>
+            <img src="/img/kru/kru_pai.jpg" alt="ครูไผ่" class="img-thumbnail" title="กดเพื่อดูรูปภาพ" />
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Modal -->
+  <div id="imageModal" class="modal">
+    <div class="modal-top-buttons">
+      <button class="modal-btn download" id="downloadBtn" title="ดาวน์โหลด"> &downarrow;</button>
+      <button class="modal-btn share" id="shareBtn" title="แชร์">📤</button>
+      <button class="modal-btn close-btn" title="ปิด">&times;</button>
+    </div>
+    <img class="modal-content" id="modalImg" />
+  </div>
+
+  <footer>
+    <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
+  </footer>
+
+  <script src="/js/scripts.js"></script>
+  <script src="/js/advisor.js"></script>
 
 </body>
 </html>
