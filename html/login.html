@@ -3,35 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://www.swk13.site/img/logo/SWK-LogoNoBG.png" type="image/x-icon">
     <title>มัธยมศึกษาปีที่ 3/13 | เข้าสู่ระบบ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/style-login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="login-container">
-        <h2>เข้าสู่ระบบ</h2>
-        <form id="loginForm">
-            <label for="username">Username:</label>
-            <input type="text" id="username" placeholder="กรุณากรอกเลขประจำตัว" required />
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" placeholder="กรุณากรอกเลขประจำตัว" required />
-            
-            <button type="submit">เข้าสู่ระบบ</button> <br><br> 
-
-            <a href="/" style="color:#34D399">กลับหน้าหลัก </a>
-
-        </form>
-        <p id="error-message" style="color:red;"></p>
-    </div>
-
-    <div id="popupOverlay"></div>
-    <div id="welcomePopup">
-        <h2>ยินดีต้อนรับ!</h2>
-        <p>ข้อความต้อนรับจะปรากฏที่นี่</p>
-        <button id="closePopup">ปิด</button>
+    <div class="background-animation">
+        <div class="shape"></div>
+        <div class="shape"></div>
     </div>
     
+    <div class="login-container">
+        <div class="logo-container">
+            <i class="fas fa-graduation-cap"></i>
+            <h1>มัธยมศึกษาปีที่ 3/13</h1>
+        </div>
+        
+        <h2>เข้าสู่ระบบ</h2>
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">
+                    <i class="fas fa-user"></i> ชื่อผู้ใช้:
+                </label>
+                <input type="text" id="username" placeholder="กรุณากรอกเลขประจำตัว" required />
+            </div>
+            
+            <div class="input-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i> รหัสผ่าน:
+                </label>
+                <input type="password" id="password" placeholder="กรุณากรอกเลขประจำตัว" required />
+                <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+            </div>
+            
+            <button type="submit" class="btn-login">
+                <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ
+            </button>
+            
+            <div class="footer-links">
+                <a href="/" class="back-link">
+                    <i class="fas fa-arrow-left"></i> กลับหน้าหลัก
+                </a>
+            </div>
+        </form>
+        
+        <p id="error-message" class="error-message"></p>
+    </div>
 
+    <div id="popupOverlay" class="popup-overlay"></div>
+    <div id="welcomePopup" class="welcome-popup">
+        <div class="popup-content">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h2>ยินดีต้อนรับ!</h2>
+            <p id="welcomeMessage">คุณเข้าสู่ระบบสำเร็จแล้ว</p>
+            <button id="closePopup" class="btn-close">
+                <i class="fas fa-times"></i> ปิด
+            </button>
+        </div>
+    </div>
+    
     <script src="/js/login.js"></script>
 </body>
 </html>
