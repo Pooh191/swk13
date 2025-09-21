@@ -24,6 +24,8 @@
             font-family: 'Kanit', sans-serif;
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         .card {
@@ -38,6 +40,7 @@
             position: relative;
             border-radius: 12px;
             border: 1px solid var(--border);
+            -webkit-overflow-scrolling: touch;
         }
         
         .sticky-col {
@@ -110,6 +113,7 @@
             font-weight: 600;
             transition: all 0.3s;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            min-height: 44px;
         }
         
         .btn-primary {
@@ -190,18 +194,170 @@
             margin-bottom: 2rem;
         }
         
+        /* ปรับปรุงสำหรับมือถือ */
         @media (max-width: 768px) {
+            .header-gradient {
+                padding: 1.5rem 1rem;
+                border-radius: 0;
+                margin-bottom: 1rem;
+            }
+            
             .header-gradient h1 {
                 font-size: 1.5rem;
             }
             
             .payment-input {
                 width: 70px;
-                padding: 6px;
+                padding: 10px;
+                font-size: 16px;
             }
             
             thead th, tbody td {
-                padding: 12px 14px;
+                padding: 12px 10px;
+                font-size: 0.7rem;
+            }
+            
+            .sticky-col {
+                min-width: 50px !important;
+            }
+            
+            .sticky-col:nth-child(1) { left: 0; min-width: 40px !important; }
+            .sticky-col:nth-child(2) { left: 40px; min-width: 80px !important; }
+            .sticky-col:nth-child(3) { left: 120px; min-width: 70px !important; }
+            .sticky-col:nth-child(4) { left: 190px; min-width: 100px !important; }
+            .sticky-col:nth-child(5) { left: 290px; min-width: 100px !important; }
+            
+            .btn {
+                padding: 14px 20px;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .footer-info {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .stat-box {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            
+            /* ปรับปรุงตารางสำหรับมือถือแนวตั้ง */
+            .mobile-optimized-table {
+                display: block;
+                width: 100%;
+            }
+            
+            .mobile-optimized-table thead {
+                display: none;
+            }
+            
+            .mobile-optimized-table tbody,
+            .mobile-optimized-table tr,
+            .mobile-optimized-table td {
+                display: block;
+                width: 100%;
+            }
+            
+            .mobile-optimized-table tr {
+                margin-bottom: 1rem;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 1rem;
+                background: white;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .mobile-optimized-table td {
+                padding: 0.75rem;
+                border: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .mobile-optimized-table td:before {
+                content: attr(data-label);
+                font-weight: bold;
+                margin-right: 1rem;
+                flex: 1;
+            }
+            
+            .mobile-optimized-table .payment-input {
+                width: 100px;
+                flex: 2;
+            }
+            
+            .mobile-optimized-table .total-cell,
+            .mobile-optimized-table .balance-cell {
+                font-weight: bold;
+                background-color: #f0f9ff;
+                padding: 0.75rem;
+                border-radius: 4px;
+            }
+        }
+        
+        /* สำหรับแท็บเล็ต */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .payment-input {
+                width: 80px;
+                padding: 10px;
+            }
+            
+            thead th, tbody td {
+                padding: 14px 16px;
+            }
+        }
+        
+        /* ปรับปรุงสำหรับหน้าจอขนาดเล็กมาก (มือถือแนวตั้ง) */
+        @media (max-width: 480px) {
+            .container {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+            
+            .card {
+                border-radius: 12px;
+                padding: 12px;
+            }
+            
+            .header-gradient h1 {
+                font-size: 1.3rem;
+            }
+            
+            .header-gradient p {
+                font-size: 0.9rem;
+            }
+            
+            thead th, tbody td {
+                padding: 10px 8px;
+                font-size: 0.65rem;
+            }
+            
+            .payment-input {
+                width: 60px;
+                padding: 8px;
+                font-size: 14px;
+            }
+            
+            .sticky-col:nth-child(1) { left: 0; min-width: 35px !important; }
+            .sticky-col:nth-child(2) { left: 35px; min-width: 70px !important; }
+            .sticky-col:nth-child(3) { left: 105px; min-width: 60px !important; }
+            .sticky-col:nth-child(4) { left: 165px; min-width: 80px !important; }
+            .sticky-col:nth-child(5) { left: 245px; min-width: 80px !important; }
+            
+            .footer-info {
+                padding: 12px;
+            }
+            
+            .stat-box {
+                padding: 10px;
+            }
+            
+            .stat-box i {
+                font-size: 1.2rem;
+                margin-right: 8px;
             }
         }
         
@@ -231,14 +387,152 @@
             font-size: 1.5rem;
             color: var(--primary);
         }
+        
+        /* Footer Styles */
+        .main-footer {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+            width: 100%;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            flex: 0;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+            padding: 0 1rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-links i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-section {
+                flex: 100%;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .footer-section h3 {
+                font-size: 1.1rem;
+            }
+            
+            .footer-links a {
+                padding: 8px 0;
+            }
+        }
+        
+        /* Mobile view toggle */
+        .view-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .view-toggle-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin: 0 5px;
+        }
+        
+        .view-toggle-btn i {
+            margin-right: 5px;
+        }
+        
+        .view-toggle-btn.active {
+            background: var(--primary-dark);
+        }
+        
+        @media (min-width: 769px) {
+            .view-toggle {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="p-4 min-h-screen flex flex-col items-center justify-start">
-    <div class="container mx-auto max-w-7xl mt-4">
+    <div class="container mx-auto max-w-7xl mt-4 flex-grow">
         <!-- Header -->
         <div class="header-gradient text-center">
             <h1 class="text-3xl sm:text-4xl font-bold mb-2">ระบบจัดการเงินห้อง</h1>
             <p class="opacity-90">จัดการการเก็บเงินรายสัปดาห์ของนักเรียน</p>
+        </div>
+        
+        <!-- Mobile view toggle -->
+        <div class="view-toggle">
+            <button id="card-view-btn" class="view-toggle-btn">
+                <i class="fas fa-th-large"></i> การแสดงแบบการ์ด
+            </button>
+            <button id="table-view-btn" class="view-toggle-btn active">
+                <i class="fas fa-table"></i> การแสดงแบบตาราง
+            </button>
         </div>
         
         <!-- Main Content -->
@@ -269,6 +563,11 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            
+            <!-- Mobile Card View -->
+            <div id="mobile-card-view" class="hidden">
+                <!-- Cards will be generated here by JavaScript -->
             </div>
             
             <!-- Save button -->
@@ -309,6 +608,38 @@
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="main-footer mt-auto">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>เกี่ยวกับระบบ</h3>
+                <p>ระบบจัดการเงินห้องออกแบบมาเพื่อช่วยครูและผู้ดูแลห้องเรียนในการจัดการการเก็บเงินรายสัปดาห์ของนักเรียนอย่างมีประสิทธิภาพ</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>ลิงก์ที่เกี่ยวข้อง</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-book"></i> คู่มือการใช้งาน</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> คำถามที่พบบ่อย</a></li>
+                    <li><a href="#"><i class="fas fa-download"></i> ดาวน์โหลดรายงาน</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>ติดต่อเรา</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-envelope"></i> surawittayakarntub13@gmail.com</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> 080-73X-XXXX</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> โรงเรียนสุรวิทยาคาร จังหวัดสุรินทร์</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 ระบบบันทึกเงินห้องเรียนรายสัปดาห์</p>
+        </div>
+    </footer>
+
     <!-- Modal for messages -->
     <div id="message-modal" class="modal fixed inset-0 flex items-center justify-center z-50 p-4" style="opacity: 0; visibility: hidden;">
         <div class="modal-overlay absolute inset-0 bg-gray-900 opacity-50"></div>
@@ -340,10 +671,15 @@
     const studentCount = document.getElementById('student-count');
     const totalAmount = document.getElementById('total-amount');
     const lastUpdate = document.getElementById('last-update');
+    const mobileCardView = document.getElementById('mobile-card-view');
+    const dataTable = document.getElementById('data-table');
+    const cardViewBtn = document.getElementById('card-view-btn');
+    const tableViewBtn = document.getElementById('table-view-btn');
 
     let pendingUpdates = {};
     let dateHeaders = [];
     let allStudentsData = [];
+    let isMobileView = false;
 
     function showModal(message, title = 'แจ้งเตือน') {
         modalTitle.textContent = title;
@@ -492,6 +828,73 @@
             row.innerHTML = fixedColumns + paymentCells + totalAndBalance;
             dataTableBody.appendChild(row);
         });
+
+        // Also render mobile cards
+        renderMobileCards(data);
+    }
+
+    function renderMobileCards(data) {
+        if (!data.data || data.data.length === 0) {
+            mobileCardView.innerHTML = `
+                <div class="text-center p-8 text-gray-500">
+                    <i class="fas fa-inbox text-3xl mb-2 opacity-50"></i>
+                    <p>ไม่มีข้อมูลนักเรียน</p>
+                </div>
+            `;
+            return;
+        }
+
+        mobileCardView.innerHTML = '';
+
+        data.data.forEach((student) => {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-lg shadow-md p-4 mb-4 mobile-optimized-table';
+            
+            let paymentsHTML = '';
+            (student.payments || []).forEach((payment, index) => {
+                const cellValue = payment > 0 ? payment : '';
+                paymentsHTML += `
+                    <div class="flex justify-between items-center py-2 border-b">
+                        <span>${dateHeaders[index] || `สัปดาห์ที่ ${index + 1}`}</span>
+                        <input
+                            type="number"
+                            value="${cellValue}"
+                            data-row="${student.stdId}"
+                            data-col="${index + 6}"
+                            class="payment-input"
+                            oninput="handleInputChange(this)"
+                        >
+                    </div>
+                `;
+            });
+
+            const balance = student.balance || 0;
+            const balanceClass = balance >= 0 ? 'positive-balance' : 'negative-balance';
+            
+            card.innerHTML = `
+                <div class="flex justify-between items-center mb-3 pb-2 border-b">
+                    <h3 class="font-bold">${student.prefix || ''}${student.firstName || ''} ${student.lastName || ''}</h3>
+                    <span class="text-sm text-gray-500">#${student.stdId}</span>
+                </div>
+                <div class="mb-3">
+                    <div class="flex justify-between items-center py-1">
+                        <span>เลขประจำตัว:</span>
+                        <span>${student.studentId || '-'}</span>
+                    </div>
+                </div>
+                ${paymentsHTML}
+                <div class="flex justify-between items-center mt-3 pt-2 border-t font-bold">
+                    <span>ผลรวม:</span>
+                    <span class="total-cell">${student.total || 0}</span>
+                </div>
+                <div class="flex justify-between items-center mt-2">
+                    <span>ยอดคงเหลือ:</span>
+                    <span class="balance-cell ${balanceClass}">${balance}</span>
+                </div>
+            `;
+            
+            mobileCardView.appendChild(card);
+        });
     }
     
     function updateFooterInfo() {
@@ -516,31 +919,83 @@
         }
         pendingUpdates[row][col] = value;
         
-        updateRowTotals(input.closest('tr'));
+        updateRowTotals(input.closest('tr') || input.closest('.mobile-optimized-table'));
     }
     
-    function updateRowTotals(row) {
-        let total = 0;
-        const inputs = row.querySelectorAll('.payment-input');
-        
-        inputs.forEach(input => {
-            const value = parseFloat(input.value) || 0;
-            total += value;
-        });
-        
-        const totalCell = row.querySelector('.total-cell');
-        const balanceCell = row.querySelector('.balance-cell');
-        
-        if (totalCell && balanceCell) {
-            totalCell.textContent = total;
+    function updateRowTotals(container) {
+        if (container.tagName === 'TR') {
+            // Table view
+            let total = 0;
+            const inputs = container.querySelectorAll('.payment-input');
             
-            // Calculate balance (assuming the expected total is 100 per week for 15 weeks = 1500)
-            const expectedTotal = 1500;
-            const balance = expectedTotal - total;
+            inputs.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                total += value;
+            });
             
-            // Update balance class based on value
-            balanceCell.className = `balance-cell text-right ${balance >= 0 ? 'positive-balance' : 'negative-balance'}`;
-            balanceCell.textContent = balance;
+            const totalCell = container.querySelector('.total-cell');
+            const balanceCell = container.querySelector('.balance-cell');
+            
+            if (totalCell && balanceCell) {
+                totalCell.textContent = total;
+                
+                // Calculate balance (assuming the expected total is 100 per week for 15 weeks = 1500)
+                const expectedTotal = 1500;
+                const balance = expectedTotal - total;
+                
+                // Update balance class based on value
+                balanceCell.className = `balance-cell text-right ${balance >= 0 ? 'positive-balance' : 'negative-balance'}`;
+                balanceCell.textContent = balance;
+            }
+        } else {
+            // Card view
+            let total = 0;
+            const inputs = container.querySelectorAll('.payment-input');
+            
+            inputs.forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                total += value;
+            });
+            
+            const totalCell = container.querySelector('.total-cell');
+            const balanceCell = container.querySelector('.balance-cell');
+            
+            if (totalCell && balanceCell) {
+                totalCell.textContent = total;
+                
+                // Calculate balance (assuming the expected total is 100 per week for 15 weeks = 1500)
+                const expectedTotal = 1500;
+                const balance = expectedTotal - total;
+                
+                // Update balance class based on value
+                balanceCell.className = `balance-cell ${balance >= 0 ? 'positive-balance' : 'negative-balance'}`;
+                balanceCell.textContent = balance;
+            }
+        }
+    }
+
+    function toggleView(isMobile) {
+        isMobileView = isMobile;
+        if (isMobile) {
+            dataTable.classList.add('hidden');
+            mobileCardView.classList.remove('hidden');
+            cardViewBtn.classList.add('active');
+            tableViewBtn.classList.remove('active');
+        } else {
+            dataTable.classList.remove('hidden');
+            mobileCardView.classList.add('hidden');
+            cardViewBtn.classList.remove('active');
+            tableViewBtn.classList.add('active');
+        }
+    }
+
+    function checkViewport() {
+        if (window.innerWidth <= 768) {
+            // On mobile, default to card view
+            toggleView(true);
+        } else {
+            // On larger screens, always use table view
+            toggleView(false);
         }
     }
 
@@ -599,7 +1054,16 @@
     window.fetchData = fetchData;
     
     saveButton.addEventListener('click', saveAllData);
-    document.addEventListener('DOMContentLoaded', fetchData);
+    
+    cardViewBtn.addEventListener('click', () => toggleView(true));
+    tableViewBtn.addEventListener('click', () => toggleView(false));
+    
+    // Initial setup
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchData();
+        checkViewport();
+        window.addEventListener('resize', checkViewport);
+    });
     </script>
 </body>
 </html>
