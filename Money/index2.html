@@ -38,6 +38,7 @@
             max-width: 100%;
             padding: 0 1rem;
             margin: 0 auto;
+            flex: 1;
         }
         .card {
             background: var(--card-bg);
@@ -322,6 +323,100 @@
         .table-container::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+        
+        /* Footer Styles */
+        .site-footer {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+            border-radius: 20px 20px 0 0;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+        .footer-section p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        .footer-links i {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
@@ -378,6 +473,13 @@
             .table-container {
                 font-size: 12px;
             }
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .footer-section {
+                min-width: 100%;
+            }
         }
         @media (max-width: 480px) {
             .payment-input {
@@ -386,6 +488,9 @@
             }
             thead th, tbody td {
                 padding: 8px 6px;
+            }
+            .site-footer {
+                padding: 1.5rem 1rem;
             }
         }
         @media (min-width: 1024px) {
@@ -422,35 +527,35 @@
         </div>
 
         <div class="footer-info">
-                    <div class="stat-box">
-                        <i class="fas fa-users"></i>
-                        <div>
-                            <div class="text-xs text-gray-500">จำนวนนักเรียน</div>
-                            <div class="font-bold text-lg" id="student-count">0</div>
-                        </div>
-                    </div>
-                    <div class="stat-box">
-                        <i class="fas fa-coins"></i>
-                        <div>
-                            <div class="text-xs text-gray-500">ยอดรวมทั้งหมด</div>
-                            <div class="font-bold text-lg" id="total-amount">0</div>
-                        </div>
-                    </div>
-                    <div class="stat-box">
-                        <i class="fas fa-check-circle"></i>
-                        <div>
-                            <div class="text-xs text-gray-500">ชำระครบแล้ว</div>
-                            <div class="font-bold text-lg" id="paid-count">0</div>
-                        </div>
-                    </div>
-                    <div class="stat-box">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <div>
-                            <div class="text-xs text-gray-500">ค้างชำระ</div>
-                            <div class="font-bold text-lg" id="unpaid-count">0</div>
-                        </div>
-                    </div>
-                </div> <br>
+            <div class="stat-box">
+                <i class="fas fa-users"></i>
+                <div>
+                    <div class="text-xs text-gray-500">จำนวนนักเรียน</div>
+                    <div class="font-bold text-lg" id="student-count">0</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-coins"></i>
+                <div>
+                    <div class="text-xs text-gray-500">ยอดรวมทั้งหมด</div>
+                    <div class="font-bold text-lg" id="total-amount">0</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <div class="text-xs text-gray-500">ชำระครบแล้ว</div>
+                    <div class="font-bold text-lg" id="paid-count">0</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-exclamation-circle"></i>
+                <div>
+                    <div class="text-xs text-gray-500">ค้างชำระ</div>
+                    <div class="font-bold text-lg" id="unpaid-count">0</div>
+                </div>
+            </div>
+        </div> <br>
         
         <!-- Desktop Table View -->
         <div id="desktop-view" class="card">
@@ -492,6 +597,43 @@
             </div>
         </div>
     </div>
+    
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>เกี่ยวกับระบบ</h3>
+                <p>ระบบจัดการเงินห้องออกแบบมาเพื่อช่วยครูและผู้ดูแลห้องเรียนในการจัดการการเก็บเงินรายสัปดาห์ของนักเรียนอย่างมีประสิทธิภาพ</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/thanakorn.sae.jong.2024?locale=th_TH" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/thanakornsaejong6/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>ลิงก์ด่วน</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-home"></i> หน้าหลัก</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> เกี่ยวกับเรา</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> คำถามที่พบบ่อย</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> ติดต่อเรา</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>ข้อมูลติดต่อ</h3>
+                <ul class="footer-links">
+                    <li><a href="http://www.sura.ac.th"><i class="fas fa-map-marker-alt"></i> โรงเรียนสุรวิทยาคาร จังหวัดสุรินทร์</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> 080-73X-XXXX</a></li>
+                    <li><a href="mailto:aewhadfg@gmail.com"><i class="fas fa-envelope"></i> aewhadfg@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2023 ระบบจัดการเงินห้อง. สงวนลิขสิทธิ์.</p>
+        </div>
+    </footer>
     
     <!-- Modal for messages -->
     <div id="message-modal" class="modal">
