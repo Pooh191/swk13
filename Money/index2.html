@@ -631,7 +631,7 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; 2023 ระบบจัดการเงินห้อง. สงวนลิขสิทธิ์.</p>
+            <p>&copy; 2025 ระบบจัดการเงินห้อง. สงวนลิขสิทธิ์.</p>
         </div>
     </footer>
     
@@ -832,7 +832,6 @@
         row.setAttribute('data-student-id', student.studentId || '');
         row.setAttribute('data-name', `${student.firstName} ${student.lastName}`);
 
-        // ปรับลำดับคอลัมน์ให้ตรงกับหัวตารางใหม่
         const stickyColumnWidths = [0, 70, 110, 160, 240];
 
         let rowHtml = `
@@ -843,12 +842,22 @@
             <td class="sticky-col" style="left: ${stickyColumnWidths[4]}px;">${student.lastName || ''}</td>
         `;
         (student.payments || []).forEach((payment, colIndex) => {
-            const cellValue = payment > 0 ? payment : '';
+            // ถ้า payment เป็น 0 หรือไม่มี ให้แสดงเป็นค่าว่าง
+            // ถ้า payment ถูกแก้ไข (pendingUpdates) ให้แสดงเลข 0 ถ้า value เป็น 0
+            let cellValue = '';
+            if (
+                pendingUpdates[student.stdId] &&
+                pendingUpdates[student.stdId][colIndex] !== undefined
+            ) {
+                cellValue = pendingUpdates[student.stdId][colIndex] === 0 ? 0 : pendingUpdates[student.stdId][colIndex];
+            } else {
+                cellValue = payment > 0 ? payment : '';
+            }
             rowHtml += `
                 <td style="text-align: center;">
                     <input
                         type="number"
-                        value="${cellValue}"
+                        value="${cellValue === 0 ? 0 : cellValue}"
                         data-row="${student.stdId}"
                         data-col="${colIndex}"
                         class="payment-input"
