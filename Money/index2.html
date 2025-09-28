@@ -1,10 +1,9 @@
-<!-- หน้านี้สำหรับ User ทั่วไป ตรวจสอบข้อมูลเท่านั้น -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ตรวจสอบเงินห้อง (สำหรับผู้ใช้ทั่วไป)</title>
+    <title>ระบบจัดการเงินห้อง</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" href="https://www.swk13.site/img/logo/SWK-LogoNoBG.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -511,8 +510,8 @@
         <!-- Header -->
         <div class="header-gradient text-center">
             <div>
-                <h1 class="text-2xl md:text-3xl font-bold mb-2">ตรวจสอบเงินห้อง</h1>
-                <p class="opacity-90 text-sm md:text-base">สำหรับผู้ใช้ทั่วไป สามารถตรวจสอบสถานะการชำระเงินของนักเรียนแต่ละคน</p>
+                <h1 class="text-2xl md:text-3xl font-bold mb-2">ระบบจัดการเงินห้อง</h1>
+                <p class="opacity-90 text-sm md:text-base">จัดการการเก็บเงินรายสัปดาห์ของนักเรียน</p>
             </div>
         </div>
         
@@ -584,7 +583,7 @@
                             <tr>
                                 <td colspan="100" class="px-4 py-6 text-center">
                                     <div class="flex flex-col items-center justify-center text-gray-500">
-                                        <i class="fas fa-spinner fa-spin text-2xl mb-2 text-green-500"></i>
+                                        <i class="fas fa-spinner fa-spin text-2xl mb-2 text-blue-500"></i>
                                         <p>กำลังโหลดข้อมูล...</p>
                                     </div>
                                 </td>
@@ -592,6 +591,14 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="mt-6 flex justify-center">
+                    <button id="save-button" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span id="save-text">บันทึกข้อมูล</span>
+                        <span id="save-spinner" class="loading ml-2 hidden"></span>
+                    </button>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -657,6 +664,9 @@
     const modalText = document.getElementById('modal-text');
     const modalTitle = document.getElementById('modal-title');
     const closeModalBtn = document.getElementById('close-modal');
+    const saveButton = document.getElementById('save-button');
+    const saveText = document.getElementById('save-text');
+    const saveSpinner = document.getElementById('save-spinner');
     const studentCount = document.getElementById('student-count');
     const totalAmount = document.getElementById('total-amount');
     const lastUpdate = document.getElementById('last-update');
@@ -665,6 +675,7 @@
     const searchInput = document.getElementById('search-input');
     
     // Global variables
+    let pendingUpdates = {};
     let dateHeaders = [];
     let allStudentsData = [];
     let isOnline = navigator.onLine;
@@ -678,6 +689,18 @@
     
     function hideModal() {
         messageModal.classList.remove('active');
+    }
+    
+    function showLoading(show) {
+        if (show) {
+            saveText.textContent = 'กำลังบันทึก...';
+            saveSpinner.classList.remove('hidden');
+            saveButton.disabled = true;
+        } else {
+            saveText.textContent = 'บันทึกข้อมูล';
+            saveSpinner.classList.add('hidden');
+            saveButton.disabled = false;
+        }
     }
     
     function updateLastUpdateTime() {
@@ -744,7 +767,7 @@
             <tr>
                 <td colspan="100" class="px-4 py-6 text-center">
                     <div class="flex flex-col items-center justify-center text-gray-500">
-                        <i class="fas fa-spinner fa-spin text-2xl mb-2 text-green-500"></i>
+                        <i class="fas fa-spinner fa-spin text-2xl mb-2 text-blue-500"></i>
                         <p>กำลังโหลดข้อมูล...</p>
                     </div>
                 </td>
@@ -823,13 +846,86 @@
             <td class="sticky-col" style="left: ${stickyColumnWidths[3]}px;">${student.firstName || ''}</td>
             <td class="sticky-col" style="left: ${stickyColumnWidths[4]}px;">${student.lastName || ''}</td>
         `;
-        (student.payments || []).forEach((payment) => {
-            rowHtml += `<td style="text-align: center;">${payment > 0 ? payment : ''}</td>`;
+        (student.payments || []).forEach((payment, colIndex) => {
+            // ถ้า payment เป็น 0 หรือไม่มี ให้แสดงเป็นค่าว่าง
+            // ถ้า payment ถูกแก้ไข (pendingUpdates) ให้แสดงเลข 0 ถ้า value เป็น 0
+            let cellValue = '';
+            if (
+                pendingUpdates[student.stdId] &&
+                pendingUpdates[student.stdId][colIndex] !== undefined
+            ) {
+                cellValue = pendingUpdates[student.stdId][colIndex] === 0 ? 0 : pendingUpdates[student.stdId][colIndex];
+            } else {
+                cellValue = payment > 0 ? payment : '';
+            }
+            rowHtml += `
+                <td style="text-align: center;">
+                    <input
+                        type="number"
+                        value="${cellValue === 0 ? 0 : cellValue}"
+                        data-row="${student.stdId}"
+                        data-col="${colIndex}"
+                        class="payment-input"
+                        placeholder="0"
+                        min="0"
+                        step="1"
+                        oninput="handleInputChange(this)"
+                    >
+                </td>
+            `;
         });
         rowHtml += `<td class="total-cell text-center">${student.total || 0}</td>`;
         rowHtml += `<td class="balance-cell text-center ${student.balance > 0 ? 'positive-balance' : 'negative-balance'}">${student.balance || 0}</td>`;
         row.innerHTML = rowHtml;
         return row;
+    }
+    
+    // Input handling
+    function handleInputChange(input) {
+        const row = parseInt(input.getAttribute('data-row'));
+        const col = parseInt(input.getAttribute('data-col'));
+        const value = input.value === '' ? 0 : parseFloat(input.value);
+        
+        if (isNaN(value) || value < 0) {
+            input.value = '';
+            return;
+        }
+        
+        input.classList.add('changed');
+        
+        if (!pendingUpdates[row]) {
+            pendingUpdates[row] = {};
+        }
+        pendingUpdates[row][col] = value;
+        
+        // Update totals
+        updateRowTotals(input);
+    }
+    
+    function updateRowTotals(input) {
+        const container = input.closest('tr');
+        if (!container) return;
+        
+        let total = 0;
+        const paymentInputs = container.querySelectorAll('.payment-input');
+        
+        paymentInputs.forEach(paymentInput => {
+            const value = parseFloat(paymentInput.value) || 0;
+            total += value;
+        });
+        
+        const expectedTotal = 75 * 15; // 75 บาท × 15 สัปดาห์
+        const balance = expectedTotal - total;
+        
+        // Update table row
+        const totalCell = container.querySelector('.total-cell');
+        const balanceCell = container.querySelector('.balance-cell');
+        
+        if (totalCell && balanceCell) {
+            totalCell.textContent = total;
+            balanceCell.className = `balance-cell text-center ${balance > 0 ? 'positive-balance' : 'negative-balance'}`;
+            balanceCell.textContent = balance;
+        }
     }
     
     // Data saving
@@ -929,8 +1025,11 @@
     
     // Event listeners
     closeModalBtn.addEventListener('click', hideModal);
+    saveButton.addEventListener('click', saveAllData);
     
     // Make functions globally available
+    window.handleInputChange = handleInputChange;
+    window.fetchData = fetchData;
     window.clearSearch = clearSearch;
     
     // Initialize
