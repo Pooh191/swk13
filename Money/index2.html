@@ -326,11 +326,14 @@
         
         /* Footer Styles */
         .site-footer {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, #10b981 0%, #22c55e 100%);
             color: white;
-            padding: 2rem 1rem;
+            padding: 2.5rem 1rem 1.5rem 1rem;
             margin-top: 2rem;
-            border-radius: 20px 20px 0 0;
+            border-radius: 32px 32px 0 0;
+            box-shadow: 0 -4px 24px rgba(16,185,129,0.08);
+            position: relative;
+            overflow: hidden;
         }
         .footer-content {
             max-width: 1200px;
@@ -338,63 +341,90 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            gap: 2rem;
+            gap: 2.5rem;
+            position: relative;
         }
         .footer-section {
             flex: 1;
-            min-width: 250px;
+            min-width: 220px;
+            padding: 0 1rem;
+            position: relative;
+        }
+        .footer-section:not(:last-child):after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -1.25rem;
+            width: 2px;
+            height: 80%;
+            background: rgba(255,255,255,0.12);
+            border-radius: 2px;
+            display: block;
         }
         .footer-section h3 {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             margin-bottom: 1rem;
             position: relative;
             padding-bottom: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
         }
         .footer-section h3:after {
             content: '';
             position: absolute;
             left: 0;
             bottom: 0;
-            width: 40px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.5);
+            width: 48px;
+            height: 3px;
+            background: linear-gradient(90deg, #22c55e 0%, #3b82f6 100%);
+            border-radius: 2px;
+            opacity: 0.7;
         }
         .footer-section p {
             margin-bottom: 1rem;
-            line-height: 1.6;
-            opacity: 0.9;
+            line-height: 1.7;
+            opacity: 0.92;
+            font-size: 1rem;
         }
         .footer-links {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
         .footer-links li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
         .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255,255,255,0.92);
             text-decoration: none;
             transition: all 0.3s;
             display: flex;
             align-items: center;
+            font-size: 1rem;
+            font-weight: 500;
+            gap: 0.5rem;
+            padding: 2px 0;
         }
         .footer-links a:hover {
-            color: white;
-            transform: translateX(5px);
+            color: #ffd700;
+            transform: translateX(6px) scale(1.04);
         }
         .footer-links i {
             margin-right: 8px;
-            width: 20px;
+            width: 22px;
             text-align: center;
+            font-size: 1.1rem;
+            opacity: 0.85;
         }
         .footer-bottom {
             max-width: 1200px;
             margin: 2rem auto 0;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1.5px solid rgba(255,255,255,0.18);
             text-align: center;
-            font-size: 0.9rem;
-            opacity: 0.8;
+            font-size: 1rem;
+            opacity: 0.85;
+            letter-spacing: 0.01em;
         }
         .social-links {
             display: flex;
@@ -405,18 +435,35 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(16, 185, 129, 0.1);
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.12);
             border-radius: 50%;
-            color: white;
+            color: #fff;
+            font-size: 1.3rem;
+            box-shadow: 0 2px 8px rgba(16,185,129,0.09);
             transition: all 0.3s;
+            border: 1.5px solid rgba(255,255,255,0.18);
         }
         .social-links a:hover {
-            background: rgba(16, 185, 129, 0.2);
-            transform: translateY(-3px);
+            background: #22c55e;
+            color: #ffd700;
+            transform: translateY(-3px) scale(1.08);
+            border-color: #ffd700;
         }
-
+        @media (max-width: 900px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .footer-section {
+                min-width: 100%;
+                padding: 0;
+            }
+            .footer-section:not(:last-child):after {
+                display: none;
+            }
+        }
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
@@ -607,16 +654,17 @@
     <footer class="site-footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h3>เกี่ยวกับระบบ</h3>
-                <p>ระบบจัดการเงินห้องออกแบบมาเพื่อช่วยครูและผู้ดูแลห้องเรียนในการจัดการการเก็บเงินรายสัปดาห์ของนักเรียนอย่างมีประสิทธิภาพ</p>
+                <h3><i class="fas fa-leaf mr-2"></i>เกี่ยวกับระบบ</h3>
+                <p>
+                    ระบบจัดการเงินห้องออกแบบมาเพื่อช่วยครูและผู้ดูแลห้องเรียนในการจัดการการเก็บเงินรายสัปดาห์ของนักเรียนอย่างมีประสิทธิภาพ
+                </p>
                 <div class="social-links">
                     <a href="https://www.facebook.com/thanakorn.sae.jong.2024?locale=th_TH" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://www.instagram.com/thanakornsaejong6/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
-            
             <div class="footer-section">
-                <h3>ลิงก์ด่วน</h3>
+                <h3><i class="fas fa-link mr-2"></i>ลิงก์ด่วน</h3>
                 <ul class="footer-links">
                     <li><a href="#"><i class="fas fa-home"></i> หน้าหลัก</a></li>
                     <li><a href="#"><i class="fas fa-info-circle"></i> เกี่ยวกับเรา</a></li>
@@ -624,9 +672,8 @@
                     <li><a href="#"><i class="fas fa-envelope"></i> ติดต่อเรา</a></li>
                 </ul>
             </div>
-            
             <div class="footer-section">
-                <h3>ข้อมูลติดต่อ</h3>
+                <h3><i class="fas fa-address-card mr-2"></i>ข้อมูลติดต่อ</h3>
                 <ul class="footer-links">
                     <li><a href="http://www.sura.ac.th"><i class="fas fa-map-marker-alt"></i> โรงเรียนสุรวิทยาคาร จังหวัดสุรินทร์</a></li>
                     <li><a href="#"><i class="fas fa-phone"></i> 080-73X-XXXX</a></li>
@@ -634,9 +681,11 @@
                 </ul>
             </div>
         </div>
-        
         <div class="footer-bottom">
-            <p>&copy; 2025 ระบบจัดการเงินห้อง. สงวนลิขสิทธิ์.</p>
+            <p>
+                <i class="fas fa-copyright"></i>
+                2025 ระบบจัดการเงินห้อง. สงวนลิขสิทธิ์.
+            </p>
         </div>
     </footer>
     
@@ -966,6 +1015,7 @@
                 updateLastUpdateTime();
                 setTimeout(() => {
                     hideModal();
+                    window.location.href = 'user.html'; // เพิ่ม redirect หลังบันทึกสำเร็จ
                 }, 2000);
             } else {
                 showModal('การบันทึกข้อมูลล้มเหลว: ' + (result.message || 'ไม่ทราบสาเหตุ'), 'ข้อผิดพลาด');
