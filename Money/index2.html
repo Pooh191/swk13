@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบจัดการเงินห้อง</title>
+    <title>ชั้นมัธยมศึกษาปีที่ 3/13 | ระบบจัดการเงินห้อง</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" href="https://www.swk13.site/img/logo/SWK-LogoNoBG.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -569,11 +569,11 @@
                     <table id="data-table" class="w-full">
                         <thead>
                             <tr id="table-headers">
-                                <th class="sticky-col text-left" style="min-width: 70px; left: 0px;">เลขประจำตัว</th>
-                                <th class="sticky-col text-left" style="min-width: 40px; left: 70px;">เลขที่</th>
-                                <th class="sticky-col text-left" style="min-width: 50px; left: 110px;">คำนำหน้า</th>
-                                <th class="sticky-col text-left" style="min-width: 80px; left: 160px;">ชื่อ</th>
-                                <th class="sticky-col text-left" style="min-width: 80px; left: 240px;">นามสกุล</th>
+                                <th class="sticky-col text-left" style="min-width: 70px; left: 0px; z-index: 2;">เลขประจำตัว</th>
+                                <th class="sticky-col text-left" style="min-width: 40px; left: 70px; z-index: 2;">เลขที่</th>
+                                <th class="sticky-col text-left" style="min-width: 50px; left: 110px; z-index: 2;">คำนำหน้า</th>
+                                <th class="sticky-col text-left" style="min-width: 80px; left: 160px; z-index: 2;">ชื่อ</th>
+                                <th class="sticky-col text-left" style="min-width: 80px; left: 240px; z-index: 2;">นามสกุล</th>
                                 <!-- Dynamic week headers will be inserted here -->
                                 <th class="text-center total-cell" style="min-width: 70px;">ผลรวม</th>
                                 <th class="text-center balance-cell" style="min-width: 90px;">ยอดคงเหลือ</th>
@@ -837,14 +837,13 @@
         row.setAttribute('data-student-id', student.studentId || '');
         row.setAttribute('data-name', `${student.firstName} ${student.lastName}`);
 
-        const stickyColumnWidths = [0, 70, 110, 160, 240];
-
-        let rowHtml = `
-            <td class="sticky-col" style="left: ${stickyColumnWidths[0]}px; text-align: center;">${student.studentId || ''}</td>
-            <td class="sticky-col" style="left: ${stickyColumnWidths[1]}px; text-align: center;">${student.stdId || ''}</td>
-            <td class="sticky-col" style="left: ${stickyColumnWidths[2]}px; text-align: center;">${student.prefix || ''}</td>
-            <td class="sticky-col" style="left: ${stickyColumnWidths[3]}px;">${student.firstName || ''}</td>
-            <td class="sticky-col" style="left: ${stickyColumnWidths[4]}px;">${student.lastName || ''}</td>
+        // ตรึงคอลัมน์ด้วย sticky-col และ left ตาม header
+        row.innerHTML = `
+            <td class="sticky-col" style="left: 0px; text-align: center; z-index: 1;">${student.studentId || ''}</td>
+            <td class="sticky-col" style="left: 70px; text-align: center; z-index: 1;">${student.stdId || ''}</td>
+            <td class="sticky-col" style="left: 110px; text-align: center; z-index: 1;">${student.prefix || ''}</td>
+            <td class="sticky-col" style="left: 160px; z-index: 1;">${student.firstName || ''}</td>
+            <td class="sticky-col" style="left: 240px; z-index: 1;">${student.lastName || ''}</td>
         `;
         (student.payments || []).forEach((payment, colIndex) => {
             // ถ้า payment เป็น 0 หรือไม่มี ให้แสดงเป็นค่าว่าง
@@ -858,7 +857,7 @@
             } else {
                 cellValue = payment > 0 ? payment : '';
             }
-            rowHtml += `
+            row.innerHTML += `
                 <td style="text-align: center;">
                     <input
                         type="number"
@@ -874,9 +873,8 @@
                 </td>
             `;
         });
-        rowHtml += `<td class="total-cell text-center">${student.total || 0}</td>`;
-        rowHtml += `<td class="balance-cell text-center ${student.balance > 0 ? 'positive-balance' : 'negative-balance'}">${student.balance || 0}</td>`;
-        row.innerHTML = rowHtml;
+        row.innerHTML += `<td class="total-cell text-center">${student.total || 0}</td>`;
+        row.innerHTML += `<td class="balance-cell text-center ${student.balance > 0 ? 'positive-balance' : 'negative-balance'}">${student.balance || 0}</td>`;
         return row;
     }
     
