@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ตรวจสอบเงินห้อง (สำหรับผู้ใช้ทั่วไป)</title>
+    <title>ชั้นมัธยมศึกษาปีที่ 3/13 | ตรวจสอบเงินห้อง (สำหรับผู้ใช้ทั่วไป)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" href="https://www.swk13.site/img/logo/SWK-LogoNoBG.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -531,6 +531,13 @@
             </div>
         </div>
         
+        <!-- ปุ่มแก้ไขข้อมูล -->
+        <div class="flex justify-end mt-2 mb-4">
+            <button id="edit-btn" class="btn btn-primary">
+                <i class="fas fa-edit"></i> แก้ไขข้อมูล
+            </button>
+        </div>
+        
         <!-- Search and Filter Section -->
         <div class="search-section card">
             <div class="search-box">
@@ -658,6 +665,25 @@
                 <h3 class="text-lg font-medium text-gray-900 mb-2" id="modal-title">แจ้งเตือน</h3>
                 <p id="modal-text" class="text-gray-500 mb-4"></p>
                 <button id="close-modal" class="btn btn-primary">ตกลง</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for password -->
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+                    <i class="fas fa-lock text-green-500 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">เข้าสู่โหมดแก้ไขข้อมูล</h3>
+                <p class="text-gray-500 mb-4">กรุณากรอกรหัสผ่านเพื่อเข้าใช้งาน</p>
+                <input type="password" id="edit-password" class="search-input mb-4" placeholder="รหัสผ่าน" style="width: 100%;">
+                <div class="flex gap-2 justify-center">
+                    <button id="password-confirm" class="btn btn-primary">ตกลง</button>
+                    <button id="password-cancel" class="btn">ยกเลิก</button>
+                </div>
+                <div id="password-error" class="text-red-500 mt-2 text-sm" style="display:none;"></div>
             </div>
         </div>
     </div>
@@ -954,6 +980,44 @@
         setupSearch();
         updateLastUpdateTime();
     });
+    
+    // Password modal logic
+    const editBtn = document.getElementById('edit-btn');
+    const passwordModal = document.getElementById('password-modal');
+    const passwordConfirm = document.getElementById('password-confirm');
+    const passwordCancel = document.getElementById('password-cancel');
+    const editPasswordInput = document.getElementById('edit-password');
+    const passwordError = document.getElementById('password-error');
+
+    editBtn.addEventListener('click', () => {
+        passwordModal.classList.add('active');
+        editPasswordInput.value = '';
+        passwordError.style.display = 'none';
+        editPasswordInput.focus();
+    });
+
+    passwordCancel.addEventListener('click', () => {
+        passwordModal.classList.remove('active');
+        passwordError.style.display = 'none';
+    });
+
+    passwordConfirm.addEventListener('click', checkPassword);
+    editPasswordInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') checkPassword();
+    });
+
+    function checkPassword() {
+        const pwd = editPasswordInput.value.trim();
+        if (pwd === 'admin313') {
+            // Redirect to admin page
+            window.location.href = 'index2.html';
+        } else {
+            passwordError.textContent = 'รหัสผ่านไม่ถูกต้อง';
+            passwordError.style.display = 'block';
+            editPasswordInput.value = '';
+            editPasswordInput.focus();
+        }
+    }
     </script>
 </body>
 </html>
