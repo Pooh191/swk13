@@ -58,6 +58,21 @@
             -webkit-overflow-scrolling: touch;
             background: var(--card-bg);
             width: 100%;
+            /* เพิ่มเส้นรอบตาราง */
+            box-shadow: 0 0 0 1px var(--border);
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            /* เพิ่มเส้นรอบตาราง */
+            border: 1px solid var(--border);
+        }
+        thead th, tbody td {
+            padding: 12px;
+            border: 1px solid var(--border); /* เพิ่มเส้นตาราง */
+            transition: background-color 0.2s;
+            white-space: nowrap;
+            vertical-align: middle;
         }
         .sticky-col {
             position: sticky;
@@ -154,7 +169,7 @@
         }
         tbody td {
             padding: 12px;
-            border-top: 1px solid #f1f5f9;
+            border: 1px solid var(--border); /* เพิ่มเส้นตาราง */
             transition: background-color 0.2s;
             white-space: nowrap;
             vertical-align: middle;
