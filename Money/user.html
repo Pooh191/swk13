@@ -1,0 +1,944 @@
+<!-- หน้านี้สำหรับ User ทั่วไป ตรวจสอบข้อมูลเท่านั้น -->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตรวจสอบเงินห้อง (สำหรับผู้ใช้ทั่วไป)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="https://www.swk13.site/img/logo/SWK-LogoNoBG.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --secondary: #3b82f6;
+            --secondary-dark: #2563eb;
+            --accent: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --light-bg: #f8fafc;
+            --border: #e2e8f0;
+            --card-bg: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+        }
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(135deg, #e0ffe8 0%, #d1fae5 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text-primary);
+            padding: 0;
+            margin: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0 1rem;
+            margin: 0 auto;
+            flex: 1;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            margin-bottom: 1rem;
+        }
+        .table-container {
+            overflow-x: auto;
+            position: relative;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            -webkit-overflow-scrolling: touch;
+            background: var(--card-bg);
+            width: 100%;
+        }
+        .sticky-col {
+            position: sticky;
+            left: 0;
+            background-color: var(--card-bg);
+            z-index: 10;
+            transition: all 0.2s;
+            box-shadow: 1px 0 3px rgba(0,0,0,0.1);
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+            transition: all 0.2s;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .payment-input {
+            width: 70px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            font-weight: 500;
+            background: #ffffff;
+            transition: all 0.3s;
+        }
+        .payment-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+            background: white;
+        }
+        .payment-input.changed {
+            border-color: var(--warning);
+            background-color: #fffbeb;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            min-height: 44px;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px -1px rgba(16, 185, 129, 0.15);
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn i {
+            margin-right: 8px;
+        }
+        thead th {
+            background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+            padding: 14px 8px;
+            font-weight: 600;
+            color: #475569;
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+            position: relative;
+            white-space: nowrap;
+            border-bottom: 2px solid #e2e8f0;
+            text-align: center;
+        }
+        tbody td {
+            padding: 12px;
+            border-top: 1px solid #f1f5f9;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+        .total-cell {
+            font-weight: 700;
+            color: var(--primary);
+            background-color: #f8f9fa;
+        }
+        .balance-cell {
+            font-weight: 600;
+            background-color: #f8f9fa;
+        }
+        .positive-balance {
+            color: var(--danger);
+        }
+        .negative-balance {
+            color: var(--primary);
+        }
+        .header-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 1.5rem 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            border-radius: 0 0 20px 20px;
+        }
+        /* Search and filter section */
+        .search-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        .search-box {
+            position: relative;
+            flex-grow: 1;
+            min-width: 200px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #f8fafc;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+            background: white;
+        }
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+        .filter-btn {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        .filter-btn:hover {
+            background: #e2e8f0;
+        }
+        /* Footer info */
+        .footer-info {
+            background: #f1f5f9;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+        }
+        .stat-box {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            flex: 1;
+            min-width: 140px;
+        }
+        .stat-box i {
+            margin-right: 12px;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            max-width: 90%;
+            width: 400px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-20px);
+            transition: transform 0.3s;
+        }
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        /* Error state */
+        .error-state {
+            color: #ef4444;
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+        /* Scrollbar styling */
+        .table-container::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        .table-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .table-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .table-container::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Footer Styles */
+        .site-footer {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+            border-radius: 20px 20px 0 0;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+        .footer-section p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        .footer-links i {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            background: rgba(16, 185, 129, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 0.5rem;
+            }
+            .header-gradient {
+                padding: 1.25rem 0.75rem;
+                border-radius: 0 0 16px 16px;
+            }
+            .header-gradient h1 {
+                font-size: 1.35rem;
+            }
+            .header-gradient p {
+                font-size: 0.9rem;
+            }
+            .search-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box {
+                width: 100%;
+            }
+            .payment-input {
+                width: 60px;
+                padding: 6px;
+                font-size: 14px;
+            }
+            thead th, tbody td {
+                padding: 10px 8px;
+                font-size: 12px;
+            }
+            .sticky-col {
+                min-width: 40px !important;
+                box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+                /* เพิ่มโค้ดนี้เพื่อแก้ปัญหา sticky บนมือถือ */
+                position: static !important;
+                left: unset !important;
+                z-index: unset !important;
+                background-color: unset !important;
+                box-shadow: none !important;
+            }
+            .btn {
+                padding: 10px 16px;
+                width: 100%;
+                max-width: 300px;
+            }
+            .footer-info {
+                flex-direction: column;
+            }
+            .stat-box {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            .table-container {
+                font-size: 12px;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .footer-section {
+                min-width: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            .payment-input {
+                width: 50px;
+                padding: 5px;
+            }
+            thead th, tbody td {
+                padding: 8px 6px;
+            }
+            .site-footer {
+                padding: 1.5rem 1rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 1200px;
+            }
+        }
+
+        ::selection {
+            background: #ffffff00;
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header-gradient text-center">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold mb-2">ตรวจสอบเงินห้อง</h1>
+                <p class="opacity-90 text-sm md:text-base">สำหรับผู้ใช้ทั่วไป สามารถตรวจสอบสถานะการชำระเงินของนักเรียนแต่ละคน</p>
+            </div>
+        </div>
+        
+        <!-- Search and Filter Section -->
+        <div class="search-section card">
+            <div class="search-box">
+                <i class="search-icon fas fa-search"></i>
+                <input type="text" id="search-input" class="search-input" placeholder="ค้นหานักเรียนด้วยชื่อ หรือรหัสประจำตัว">
+            </div>
+            <div class="filter-btn" onclick="clearSearch()">
+                <i class="fas fa-times"></i>
+                <span>ล้างการค้นหา</span>
+            </div>
+            <div class="flex items-center">
+                <div class="mr-2 text-sm text-gray-600">อัปเดตล่าสุด:</div>
+                <div class="font-medium text-sm" id="last-update">-</div>
+            </div>
+        </div>
+
+        <div class="footer-info">
+            <div class="stat-box">
+                <i class="fas fa-users"></i>
+                <div>
+                    <div class="text-xs text-gray-500">จำนวนนักเรียน</div>
+                    <div class="font-bold text-lg" id="student-count">0</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-coins"></i>
+                <div>
+                    <div class="text-xs text-gray-500">ยอดรวมทั้งหมด</div>
+                    <div class="font-bold text-lg" id="total-amount">0</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <div class="text-xs text-gray-500">ชำระครบแล้ว</div>
+                    <div class="font-bold text-lg" id="paid-count">0</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-exclamation-circle"></i>
+                <div>
+                    <div class="text-xs text-gray-500">ค้างชำระ</div>
+                    <div class="font-bold text-lg" id="unpaid-count">0</div>
+                </div>
+            </div>
+        </div> <br>
+        
+        <!-- Desktop Table View -->
+        <div id="desktop-view" class="card">
+            <div class="p-4">
+                <div class="table-container">
+                    <table id="data-table" class="w-full">
+                        <thead>
+                            <tr id="table-headers">
+                                <th class="sticky-col text-left" style="min-width: 70px; left: 0px;">เลขประจำตัว</th>
+                                <th class="sticky-col text-left" style="min-width: 40px; left: 70px;">เลขที่</th>
+                                <th class="sticky-col text-left" style="min-width: 50px; left: 110px;">คำนำหน้า</th>
+                                <th class="sticky-col text-left" style="min-width: 80px; left: 160px;">ชื่อ</th>
+                                <th class="sticky-col text-left" style="min-width: 80px; left: 240px;">นามสกุล</th>
+                                <!-- Dynamic week headers will be inserted here -->
+                                <th class="text-center total-cell" style="min-width: 70px;">ผลรวม</th>
+                                <th class="text-center balance-cell" style="min-width: 90px;">ยอดคงเหลือ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-table-body">
+                            <tr>
+                                <td colspan="100" class="px-4 py-6 text-center">
+                                    <div class="flex flex-col items-center justify-center text-gray-500">
+                                        <i class="fas fa-spinner fa-spin text-2xl mb-2 text-green-500"></i>
+                                        <p>กำลังโหลดข้อมูล...</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer Section -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>เกี่ยวกับระบบ</h3>
+                <p>ระบบจัดการเงินห้องออกแบบมาเพื่อช่วยครูและผู้ดูแลห้องเรียนในการจัดการการเก็บเงินรายสัปดาห์ของนักเรียนอย่างมีประสิทธิภาพ</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/thanakorn.sae.jong.2024?locale=th_TH" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/thanakornsaejong6/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>ลิงก์ด่วน</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-home"></i> หน้าหลัก</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> เกี่ยวกับเรา</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> คำถามที่พบบ่อย</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> ติดต่อเรา</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>ข้อมูลติดต่อ</h3>
+                <ul class="footer-links">
+                    <li><a href="http://www.sura.ac.th"><i class="fas fa-map-marker-alt"></i> โรงเรียนสุรวิทยาคาร จังหวัดสุรินทร์</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> 080-73X-XXXX</a></li>
+                    <li><a href="mailto:aewhadfg@gmail.com"><i class="fas fa-envelope"></i> aewhadfg@gmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 ระบบจัดการเงินห้อง. สงวนลิขสิทธิ์.</p>
+        </div>
+    </footer>
+    
+    <!-- Modal for messages -->
+    <div id="message-modal" class="modal">
+        <div class="modal-content">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
+                    <i class="fas fa-info-circle text-blue-500 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2" id="modal-title">แจ้งเตือน</h3>
+                <p id="modal-text" class="text-gray-500 mb-4"></p>
+                <button id="close-modal" class="btn btn-primary">ตกลง</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjb2vK2udXhWyGAo34wB0TcXDVVqbfQYPm-PGs0Q7GGLxKg1Kh3eVwmZSYeDrx8b2NBA/exec';
+    
+    // DOM Elements
+    const dataTableBody = document.getElementById('data-table-body');
+    const tableHeaders = document.getElementById('table-headers');
+    const messageModal = document.getElementById('message-modal');
+    const modalText = document.getElementById('modal-text');
+    const modalTitle = document.getElementById('modal-title');
+    const closeModalBtn = document.getElementById('close-modal');
+    const studentCount = document.getElementById('student-count');
+    const totalAmount = document.getElementById('total-amount');
+    const lastUpdate = document.getElementById('last-update');
+    const paidCount = document.getElementById('paid-count');
+    const unpaidCount = document.getElementById('unpaid-count');
+    const searchInput = document.getElementById('search-input');
+    
+    // Global variables
+    let dateHeaders = [];
+    let allStudentsData = [];
+    let isOnline = navigator.onLine;
+    
+    // Utility functions
+    function showModal(message, title = 'แจ้งเตือน') {
+        modalTitle.textContent = title;
+        modalText.textContent = message;
+        messageModal.classList.add('active');
+    }
+    
+    function hideModal() {
+        messageModal.classList.remove('active');
+    }
+    
+    function updateLastUpdateTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('th-TH', {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        const dateString = now.toLocaleDateString('th-TH', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+        lastUpdate.textContent = `${timeString} ${dateString}`;
+    }
+    
+    function clearSearch() {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+    }
+    
+    // Data fetching
+    async function fetchData() {
+        try {
+            showTableLoading();
+            const response = await fetch(SCRIPT_URL + '?t=' + new Date().getTime(), {
+                method: 'GET',
+                cache: 'no-cache'
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            if (data.error) {
+                throw new Error(data.error);
+            }
+            
+            // Validate data structure
+            if (!data || typeof data !== 'object') {
+                throw new Error('Invalid data format received');
+            }
+            
+            allStudentsData = data.data || [];
+            dateHeaders = data.dateHeaders || [];
+            
+            // Wait for DOM to be ready
+            setTimeout(() => {
+                renderTable(data);
+                updateFooterInfo();
+                updateLastUpdateTime();
+            }, 100);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setTimeout(() => {
+                showError('เกิดข้อผิดพลาดในการโหลดข้อมูล: ' + error.message);
+            }, 100);
+        }
+    }
+    
+    function showTableLoading() {
+        dataTableBody.innerHTML = `
+            <tr>
+                <td colspan="100" class="px-4 py-6 text-center">
+                    <div class="flex flex-col items-center justify-center text-gray-500">
+                        <i class="fas fa-spinner fa-spin text-2xl mb-2 text-green-500"></i>
+                        <p>กำลังโหลดข้อมูล...</p>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+    
+    function showError(message) {
+        const errorContent = `
+            <div class="flex flex-col items-center justify-center text-red-500 py-6">
+                <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                <p class="mb-4">${message}</p>
+                <button class="text-blue-500 hover:underline" onclick="fetchData()">
+                    <i class="fas fa-redo mr-1"></i>ลองอีกครั้ง
+                </button>
+            </div>
+        `;
+        dataTableBody.innerHTML = `<tr><td colspan="100" class="px-4 py-6 text-center">${errorContent}</td></tr>`;
+    }
+    
+    // Table rendering
+    function renderTable(data) {
+        // Clear existing week headers
+        const existingWeekHeaders = tableHeaders.querySelectorAll('th:not(.sticky-col):not(.total-cell):not(.balance-cell):not([style*="min-width: 50px"])');
+        existingWeekHeaders.forEach(header => header.remove());
+
+        // Add week headers
+        if (dateHeaders && dateHeaders.length > 0) {
+            // Find the last static column (นามสกุล)
+            const lastStickyCol = tableHeaders.querySelectorAll('.sticky-col')[4];
+            let insertAfter = lastStickyCol;
+            dateHeaders.forEach((date, index) => {
+                const th = document.createElement('th');
+                th.className = 'text-left';
+                th.style.minWidth = '80px';
+                th.textContent = date;
+                insertAfter.insertAdjacentElement('afterend', th);
+                insertAfter = th;
+            });
+            // ผลรวม/ยอดคงเหลืออยู่ท้ายสุด
+        }
+
+        dataTableBody.innerHTML = '';
+
+        if (!data.data || data.data.length === 0) {
+            const totalColumns = 7 + (dateHeaders ? dateHeaders.length : 0);
+            dataTableBody.innerHTML = `
+                <tr>
+                    <td colspan="${totalColumns}" class="px-4 py-6 text-center text-gray-500">
+                        <i class="fas fa-inbox text-2xl mb-2 opacity-50"></i>
+                        <p>ไม่มีข้อมูลนักเรียน</p>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        data.data.forEach((student) => {
+            const row = createTableRow(student);
+            dataTableBody.appendChild(row);
+        });
+    }
+
+    function createTableRow(student) {
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-gray-50';
+        row.setAttribute('data-student-id', student.studentId || '');
+        row.setAttribute('data-name', `${student.firstName} ${student.lastName}`);
+
+        const stickyColumnWidths = [0, 70, 110, 160, 240];
+
+        let rowHtml = `
+            <td class="sticky-col" style="left: ${stickyColumnWidths[0]}px; text-align: center;">${student.studentId || ''}</td>
+            <td class="sticky-col" style="left: ${stickyColumnWidths[1]}px; text-align: center;">${student.stdId || ''}</td>
+            <td class="sticky-col" style="left: ${stickyColumnWidths[2]}px; text-align: center;">${student.prefix || ''}</td>
+            <td class="sticky-col" style="left: ${stickyColumnWidths[3]}px;">${student.firstName || ''}</td>
+            <td class="sticky-col" style="left: ${stickyColumnWidths[4]}px;">${student.lastName || ''}</td>
+        `;
+        (student.payments || []).forEach((payment) => {
+            rowHtml += `<td style="text-align: center;">${payment > 0 ? payment : ''}</td>`;
+        });
+        rowHtml += `<td class="total-cell text-center">${student.total || 0}</td>`;
+        rowHtml += `<td class="balance-cell text-center ${student.balance > 0 ? 'positive-balance' : 'negative-balance'}">${student.balance || 0}</td>`;
+        row.innerHTML = rowHtml;
+        return row;
+    }
+    
+    // Data saving
+    async function saveAllData() {
+        if (Object.keys(pendingUpdates).length === 0) {
+            showModal('ไม่มีข้อมูลที่ต้องบันทึก', 'แจ้งเตือน');
+            return;
+        }
+        
+        try {
+            showLoading(true);
+            
+            const params = new URLSearchParams();
+            params.append('action', 'batchUpdate');
+            params.append('updates', JSON.stringify(pendingUpdates));
+            
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: params,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            
+            let result;
+            try {
+                const responseText = await response.text();
+                result = JSON.parse(responseText);
+            } catch (e) {
+                result = { success: true, message: 'บันทึกข้อมูลสำเร็จ' };
+            }
+            
+            if (result.success) {
+                showModal('บันทึกข้อมูลเรียบร้อยแล้ว!', 'สำเร็จ');
+                // Reset changed inputs
+                document.querySelectorAll('.payment-input.changed').forEach(input => {
+                    input.classList.remove('changed');
+                });
+                pendingUpdates = {};
+                updateLastUpdateTime();
+                setTimeout(() => {
+                    hideModal();
+                }, 2000);
+            } else {
+                showModal('การบันทึกข้อมูลล้มเหลว: ' + (result.message || 'ไม่ทราบสาเหตุ'), 'ข้อผิดพลาด');
+            }
+        } catch (error) {
+            console.error('Error saving data:', error);
+            showModal('เกิดข้อผิดพลาดในการเชื่อมต่อเพื่อบันทึกข้อมูล: ' + error.message, 'ข้อผิดพลาด');
+        } finally {
+            showLoading(false);
+        }
+    }
+    
+    // Footer info update
+    function updateFooterInfo() {
+        const studentCountValue = allStudentsData.length;
+        const totalAmountValue = allStudentsData.reduce((sum, student) => sum + (student.total || 0), 0);
+        const paidStudents = allStudentsData.filter(student => (student.balance || 0) <= 0).length;
+        const unpaidStudents = studentCountValue - paidStudents;
+        
+        // Update stat displays
+        studentCount.textContent = studentCountValue;
+        totalAmount.textContent = totalAmountValue.toLocaleString();
+        paidCount.textContent = paidStudents;
+        unpaidCount.textContent = unpaidStudents;
+    }
+    
+    // Search functionality
+    function setupSearch() {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            
+            // Filter table rows
+            const rows = dataTableBody.querySelectorAll('tr[data-student-id]');
+            rows.forEach(row => {
+                const studentId = row.getAttribute('data-student-id') || '';
+                const studentName = row.getAttribute('data-name') || '';
+                const matches = studentId.toLowerCase().includes(searchTerm) || 
+                              studentName.toLowerCase().includes(searchTerm);
+                row.style.display = matches ? '' : 'none';
+            });
+        });
+    }
+    
+    // Online/offline detection
+    window.addEventListener('online', () => {
+        isOnline = true;
+        console.log('Back online');
+        fetchData();
+    });
+    
+    window.addEventListener('offline', () => {
+        isOnline = false;
+        console.log('Gone offline');
+    });
+    
+    // Event listeners
+    closeModalBtn.addEventListener('click', hideModal);
+    
+    // Make functions globally available
+    window.clearSearch = clearSearch;
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchData();
+        setupSearch();
+        updateLastUpdateTime();
+    });
+    </script>
+</body>
+</html>
