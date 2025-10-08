@@ -1,4 +1,3 @@
-<!-- หน้านี้สำหรับ User ทั่วไป ตรวจสอบข้อมูลเท่านั้น -->
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -58,30 +57,99 @@
             -webkit-overflow-scrolling: touch;
             background: var(--card-bg);
             width: 100%;
-            /* เพิ่มเส้นรอบตาราง */
             box-shadow: 0 0 0 1px var(--border);
         }
         table {
             border-collapse: collapse;
             width: 100%;
-            /* เพิ่มเส้นรอบตาราง */
             border: 1px solid var(--border);
         }
         thead th, tbody td {
             padding: 12px;
-            border: 1px solid var(--border); /* เพิ่มเส้นตาราง */
+            border: 1px solid var(--border);
             transition: background-color 0.2s;
             white-space: nowrap;
             vertical-align: middle;
         }
         .sticky-col {
             position: sticky;
-            left: 0;
             background-color: var(--card-bg);
             z-index: 10;
             transition: all 0.2s;
             box-shadow: 1px 0 3px rgba(0,0,0,0.1);
         }
+        /* ปรับปรุงการกำหนดตำแหน่งสำหรับมือถือ */
+        .sticky-col:nth-child(1) { left: 0px; min-width: 60px; }
+        .sticky-col:nth-child(2) { left: 60px; min-width: 40px; }
+        .sticky-col:nth-child(3) { left: 100px; min-width: 50px; }
+        .sticky-col:nth-child(4) { left: 150px; min-width: 70px; }
+        .sticky-col:nth-child(5) { left: 220px; min-width: 80px; }
+        
+        /* ปรับปรุงสำหรับมือถือ */
+        @media (max-width: 768px) {
+            .sticky-col:nth-child(1) { left: 0px; min-width: 48px; }
+            .sticky-col:nth-child(2) { left: 48px; min-width: 32px; }
+            .sticky-col:nth-child(3) { left: 80px; min-width: 36px; }
+            .sticky-col:nth-child(4) { left: 116px; min-width: 56px; }
+            .sticky-col:nth-child(5) { left: 172px; min-width: 60px; }
+            th, td { 
+                font-size: 13px; 
+                padding: 8px 6px;
+            }
+            .table-container {
+                border-radius: 8px;
+            }
+        }
+        
+        /* สำหรับหน้าจอที่เล็กมาก */
+        @media (max-width: 480px) {
+            /* ปรับปรุงการแสดงผลสำหรับมือถือขนาดเล็ก */
+            .sticky-col:nth-child(1) { left: 0px; min-width: 40px; }
+            .sticky-col:nth-child(2) { left: 40px; min-width: 28px; }
+            .sticky-col:nth-child(3) { left: 68px; min-width: 30px; }
+            .sticky-col:nth-child(4) { left: 98px; min-width: 48px; }
+            .sticky-col:nth-child(5) { left: 146px; min-width: 52px; }
+            th, td { 
+                font-size: 12px; 
+                padding: 6px 4px;
+            }
+            
+            /* เพิ่มการแสดงผลแบบแนวนอนสำหรับตาราง */
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* ปรับปรุงการแสดงผลสำหรับคอลัมน์ข้อมูล */
+            .week-header, .week-data {
+                min-width: 60px;
+            }
+            
+            /* ปรับปรุงการแสดงผลสำหรับคอลัมน์ผลรวมและยอดคงเหลือ */
+            .total-cell, .balance-cell {
+                min-width: 70px;
+            }
+        }
+        
+        /* เพิ่มการแสดงผลแบบแนวนอนสำหรับมือถือ */
+        .mobile-hint {
+            display: none;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-hint {
+                display: block;
+            }
+        }
+        
         input[type="number"] {
             -moz-appearance: textfield;
             transition: all 0.2s;
@@ -169,7 +237,7 @@
         }
         tbody td {
             padding: 12px;
-            border: 1px solid var(--border); /* เพิ่มเส้นตาราง */
+            border: 1px solid var(--border);
             transition: background-color 0.2s;
             white-space: nowrap;
             vertical-align: middle;
@@ -480,7 +548,6 @@
                 display: none;
             }
         }
-        /* ...existing code... */
         ::selection {
             background: #ffffff00;
             color: #ffd700;
@@ -554,18 +621,23 @@
         <!-- Desktop Table View -->
         <div id="desktop-view" class="card">
             <div class="p-4">
+                <!-- แสดงคำแนะนำสำหรับมือถือ -->
+                <div class="mobile-hint">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    เลื่อนแนวนอนเพื่อดูข้อมูลทั้งหมด
+                </div>
                 <div class="table-container">
                     <table id="data-table" class="w-full">
                         <thead>
                             <tr id="table-headers">
-                                <th class="sticky-col text-left" style="min-width: 70px; left: 0px;">เลขประจำตัว</th>
-                                <th class="sticky-col text-left" style="min-width: 40px; left: 70px;">เลขที่</th>
-                                <th class="sticky-col text-left" style="min-width: 50px; left: 110px;">คำนำหน้า</th>
-                                <th class="sticky-col text-left" style="min-width: 80px; left: 160px;">ชื่อ</th>
-                                <th class="sticky-col text-left" style="min-width: 80px; left: 240px;">นามสกุล</th>
+                                <th class="sticky-col text-left">เลขประจำตัว</th>
+                                <th class="sticky-col text-left">เลขที่</th>
+                                <th class="sticky-col text-left">คำนำหน้า</th>
+                                <th class="sticky-col text-left">ชื่อ</th>
+                                <th class="sticky-col text-left">นามสกุล</th>
                                 <!-- Dynamic week headers will be inserted here -->
-                                <th class="text-center total-cell" style="min-width: 70px;">ผลรวม</th>
-                                <th class="text-center balance-cell" style="min-width: 90px;">ยอดคงเหลือ</th>
+                                <th class="text-center total-cell">ผลรวม</th>
+                                <th class="text-center balance-cell">ยอดคงเหลือ</th>
                             </tr>
                         </thead>
                         <tbody id="data-table-body">
@@ -785,8 +857,7 @@
             let insertAfter = lastStickyCol;
             dateHeaders.forEach((date, index) => {
                 const th = document.createElement('th');
-                th.className = 'text-left';
-                th.style.minWidth = '80px';
+                th.className = 'text-left week-header';
                 th.textContent = date;
                 insertAfter.insertAdjacentElement('afterend', th);
                 insertAfter = th;
@@ -819,19 +890,18 @@
         const row = document.createElement('tr');
         row.className = 'hover:bg-gray-50';
         row.setAttribute('data-student-id', student.studentId || '');
+        row.setAttribute('data-number', student.stdId || '');
         row.setAttribute('data-name', `${student.firstName} ${student.lastName}`);
 
-        const stickyColumnWidths = [0, 70, 110, 160, 240];
-
         let rowHtml = `
-            <td class="sticky-col" style="left: ${stickyColumnWidths[0]}px; text-align: center;">${student.studentId || ''}</td>
-            <td class="sticky-col" style="left: ${stickyColumnWidths[1]}px; text-align: center;">${student.stdId || ''}</td>
-            <td class="sticky-col" style="left: ${stickyColumnWidths[2]}px; text-align: center;">${student.prefix || ''}</td>
-            <td class="sticky-col" style="left: ${stickyColumnWidths[3]}px;">${student.firstName || ''}</td>
-            <td class="sticky-col" style="left: ${stickyColumnWidths[4]}px;">${student.lastName || ''}</td>
+            <td class="sticky-col" style="text-align: center;">${student.studentId || ''}</td>
+            <td class="sticky-col" style="text-align: center;">${student.stdId || ''}</td>
+            <td class="sticky-col" style="text-align: center;">${student.prefix || ''}</td>
+            <td class="sticky-col">${student.firstName || ''}</td>
+            <td class="sticky-col">${student.lastName || ''}</td>
         `;
         (student.payments || []).forEach((payment) => {
-            rowHtml += `<td style="text-align: center;">${payment > 0 ? payment : ''}</td>`;
+            rowHtml += `<td class="week-data" style="text-align: center;">${payment > 0 ? payment : ''}</td>`;
         });
         rowHtml += `<td class="total-cell text-center">${student.total || 0}</td>`;
         rowHtml += `<td class="balance-cell text-center ${student.balance > 0 ? 'positive-balance' : 'negative-balance'}">${student.balance || 0}</td>`;
@@ -915,8 +985,10 @@
             rows.forEach(row => {
                 const studentId = row.getAttribute('data-student-id') || '';
                 const studentName = row.getAttribute('data-name') || '';
+                const studentNumber = row.getAttribute('data-number') || '';
                 const matches = studentId.toLowerCase().includes(searchTerm) || 
-                              studentName.toLowerCase().includes(searchTerm);
+                              studentName.toLowerCase().includes(searchTerm) ||
+                              studentNumber.includes(searchTerm);
                 row.style.display = matches ? '' : 'none';
             });
         });
