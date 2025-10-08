@@ -49,6 +49,97 @@
             border: 1px solid rgba(255, 255, 255, 0.5);
             margin-bottom: 1rem;
         }
+        
+        /* ปรับปรุงสำหรับมือถือ - แสดงผลแบบแนวตั้ง */
+        .mobile-student-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .mobile-student-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .mobile-student-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+        
+        .mobile-student-id {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .mobile-payments-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .mobile-payment-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        
+        .mobile-payment-week {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .mobile-payment-amount {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .mobile-totals {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .mobile-total-item {
+            text-align: center;
+        }
+        
+        .mobile-total-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+        
+        .mobile-total-value {
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        .mobile-total-amount {
+            color: var(--primary);
+        }
+        
+        .mobile-balance-positive {
+            color: var(--danger);
+        }
+        
+        .mobile-balance-negative {
+            color: var(--primary);
+        }
+        
+        /* Desktop Table View */
         .table-container {
             overflow-x: auto;
             position: relative;
@@ -59,11 +150,13 @@
             width: 100%;
             box-shadow: 0 0 0 1px var(--border);
         }
+        
         table {
             border-collapse: collapse;
             width: 100%;
             border: 1px solid var(--border);
         }
+        
         thead th, tbody td {
             padding: 12px;
             border: 1px solid var(--border);
@@ -71,6 +164,7 @@
             white-space: nowrap;
             vertical-align: middle;
         }
+        
         .sticky-col {
             position: sticky;
             background-color: var(--card-bg);
@@ -78,74 +172,28 @@
             transition: all 0.2s;
             box-shadow: 1px 0 3px rgba(0,0,0,0.1);
         }
-        /* ปรับปรุงการกำหนดตำแหน่งสำหรับมือถือ */
+        
         .sticky-col:nth-child(1) { left: 0px; min-width: 60px; }
         .sticky-col:nth-child(2) { left: 60px; min-width: 40px; }
         .sticky-col:nth-child(3) { left: 100px; min-width: 50px; }
         .sticky-col:nth-child(4) { left: 150px; min-width: 70px; }
         .sticky-col:nth-child(5) { left: 220px; min-width: 80px; }
         
-        /* ปรับปรุงสำหรับมือถือ */
+        /* ซ่อนตารางบนมือถือและแสดงการ์ดแทน */
         @media (max-width: 768px) {
-            .sticky-col:nth-child(1) { left: 0px; min-width: 48px; }
-            .sticky-col:nth-child(2) { left: 48px; min-width: 32px; }
-            .sticky-col:nth-child(3) { left: 80px; min-width: 36px; }
-            .sticky-col:nth-child(4) { left: 116px; min-width: 56px; }
-            .sticky-col:nth-child(5) { left: 172px; min-width: 60px; }
-            th, td { 
-                font-size: 13px; 
-                padding: 8px 6px;
+            #desktop-view {
+                display: none;
             }
-            .table-container {
-                border-radius: 8px;
+            #mobile-view {
+                display: block;
             }
         }
         
-        /* สำหรับหน้าจอที่เล็กมาก */
-        @media (max-width: 480px) {
-            /* ปรับปรุงการแสดงผลสำหรับมือถือขนาดเล็ก */
-            .sticky-col:nth-child(1) { left: 0px; min-width: 40px; }
-            .sticky-col:nth-child(2) { left: 40px; min-width: 28px; }
-            .sticky-col:nth-child(3) { left: 68px; min-width: 30px; }
-            .sticky-col:nth-child(4) { left: 98px; min-width: 48px; }
-            .sticky-col:nth-child(5) { left: 146px; min-width: 52px; }
-            th, td { 
-                font-size: 12px; 
-                padding: 6px 4px;
+        @media (min-width: 769px) {
+            #mobile-view {
+                display: none;
             }
-            
-            /* เพิ่มการแสดงผลแบบแนวนอนสำหรับตาราง */
-            .table-container {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            /* ปรับปรุงการแสดงผลสำหรับคอลัมน์ข้อมูล */
-            .week-header, .week-data {
-                min-width: 60px;
-            }
-            
-            /* ปรับปรุงการแสดงผลสำหรับคอลัมน์ผลรวมและยอดคงเหลือ */
-            .total-cell, .balance-cell {
-                min-width: 70px;
-            }
-        }
-        
-        /* เพิ่มการแสดงผลแบบแนวนอนสำหรับมือถือ */
-        .mobile-hint {
-            display: none;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 8px;
-            padding: 8px 12px;
-            margin-bottom: 12px;
-            font-size: 12px;
-            color: var(--primary);
-            text-align: center;
-        }
-        
-        @media (max-width: 768px) {
-            .mobile-hint {
+            #desktop-view {
                 display: block;
             }
         }
@@ -621,11 +669,6 @@
         <!-- Desktop Table View -->
         <div id="desktop-view" class="card">
             <div class="p-4">
-                <!-- แสดงคำแนะนำสำหรับมือถือ -->
-                <div class="mobile-hint">
-                    <i class="fas fa-info-circle mr-1"></i>
-                    เลื่อนแนวนอนเพื่อดูข้อมูลทั้งหมด
-                </div>
                 <div class="table-container">
                     <table id="data-table" class="w-full">
                         <thead>
@@ -651,6 +694,16 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Vertical View -->
+        <div id="mobile-view">
+            <div id="mobile-students-container">
+                <div class="text-center py-8 text-gray-500">
+                    <i class="fas fa-spinner fa-spin text-2xl mb-2 text-green-500"></i>
+                    <p>กำลังโหลดข้อมูล...</p>
                 </div>
             </div>
         </div>
@@ -742,6 +795,7 @@
     const paidCount = document.getElementById('paid-count');
     const unpaidCount = document.getElementById('unpaid-count');
     const searchInput = document.getElementById('search-input');
+    const mobileStudentsContainer = document.getElementById('mobile-students-container');
     
     // Global variables
     let dateHeaders = [];
@@ -807,6 +861,7 @@
             // Wait for DOM to be ready
             setTimeout(() => {
                 renderTable(data);
+                renderMobileView(data);
                 updateFooterInfo();
                 updateLastUpdateTime();
             }, 100);
@@ -829,6 +884,13 @@
                 </td>
             </tr>
         `;
+        
+        mobileStudentsContainer.innerHTML = `
+            <div class="text-center py-8 text-gray-500">
+                <i class="fas fa-spinner fa-spin text-2xl mb-2 text-green-500"></i>
+                <p>กำลังโหลดข้อมูล...</p>
+            </div>
+        `;
     }
     
     function showError(message) {
@@ -842,6 +904,16 @@
             </div>
         `;
         dataTableBody.innerHTML = `<tr><td colspan="100" class="px-4 py-6 text-center">${errorContent}</td></tr>`;
+        
+        mobileStudentsContainer.innerHTML = `
+            <div class="flex flex-col items-center justify-center text-red-500 py-6">
+                <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                <p class="mb-4">${message}</p>
+                <button class="text-blue-500 hover:underline" onclick="fetchData()">
+                    <i class="fas fa-redo mr-1"></i>ลองอีกครั้ง
+                </button>
+            </div>
+        `;
     }
     
     // Table rendering
@@ -909,56 +981,71 @@
         return row;
     }
     
-    // Data saving
-    async function saveAllData() {
-        if (Object.keys(pendingUpdates).length === 0) {
-            showModal('ไม่มีข้อมูลที่ต้องบันทึก', 'แจ้งเตือน');
+    // Mobile view rendering
+    function renderMobileView(data) {
+        mobileStudentsContainer.innerHTML = '';
+        
+        if (!data.data || data.data.length === 0) {
+            mobileStudentsContainer.innerHTML = `
+                <div class="text-center py-8 text-gray-500">
+                    <i class="fas fa-inbox text-2xl mb-2 opacity-50"></i>
+                    <p>ไม่มีข้อมูลนักเรียน</p>
+                </div>
+            `;
             return;
         }
         
-        try {
-            showLoading(true);
-            
-            const params = new URLSearchParams();
-            params.append('action', 'batchUpdate');
-            params.append('updates', JSON.stringify(pendingUpdates));
-            
-            const response = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: params,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+        data.data.forEach((student) => {
+            const card = createMobileStudentCard(student);
+            mobileStudentsContainer.appendChild(card);
+        });
+    }
+    
+    function createMobileStudentCard(student) {
+        const card = document.createElement('div');
+        card.className = 'mobile-student-card';
+        card.setAttribute('data-student-id', student.studentId || '');
+        card.setAttribute('data-number', student.stdId || '');
+        card.setAttribute('data-name', `${student.firstName} ${student.lastName}`);
+        
+        // สร้างรายการสัปดาห์
+        let paymentsHtml = '';
+        if (student.payments && student.payments.length > 0) {
+            student.payments.forEach((payment, index) => {
+                if (dateHeaders && dateHeaders[index]) {
+                    paymentsHtml += `
+                        <div class="mobile-payment-item">
+                            <span class="mobile-payment-week">${dateHeaders[index]}</span>
+                            <span class="mobile-payment-amount">${payment > 0 ? payment : '-'}</span>
+                        </div>
+                    `;
                 }
             });
-            
-            let result;
-            try {
-                const responseText = await response.text();
-                result = JSON.parse(responseText);
-            } catch (e) {
-                result = { success: true, message: 'บันทึกข้อมูลสำเร็จ' };
-            }
-            
-            if (result.success) {
-                showModal('บันทึกข้อมูลเรียบร้อยแล้ว!', 'สำเร็จ');
-                // Reset changed inputs
-                document.querySelectorAll('.payment-input.changed').forEach(input => {
-                    input.classList.remove('changed');
-                });
-                pendingUpdates = {};
-                updateLastUpdateTime();
-                setTimeout(() => {
-                    hideModal();
-                }, 2000);
-            } else {
-                showModal('การบันทึกข้อมูลล้มเหลว: ' + (result.message || 'ไม่ทราบสาเหตุ'), 'ข้อผิดพลาด');
-            }
-        } catch (error) {
-            console.error('Error saving data:', error);
-            showModal('เกิดข้อผิดพลาดในการเชื่อมต่อเพื่อบันทึกข้อมูล: ' + error.message, 'ข้อผิดพลาด');
-        } finally {
-            showLoading(false);
         }
+        
+        card.innerHTML = `
+            <div class="mobile-student-header">
+                <div>
+                    <div class="mobile-student-name">${student.prefix || ''}${student.firstName || ''} ${student.lastName || ''}</div>
+                    <div class="mobile-student-id">เลขที่ ${student.stdId || ''} | รหัส ${student.studentId || ''}</div>
+                </div>
+            </div>
+            <div class="mobile-payments-grid">
+                ${paymentsHtml}
+            </div>
+            <div class="mobile-totals">
+                <div class="mobile-total-item">
+                    <div class="mobile-total-label">ผลรวม</div>
+                    <div class="mobile-total-value mobile-total-amount">${student.total || 0}</div>
+                </div>
+                <div class="mobile-total-item">
+                    <div class="mobile-total-label">ยอดคงเหลือ</div>
+                    <div class="mobile-total-value ${student.balance > 0 ? 'mobile-balance-positive' : 'mobile-balance-negative'}">${student.balance || 0}</div>
+                </div>
+            </div>
+        `;
+        
+        return card;
     }
     
     // Footer info update
@@ -980,7 +1067,7 @@
         searchInput.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase().trim();
             
-            // Filter table rows
+            // Filter table rows (desktop)
             const rows = dataTableBody.querySelectorAll('tr[data-student-id]');
             rows.forEach(row => {
                 const studentId = row.getAttribute('data-student-id') || '';
@@ -990,6 +1077,18 @@
                               studentName.toLowerCase().includes(searchTerm) ||
                               studentNumber.includes(searchTerm);
                 row.style.display = matches ? '' : 'none';
+            });
+            
+            // Filter mobile cards
+            const cards = mobileStudentsContainer.querySelectorAll('.mobile-student-card');
+            cards.forEach(card => {
+                const studentId = card.getAttribute('data-student-id') || '';
+                const studentName = card.getAttribute('data-name') || '';
+                const studentNumber = card.getAttribute('data-number') || '';
+                const matches = studentId.toLowerCase().includes(searchTerm) || 
+                              studentName.toLowerCase().includes(searchTerm) ||
+                              studentNumber.includes(searchTerm);
+                card.style.display = matches ? '' : 'none';
             });
         });
     }
