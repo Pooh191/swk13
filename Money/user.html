@@ -710,6 +710,18 @@
         </div> <br>
         
         <!-- Desktop Table View -->
+        <!-- เพิ่มปุ่ม "ดาวน์โหลด Excel" และ "ดาวน์โหลด PDF" ด้านบนตาราง -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.1/jspdf.plugin.autotable.min.js"></script>
+        <div class="flex justify-end items-center mb-2">
+            <button id="export-excel" class="btn btn-primary" type="button">
+                <i class="fas fa-file-excel"></i> ดาวน์โหลด Excel
+            </button>
+            <button id="export-pdf" class="btn btn-primary ml-2" type="button">
+                <i class="fas fa-file-pdf"></i> ดาวน์โหลด PDF
+            </button>
+        </div>
         <div id="desktop-view" class="card">
             <div class="p-4">
                 <div class="table-container">
@@ -1115,6 +1127,69 @@
             editPasswordInput.focus();
         }
     }
+
+    // Export Excel
+    function exportExcel() {
+        const headers = [];
+        document.querySelectorAll('#table-headers th').forEach(th => {
+            headers.push(th.textContent.trim());
+        });
+
+        const rows = [];
+        document.querySelectorAll('#data-table-body tr').forEach(tr => {
+            const row = [];
+            tr.querySelectorAll('td').forEach(td => {
+                row.push(td.textContent.trim());
+            });
+            if (row.length > 0) rows.push(row);
+        });
+
+        const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "ข้อมูลเงินห้อง");
+        XLSX.writeFile(wb, "money-summary.xlsx");
+    }
+
+    // Export PDF (แก้ไขให้รองรับภาษาไทย)
+    function exportPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: "landscape" });
+
+        let headers = [];
+        document.querySelectorAll('#table-headers th').forEach(th => {
+            headers.push(th.textContent.trim());
+        });
+
+        let rows = [];
+        document.querySelectorAll('#data-table-body tr').forEach(tr => {
+            const row = [];
+            tr.querySelectorAll('td').forEach(td => {
+                row.push(td.textContent.trim());
+            });
+            if (row.length > 0) rows.push(row);
+        });
+
+        // ใช้ AutoTable เพื่อรองรับภาษาไทย
+        doc.setFont("THSarabunNew", "normal"); // ฟอนต์นี้รองรับภาษาไทยใน jsPDF AutoTable
+        doc.setFontSize(16);
+
+        doc.autoTable({
+            head: [headers],
+            body: rows,
+            styles: { font: "THSarabunNew", fontSize: 14 },
+            margin: { top: 20 }
+        });
+
+        doc.save("money-summary.pdf");
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // ...existing code...
+        document.getElementById('export-excel').addEventListener('click', exportExcel);
+        document.getElementById('export-pdf').addEventListener('click', exportPDF);
+    });
+
+    // ...existing code...
     </script>
 </body>
 </html>
