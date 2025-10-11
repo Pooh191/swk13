@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" href="https://www.swk13.site/img/logo/SWK-LogoNoBG.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
         :root {
@@ -612,6 +614,13 @@
         <!-- Desktop Table View -->
         <div id="desktop-view" class="card">
             <div class="p-4">
+                <!-- ย้ายปุ่ม "ดาวน์โหลด Excel" ไปไว้ด้านบนขวา เหนือตาราง -->
+                <div class="flex justify-between items-center mb-2">
+                    <div></div>
+                    <button id="export-excel" class="btn btn-primary" type="button">
+                        <i class="fas fa-file-excel"></i> ดาวน์โหลด Excel
+                    </button>
+                </div>
                 <div class="table-container">
                     <table id="data-table" class="w-full">
                         <thead>
@@ -638,7 +647,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="mt-6 flex justify-center">
+                <div class="mt-6 flex flex-col items-center gap-2">
                     <button id="save-button" class="btn btn-primary">
                         <i class="fas fa-save"></i>
                         <span id="save-text">บันทึกข้อมูล</span>
@@ -1028,6 +1037,33 @@
         }
     }
     
+    // Export Excel
+    function exportExcel() {
+        const headers = [];
+        document.querySelectorAll('#table-headers th').forEach(th => {
+            headers.push(th.textContent.trim());
+        });
+
+        const rows = [];
+        document.querySelectorAll('#data-table-body tr').forEach(tr => {
+            const row = [];
+            tr.querySelectorAll('td').forEach(td => {
+                const input = td.querySelector('input');
+                if (input) {
+                    row.push(input.value);
+                } else {
+                    row.push(td.textContent.trim());
+                }
+            });
+            if (row.length > 0) rows.push(row);
+        });
+
+        const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "ข้อมูลเงินห้อง");
+        XLSX.writeFile(wb, "money-summary.xlsx");
+    }
+
     // Footer info update
     function updateFooterInfo() {
         const studentCountValue = allStudentsData.length;
@@ -1085,6 +1121,7 @@
         fetchData();
         setupSearch();
         updateLastUpdateTime();
+        document.getElementById('export-excel').addEventListener('click', exportExcel);
     });
     </script>
 </body>
