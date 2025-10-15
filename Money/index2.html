@@ -552,162 +552,215 @@
             background: #ffffff00;
             color: #ffd700;
         }
+
+        /* Password modal styles */
+        body.locked #main-content {
+            display: none !important;
+        }
+        #password-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 1;
+            visibility: visible;
+        }
+        #password-modal.hidden {
+            display: none !important;
+        }
+        #password-modal .modal-content {
+            background: white;
+            padding: 32px 24px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            max-width: 90%;
+            width: 350px;
+            text-align: center;
+        }
+        #password-modal input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        #password-modal .error {
+            color: #ef4444;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
     </style>
 </head>
-<body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header-gradient text-center">
-            <div>
-                <h1 class="text-2xl md:text-3xl font-bold mb-2">ระบบจัดการเงินห้อง</h1>
-                <p class="opacity-90 text-sm md:text-base">จัดการการเก็บเงินรายสัปดาห์ของนักเรียน</p>
-            </div>
-        </div>
-        
-        <!-- Search and Filter Section -->
-        <div class="search-section card">
-            <div class="search-box">
-                <i class="search-icon fas fa-search"></i>
-                <input type="text" id="search-input" class="search-input" placeholder="ค้นหานักเรียนด้วยชื่อ หรือรหัสประจำตัว">
-            </div>
-            <div class="filter-btn" onclick="clearSearch()">
-                <i class="fas fa-times"></i>
-                <span>ล้างการค้นหา</span>
-            </div>
-            <div class="flex items-center">
-                <div class="mr-2 text-sm text-gray-600">อัปเดตล่าสุด:</div>
-                <div class="font-medium text-sm" id="last-update">-</div>
-            </div>
-        </div>
-
-        <div class="footer-info">
-            <div class="stat-box">
-                <i class="fas fa-users"></i>
-                <div>
-                    <div class="text-xs text-gray-500">จำนวนนักเรียน</div>
-                    <div class="font-bold text-lg" id="student-count">0</div>
-                </div>
-            </div>
-            <div class="stat-box">
-                <i class="fas fa-coins"></i>
-                <div>
-                    <div class="text-xs text-gray-500">ยอดรวมทั้งหมด</div>
-                    <div class="font-bold text-lg" id="total-amount">0</div>
-                </div>
-            </div>
-            <div class="stat-box">
-                <i class="fas fa-check-circle"></i>
-                <div>
-                    <div class="text-xs text-gray-500">ชำระครบแล้ว</div>
-                    <div class="font-bold text-lg" id="paid-count">0</div>
-                </div>
-            </div>
-            <div class="stat-box">
-                <i class="fas fa-exclamation-circle"></i>
-                <div>
-                    <div class="text-xs text-gray-500">ค้างชำระ</div>
-                    <div class="font-bold text-lg" id="unpaid-count">0</div>
-                </div>
-            </div>
-        </div> <br>
-        
-        <!-- Desktop Table View -->
-        <div id="desktop-view" class="card">
-            <div class="p-4">
-                <!-- ย้ายปุ่ม "ดาวน์โหลด Excel" ไปไว้ด้านบนขวา เหนือตาราง -->
-                <div class="flex justify-between items-center mb-2">
-                    <div></div>
-                    <button id="export-excel" class="btn btn-primary" type="button">
-                        <i class="fas fa-file-excel"></i> ดาวน์โหลด Excel
-                    </button>
-                </div>
-                <div class="table-container">
-                    <table id="data-table" class="w-full">
-                        <thead>
-                            <tr id="table-headers">
-                                <th class="sticky-col text-left" style="min-width: 70px; left: 0px; z-index: 2;">เลขประจำตัว</th>
-                                <th class="sticky-col text-left" style="min-width: 40px; left: 70px; z-index: 2;">เลขที่</th>
-                                <th class="sticky-col text-left" style="min-width: 50px; left: 110px; z-index: 2;">คำนำหน้า</th>
-                                <th class="sticky-col text-left" style="min-width: 80px; left: 160px; z-index: 2;">ชื่อ</th>
-                                <th class="sticky-col text-left" style="min-width: 80px; left: 240px; z-index: 2;">นามสกุล</th>
-                                <!-- Dynamic week headers will be inserted here -->
-                                <th class="text-center total-cell" style="min-width: 70px;">ผลรวม</th>
-                                <th class="text-center balance-cell" style="min-width: 90px;">ยอดคงเหลือ</th>
-                            </tr>
-                        </thead>
-                        <tbody id="data-table-body">
-                            <tr>
-                                <td colspan="100" class="px-4 py-6 text-center">
-                                    <div class="flex flex-col items-center justify-center text-gray-500">
-                                        <i class="fas fa-spinner fa-spin text-2xl mb-2 text-blue-500"></i>
-                                        <p>กำลังโหลดข้อมูล...</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mt-6 flex flex-col items-center gap-2">
-                    <button id="save-button" class="btn btn-primary">
-                        <i class="fas fa-save"></i>
-                        <span id="save-text">บันทึกข้อมูล</span>
-                        <span id="save-spinner" class="loading ml-2 hidden"></span>
-                    </button>
-                </div>
-                
-            </div>
+<body class="locked">
+    <!-- Password Modal -->
+    <div id="password-modal">
+        <div class="modal-content">
+            <h2 class="font-bold text-xl mb-2">เข้าสู่ระบบ</h2>
+            <p class="mb-4 text-gray-600">กรุณากรอกรหัสผ่านเพื่อเข้าใช้งาน</p>
+            <div id="password-error" class="error" style="display:none;"></div>
+            <input type="password" id="password-input" placeholder="รหัสผ่าน" autocomplete="off">
+            <button id="password-submit" class="btn btn-primary w-full">เข้าสู่ระบบ</button>
         </div>
     </div>
-    
-    <!-- Footer Section -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3><i class="fas fa-leaf mr-2"></i>เกี่ยวกับระบบ</h3>
+    <div id="main-content">
+        <div class="container">
+            <!-- Header -->
+            <div class="header-gradient text-center">
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold mb-2">ระบบจัดการเงินห้อง</h1>
+                    <p class="opacity-90 text-sm md:text-base">จัดการการเก็บเงินรายสัปดาห์ของนักเรียน</p>
+                </div>
+            </div>
+            
+            <!-- Search and Filter Section -->
+            <div class="search-section card">
+                <div class="search-box">
+                    <i class="search-icon fas fa-search"></i>
+                    <input type="text" id="search-input" class="search-input" placeholder="ค้นหานักเรียนด้วยชื่อ หรือรหัสประจำตัว">
+                </div>
+                <div class="filter-btn" onclick="clearSearch()">
+                    <i class="fas fa-times"></i>
+                    <span>ล้างการค้นหา</span>
+                </div>
+                <div class="flex items-center">
+                    <div class="mr-2 text-sm text-gray-600">อัปเดตล่าสุด:</div>
+                    <div class="font-medium text-sm" id="last-update">-</div>
+                </div>
+            </div>
+
+            <div class="footer-info">
+                <div class="stat-box">
+                    <i class="fas fa-users"></i>
+                    <div>
+                        <div class="text-xs text-gray-500">จำนวนนักเรียน</div>
+                        <div class="font-bold text-lg" id="student-count">0</div>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-coins"></i>
+                    <div>
+                        <div class="text-xs text-gray-500">ยอดรวมทั้งหมด</div>
+                        <div class="font-bold text-lg" id="total-amount">0</div>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <div class="text-xs text-gray-500">ชำระครบแล้ว</div>
+                        <div class="font-bold text-lg" id="paid-count">0</div>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div>
+                        <div class="text-xs text-gray-500">ค้างชำระ</div>
+                        <div class="font-bold text-lg" id="unpaid-count">0</div>
+                    </div>
+                </div>
+            </div> <br>
+            
+            <!-- Desktop Table View -->
+            <div id="desktop-view" class="card">
+                <div class="p-4">
+                    <!-- ย้ายปุ่ม "ดาวน์โหลด Excel" ไปไว้ด้านบนขวา เหนือตาราง -->
+                    <div class="flex justify-between items-center mb-2">
+                        <div></div>
+                        <button id="export-excel" class="btn btn-primary" type="button">
+                            <i class="fas fa-file-excel"></i> ดาวน์โหลด Excel
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table id="data-table" class="w-full">
+                            <thead>
+                                <tr id="table-headers">
+                                    <th class="sticky-col text-left" style="min-width: 70px; left: 0px; z-index: 2;">เลขประจำตัว</th>
+                                    <th class="sticky-col text-left" style="min-width: 40px; left: 70px; z-index: 2;">เลขที่</th>
+                                    <th class="sticky-col text-left" style="min-width: 50px; left: 110px; z-index: 2;">คำนำหน้า</th>
+                                    <th class="sticky-col text-left" style="min-width: 80px; left: 160px; z-index: 2;">ชื่อ</th>
+                                    <th class="sticky-col text-left" style="min-width: 80px; left: 240px; z-index: 2;">นามสกุล</th>
+                                    <!-- Dynamic week headers will be inserted here -->
+                                    <th class="text-center total-cell" style="min-width: 70px;">ผลรวม</th>
+                                    <th class="text-center balance-cell" style="min-width: 90px;">ยอดคงเหลือ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="data-table-body">
+                                <tr>
+                                    <td colspan="100" class="px-4 py-6 text-center">
+                                        <div class="flex flex-col items-center justify-center text-gray-500">
+                                            <i class="fas fa-spinner fa-spin text-2xl mb-2 text-blue-500"></i>
+                                            <p>กำลังโหลดข้อมูล...</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-6 flex flex-col items-center gap-2">
+                        <button id="save-button" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            <span id="save-text">บันทึกข้อมูล</span>
+                            <span id="save-spinner" class="loading ml-2 hidden"></span>
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer Section -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-leaf mr-2"></i>เกี่ยวกับระบบ</h3>
+                    <p>
+                        ระบบจัดการเงินห้องออกแบบมาเพื่อช่วยครูและผู้ดูแลห้องเรียนในการจัดการการเก็บเงินรายสัปดาห์ของนักเรียนอย่างมีประสิทธิภาพ
+                    </p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/thanakorn.sae.jong.2024?locale=th_TH" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/thanakornsaejong6/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-link mr-2"></i>ลิงก์ด่วน</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-home"></i> หน้าหลัก</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> เกี่ยวกับเรา</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> คำถามที่พบบ่อย</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> ติดต่อเรา</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3><i class="fas fa-address-card mr-2"></i>ข้อมูลติดต่อ</h3>
+                    <ul class="footer-links">
+                        <li><a href="http://www.sura.ac.th"><i class="fas fa-map-marker-alt"></i> โรงเรียนสุรวิทยาคาร จังหวัดสุรินทร์</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> 080-73X-XXXX</a></li>
+                        <li><a href="mailto:aewhadfg@gmail.com"><i class="fas fa-envelope"></i> aewhadfg@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
                 <p>
-                    ระบบจัดการเงินห้องออกแบบมาเพื่อช่วยครูและผู้ดูแลห้องเรียนในการจัดการการเก็บเงินรายสัปดาห์ของนักเรียนอย่างมีประสิทธิภาพ
+                    <i class="fas fa-copyright"></i>
+                    2025 ระบบจัดการเงินห้อง. สงวนลิขสิทธิ์.
                 </p>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/thanakorn.sae.jong.2024?locale=th_TH" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/thanakornsaejong6/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </footer>
+        
+        <!-- Modal for messages -->
+        <div id="message-modal" class="modal">
+            <div class="modal-content">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
+                        <i class="fas fa-info-circle text-blue-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2" id="modal-title">แจ้งเตือน</h3>
+                    <p id="modal-text" class="text-gray-500 mb-4"></p>
+                    <button id="close-modal" class="btn btn-primary">ตกลง</button>
                 </div>
-            </div>
-            <div class="footer-section">
-                <h3><i class="fas fa-link mr-2"></i>ลิงก์ด่วน</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-home"></i> หน้าหลัก</a></li>
-                    <li><a href="#"><i class="fas fa-info-circle"></i> เกี่ยวกับเรา</a></li>
-                    <li><a href="#"><i class="fas fa-question-circle"></i> คำถามที่พบบ่อย</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> ติดต่อเรา</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3><i class="fas fa-address-card mr-2"></i>ข้อมูลติดต่อ</h3>
-                <ul class="footer-links">
-                    <li><a href="http://www.sura.ac.th"><i class="fas fa-map-marker-alt"></i> โรงเรียนสุรวิทยาคาร จังหวัดสุรินทร์</a></li>
-                    <li><a href="#"><i class="fas fa-phone"></i> 080-73X-XXXX</a></li>
-                    <li><a href="mailto:aewhadfg@gmail.com"><i class="fas fa-envelope"></i> aewhadfg@gmail.com</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>
-                <i class="fas fa-copyright"></i>
-                2025 ระบบจัดการเงินห้อง. สงวนลิขสิทธิ์.
-            </p>
-        </div>
-    </footer>
-    
-    <!-- Modal for messages -->
-    <div id="message-modal" class="modal">
-        <div class="modal-content">
-            <div class="text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
-                    <i class="fas fa-info-circle text-blue-500 text-xl"></i>
-                </div>
-                <h3 class="text-lg font-medium text-gray-900 mb-2" id="modal-title">แจ้งเตือน</h3>
-                <p id="modal-text" class="text-gray-500 mb-4"></p>
-                <button id="close-modal" class="btn btn-primary">ตกลง</button>
             </div>
         </div>
     </div>
@@ -1111,10 +1164,46 @@
     closeModalBtn.addEventListener('click', hideModal);
     saveButton.addEventListener('click', saveAllData);
     
-    // Make functions globally available
-    window.handleInputChange = handleInputChange;
-    window.fetchData = fetchData;
-    window.clearSearch = clearSearch;
+    // Password protection logic
+    const PASSWORD = 'admin313';
+    const passwordModal = document.getElementById('password-modal');
+    const passwordInput = document.getElementById('password-input');
+    const passwordSubmit = document.getElementById('password-submit');
+    const passwordError = document.getElementById('password-error');
+    const mainContent = document.getElementById('main-content');
+    const bodyTag = document.body;
+
+    function unlockSite() {
+        passwordModal.classList.add('hidden');
+        bodyTag.classList.remove('locked');
+        mainContent.style.display = '';
+    }
+
+    function showPasswordError(msg) {
+        passwordError.textContent = msg;
+        passwordError.style.display = 'block';
+    }
+
+    passwordSubmit.addEventListener('click', function() {
+        if (passwordInput.value === PASSWORD) {
+            unlockSite();
+        } else {
+            showPasswordError('รหัสผ่านไม่ถูกต้อง');
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
+    });
+
+    passwordInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') passwordSubmit.click();
+    });
+
+    // Prevent access until password entered
+    document.addEventListener('DOMContentLoaded', function() {
+        mainContent.style.display = 'none';
+        passwordModal.classList.remove('hidden');
+        passwordInput.focus();
+    });
     
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
