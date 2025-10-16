@@ -957,14 +957,19 @@
             <td class="sticky-col" style="left: 240px; z-index: 1;">${student.lastName || ''}</td>
         `;
         (student.payments || []).forEach((payment, colIndex) => {
-            // ถ้า payment เป็น 0 หรือไม่มี ให้แสดงเป็นค่าว่าง
-            // ถ้า payment ถูกแก้ไข (pendingUpdates) ให้แสดงเลข 0 ถ้า value เป็น 0
             let cellValue = '';
+            let changedClass = '';
             if (
                 pendingUpdates[student.stdId] &&
                 pendingUpdates[student.stdId][colIndex] !== undefined
             ) {
-                cellValue = pendingUpdates[student.stdId][colIndex] === 0 ? 0 : pendingUpdates[student.stdId][colIndex];
+                cellValue = pendingUpdates[student.stdId][colIndex];
+                if (!cellValue || cellValue === 0) {
+                    cellValue = '';
+                    changedClass = 'changed'; // ช่องว่างที่ถูกแก้ไข
+                } else {
+                    changedClass = 'changed'; // ช่องที่ถูกแก้ไขเป็นเลข
+                }
             } else {
                 cellValue = payment > 0 ? payment : '';
             }
@@ -972,10 +977,10 @@
                 <td style="text-align: center;">
                     <input
                         type="number"
-                        value="${cellValue === 0 ? 0 : cellValue}"
+                        value="${cellValue}"
                         data-row="${student.stdId}"
                         data-col="${colIndex}"
-                        class="payment-input"
+                        class="payment-input ${changedClass}"
                         placeholder="0"
                         min="0"
                         step="1"
@@ -989,24 +994,29 @@
         return row;
     }
     
-    // Input handling
+    // Input handling - แก้ไขแล้ว
     function handleInputChange(input) {
         const row = parseInt(input.getAttribute('data-row'));
         const col = parseInt(input.getAttribute('data-col'));
-        const value = input.value === '' ? 0 : parseFloat(input.value);
-        
-        if (isNaN(value) || value < 0) {
-            input.value = '';
-            return;
-        }
-        
+        const value = input.value === '' ? '' : parseFloat(input.value);
+
+        // ตั้งค่าคลาส changed เสมอเมื่อมีการเปลี่ยนแปลง
         input.classList.add('changed');
-        
-        if (!pendingUpdates[row]) {
-            pendingUpdates[row] = {};
+
+        if (value === '' || isNaN(value) || value < 0) {
+            input.value = '';
+            // แทนที่จะลบข้อมูล ให้เก็บเป็นสตริงว่าง
+            if (!pendingUpdates[row]) {
+                pendingUpdates[row] = {};
+            }
+            pendingUpdates[row][col] = ''; // เก็บเป็นสตริงว่างแทนการลบ
+        } else {
+            if (!pendingUpdates[row]) {
+                pendingUpdates[row] = {};
+            }
+            pendingUpdates[row][col] = value;
         }
-        pendingUpdates[row][col] = value;
-        
+
         // Update totals
         updateRowTotals(input);
     }
@@ -1037,9 +1047,22 @@
         }
     }
     
-    // Data saving
+    // Data saving - แก้ไขแล้ว
     async function saveAllData() {
-        if (Object.keys(pendingUpdates).length === 0) {
+        // ตรวจสอบว่ามีการแก้ไขจริง โดยนับจำนวนคีย์ใน pendingUpdates
+        let hasUpdate = false;
+        for (const rowKey in pendingUpdates) {
+            if (pendingUpdates.hasOwnProperty(rowKey)) {
+                const cols = pendingUpdates[rowKey];
+                // ถ้ามี key ใน cols (แม้ค่าจะเป็น "") ให้ถือว่ามีการแก้ไข
+                if (Object.keys(cols).length > 0) {
+                    hasUpdate = true;
+                    break;
+                }
+            }
+        }
+        
+        if (!hasUpdate) {
             showModal('ไม่มีข้อมูลที่ต้องบันทึก', 'แจ้งเตือน');
             return;
         }
@@ -1165,13 +1188,18 @@
     saveButton.addEventListener('click', saveAllData);
     
     // Password protection logic
-    const PASSWORD = 'admin313';
+    const PASSWORD_HEX = '61646d696e333133'; // admin313 in hex
     const passwordModal = document.getElementById('password-modal');
     const passwordInput = document.getElementById('password-input');
     const passwordSubmit = document.getElementById('password-submit');
     const passwordError = document.getElementById('password-error');
     const mainContent = document.getElementById('main-content');
     const bodyTag = document.body;
+
+    // Convert string to hex
+    function toHex(str) {
+        return Array.from(str).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join('');
+    }
 
     function unlockSite() {
         passwordModal.classList.add('hidden');
@@ -1185,7 +1213,7 @@
     }
 
     passwordSubmit.addEventListener('click', function() {
-        if (passwordInput.value === PASSWORD) {
+        if (toHex(passwordInput.value) === PASSWORD_HEX) {
             unlockSite();
         } else {
             showPasswordError('รหัสผ่านไม่ถูกต้อง');
