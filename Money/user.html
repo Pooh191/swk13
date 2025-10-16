@@ -643,6 +643,25 @@
             .sticky-col:nth-child(5) { min-width: 52px; left: 156px; }
             th, td { font-size: 12px; }
         }
+
+        /* เพิ่ม CSS สำหรับปรับขนาดคอลัมน์ตารางให้เท่ากันกับข้อความ */
+        .table-container table {
+            table-layout: fixed;
+            width: 100%;
+        }
+        #table-headers th {
+            width: 100px;
+            /* สามารถปรับแต่ละคอลัมน์ตามความเหมาะสม */
+            /* ตัวอย่าง: */
+        }
+        #table-headers th.sticky-col:nth-child(1) { width: 90px; }
+        #table-headers th.sticky-col:nth-child(2) { width: 60px; }
+        #table-headers th.sticky-col:nth-child(3) { width: 80px; }
+        #table-headers th.sticky-col:nth-child(4) { width: 120px; }
+        #table-headers th.sticky-col:nth-child(5) { width: 120px; }
+        #table-headers th.total-cell { width: 90px; }
+        #table-headers th.balance-cell { width: 110px; }
+        #table-headers th.week-header { width: 80px; }
     </style>
 </head>
 <body>
@@ -1115,9 +1134,13 @@
         if (e.key === 'Enter') checkPassword();
     });
 
+    function toHex(str) {
+        return Array.from(str).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join('');
+    }
+
     function checkPassword() {
         const pwd = editPasswordInput.value.trim();
-        if (pwd === 'admin313') {
+        if (toHex(pwd) === '61646d696e333133') { // admin313 in hex
             // Redirect to admin page
             window.location.href = 'index2.html';
         } else {
@@ -1150,7 +1173,7 @@
         XLSX.writeFile(wb, "money-summary.xlsx");
     }
 
-    // Export PDF (แก้ไขให้รองรับภาษาไทย)
+    // Export PDF
     function exportPDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF({ orientation: "landscape" });
@@ -1169,14 +1192,10 @@
             if (row.length > 0) rows.push(row);
         });
 
-        // ใช้ AutoTable เพื่อรองรับภาษาไทย
-        doc.setFont("THSarabunNew", "normal"); // ฟอนต์นี้รองรับภาษาไทยใน jsPDF AutoTable
         doc.setFontSize(16);
-
         doc.autoTable({
             head: [headers],
             body: rows,
-            styles: { font: "THSarabunNew", fontSize: 14 },
             margin: { top: 20 }
         });
 
