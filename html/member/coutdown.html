@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>มัธยมศึกษาปีที่3/13 | นับถอยหลัง</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/logo/SWK-LogoNoBG.png">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style-logout.css">
+    <style>
+        #countdown {
+            font-size: 2em;
+            color: red;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>3/13</h1>
+            <button id="menu-toggle" class="menu-toggle">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="/html/member/dashbord.html">หน้าหลัก</a></li>
+
+                <!-- Dropdown Menu -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">เกี่ยวกับการเลือกตั้ง ▼</a>
+                    <div class="dropdown-content">
+                        <a href="/html/member/rabeb.html">ระเบียบการเลือกตั้ง</a>
+                        <a href="/html/member/user.html">ค้นหาผู้ที่มีสิทธิ์สมัครรับเลือกตั้ง</a>
+                        <a href="/html/member/Searchname.html">ค้นหาผู้มีสิทธิ์เลือกตั้ง</a>
+                    </div>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">การเลือกตั้ง ▼</a>
+                    <div class="dropdown-content">
+                        <a href="/html/member/coutdown.html">เลือกตั้ง</a>
+                        <a href="/html/member/results.html">ผลการเลือกตั้ง</a>
+                    </div>
+                </li>
+
+                <li><a href="#">ติดต่อเรา</a></li>
+
+                    <li><button id="logout-btn" class="logout-btn">Logout</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <div id="clock"></div>
+    <div id="date"></div>
+
+    <section>
+    <center>
+        <h1>เหลือเวลาอีกกี่นาทีจนถึงการเปิดหีบเลือกตั้ง</h1>
+        <div id="countdown"></div>
+    </center>
+</section>
+
+    <footer>
+        <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
+    </footer>
+
+    <script src="/js/scripts.js"></script>
+    <script src="/js/logout.js"></script>
+
+    <script>
+        // กำหนดวันเวลาที่จะเปิดหีบเลือกตั้ง (เปลี่ยนตามต้องการ)
+        const electionStartTime = new Date("2025-05-18T08:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeLeft = electionStartTime - now;
+
+            if (timeLeft <= 0) {
+                // ถ้าถึงเวลาแล้ว ให้เปลี่ยนหน้าอัตโนมัติ
+                window.location.href = "/html/member/voteleader.html";
+            } else {
+                // คำนวณวัน ชั่วโมง นาที วินาที
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                document.getElementById("countdown").innerText = 
+                    `เหลือเวลาอีก ${days} วัน ${hours} ชั่วโมง ${minutes} นาที ${seconds} วินาที`;
+            }
+        }
+
+        // อัปเดตนับถอยหลังทุกๆ วินาที
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // เรียกครั้งแรกทันที
+    </script>
+</body>
+</html>

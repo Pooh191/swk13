@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>มัธยมศึกษาปีที่3/13 | สมาชิกห้องเรียน</title>
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/logo/SWK-LogoNoBG.png">
+  <link rel="stylesheet" href="/css/style.css">
+<style>
+  #loading-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+    color: #555;
+    font-family: 'Prompt', sans-serif;
+  } 
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 5px solid rgba(0,0,0,0.1);
+    border-top: 5px solid #43A047;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  #loading {
+    font-weight: 600;
+    font-size: 16px;
+    animation: fadeIn 0.8s ease-in-out infinite alternate;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+  }
+</style>
+
+</head>
+<body>
+
+<header>
+        <div class="container">
+            <a href="/" class="logo-link">
+                <img src="/img/logo/SWK-LogoNoBG.png" alt="Logo">
+            <span class="site-title">3/13</span>
+            </a>
+            <button id="menu-toggle" class="menu-toggle">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="/">หน้าหลัก</a></li>
+                    <li><a href="/html/kewkap.html">เกี่ยวกับเรา</a></li>
+                      <!-- Dropdown Menu -->
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">ข้อมูลภายในห้องเรียน ▼</a>
+                    <div class="dropdown-content">
+                        <a href="/html/member.html">สมาชิกห้อง</a>
+                        <a href="/html/advisor.html">ครูที่ปรึกษา</a>
+                        <a href="/html/kru.html">ครูผู้สอน</a>
+                        <a href="/html/executive committee.html">คณะกรรมการบริหารห้องเรียน</a>
+                    </div>
+                </li>
+                
+                    <li><a href="/html/notify.html">ประกาศ</a></li>
+                    <li><a href="/html/timetable.html">ตารางเรียน</a></li>
+                    <li><a href="/html/tidtorraw.html">ติดต่อเรา</a></li>
+                    <li><a href="/html/login.html">เข้าสู่ระบบ</a></li>
+                </ul>
+                
+                
+            </nav>
+        </div>
+    </header>
+
+
+    <div id="clock"></div>
+    <div id="date"></div>
+
+  <section id="members">
+    <h2>สมาชิกห้อง</h2>
+    <table id="members-table">
+      <thead>
+        <tr>
+          <th>เลขที่</th>
+          <th>คำนำหน้า</th>
+          <th>ชื่อ</th>
+          <th>นามสกุล</th>
+          <th>ชื่อเล่น</th>
+          <th>ตำแหน่ง</th>
+          <th>หมายเหตุ</th>
+        </tr>
+      </thead>
+      <tbody id="members-body">
+        <!-- ข้อมูลจะถูกโหลดจาก Google Sheets -->
+      </tbody>
+    </table>
+    <div id="loading-wrapper">
+    <div class="spinner"></div>
+    <div id="loading">กำลังโหลดข้อมูล...</div>
+    </div>
+
+  </section>
+  <br><br>
+
+  <footer>
+        <p><b>Copyright © 2024 - <span id="currentYear"></span> มัธยมศึกษาปีที่ 3/13. สงวนลิขสิทธิ์.</b></p>
+    </footer>
+
+    <script src="/js/scripts.js"></script>
+
+
+<script>
+  const loadingDiv = document.getElementById("loading");
+  const tbody = document.getElementById("members-body");
+
+  fetch("https://script.google.com/macros/s/AKfycbwxly2hMZlGN1d9fNxCg941FCMg1UsKvvD7sZz4SXgYdXpUljsa4_bGPF5o7-b-Z4mp/exec")
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(row => {
+      const tr = document.createElement("tr");
+
+      // ตรวจสอบว่าตำแหน่งควรจะเป็นตัวหนาหรือไม่
+      let position = row["ตำแหน่ง"] || "";
+      const highlightPositions = ["หัวหน้าห้อง", "รองหัวหน้าห้อง", "เลขานุการ", "ผู้ช่วยเลขานุการ", "นายทะเบียน", "เหรัญญิก"];
+      if (highlightPositions.includes(position.trim())) {
+        position = `<strong>${position}</strong>`;
+      }
+
+      tr.innerHTML = `
+        <td>${row["เลขที่"]}</td>
+        <td>${row["คำนำหน้า"]}</td>
+        <td>${row["ชื่อ"]}</td>
+        <td>${row["นามสกุล"]}</td>
+        <td>${row["ชื่อเล่น"]}</td>
+        <td>${position}</td>
+        <td>${row["หมายเหตุ"] || ""}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  })
+  .catch(err => {
+    loadingDiv.textContent = "เกิดข้อผิดพลาดในการโหลดข้อมูล";
+    console.error("Error loading member data:", err);
+  })
+  .finally(() => {
+    loadingDiv.parentElement.style.display = "none";
+  });
+
+
+</script>
+
+</body>
+</html>
