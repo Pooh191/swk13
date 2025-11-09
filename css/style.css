@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
 
-/* Define CSS Variables */
+/* Define CSS Variables (สีปกติ) */
 :root {
-    --primary-color: #43A047;
+    --primary-color: #43A047; /* JavaScript จะเปลี่ยนเป็น #444444 เมื่อถึงกำหนด */
     --primary-dark: #388E3C;
     --secondary-color: #FFD700;
     --background-gradient: linear-gradient(135deg, #f0f4f8, #d9e2ec);
@@ -15,7 +15,7 @@
 }
 
 body {
-    font-family: 'Roboto', 'Montserrat', Arial, sans-serif;
+    font-family: 'Prompt', Arial, sans-serif;
     margin: 0;
     padding: 0;
     background: var(--background-gradient);
@@ -23,11 +23,12 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     transition: background-color 0.3s ease;
+    /* ห้ามใส่ filter: grayscale(100%); ที่นี่ */
 }
 
 ::selection {
-    background: #ffffff00;
-    color: #ffd700;
+    background: #333;
+    color: white;
 }
 
 #clock {
@@ -75,6 +76,38 @@ header .container {
     padding: 0 20px;
 }
 
+/* --- ส่วน Header Logo และ Link --- */
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--white);
+    font-size: 24px;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.logo-link:hover {
+    color: var(--secondary-color);
+}
+
+.logo-link img {
+    height: 40px;
+    width: auto;
+    margin-right: 10px;
+    /* ลบ filter: grayscale(100%); ออกจากที่นี่ */
+    transition: opacity 0.3s ease;
+}
+
+.site-title {
+    font-family: 'Prompt', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* --- สิ้นสุดส่วน Header Logo --- */
+
 nav {
     display: flex;
 }
@@ -102,6 +135,7 @@ nav ul li a:hover {
     color: var(--secondary-color);
     text-decoration: underline;
 }
+
 /* เมนู Dropdown */
 nav ul li.dropdown {
     position: relative;
@@ -110,6 +144,8 @@ nav ul li.dropdown {
 nav ul li .dropdown-content {
     display: none;
     position: absolute;
+    top: 100%;
+    left: 0;
     background: white;
     min-width: 180px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -127,7 +163,7 @@ nav ul li .dropdown-content a {
 
 nav ul li .dropdown-content a:hover {
     background: var(--secondary-color);
-    color: white;
+    color: var(--primary-dark);
 }
 
 /* แสดง dropdown เมื่อ hover */
@@ -162,7 +198,7 @@ section:hover {
 }
 
 h2 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Prompt', sans-serif;
     font-size: 28px;
     margin-top: 0;
     font-weight: 700;
@@ -170,7 +206,7 @@ h2 {
 }
 
 p {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Prompt', sans-serif;
     font-size: 20px;
     margin: 10px 0;
     font-weight: 400;
@@ -273,6 +309,7 @@ button:hover {
 
 .header-bg {
     background: url('https://www.example.com/path/to/your/sw.jpg') no-repeat center center/cover;
+    /* ลบ filter: grayscale(100%); ออกจากที่นี่ */
 }
 
 @media (max-width: 768px) {
@@ -348,7 +385,7 @@ sections:hover {
 }
 
 blockquote {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Prompt', sans-serif;
     font-size: 18px;
     margin: 20px 0;
     padding: 20px;
@@ -368,6 +405,7 @@ img {
     margin: 10px auto;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* ลบ filter: grayscale(100%); ออกจากที่นี่ */
 }
 
 .table-container {
@@ -386,7 +424,7 @@ table th, table td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Prompt', sans-serif;
 }
 
 table th {
@@ -438,26 +476,27 @@ table tbody tr:hover {
     box-sizing: border-box;
     background-color: #f8f9fa;
     padding: 10px 0;
-  }
-  
-  .marquee p {
+}
+
+.marquee p {
     display: inline-block;
     padding-left: 100%;
     font-size: 1.2em;
     font-weight: bold;
     color: #333;
     animation: scroll 13.5s linear infinite;
-    
-  }
-  
-  @keyframes scroll {
+
+}
+
+@keyframes scroll {
     from {
-      transform: translateX(100%);
+    transform: translateX(100%);
     }
     to {
-      transform: translateX(-100%);
+    transform: translateX(-100%);
     }
-  }
-  
-  
-
+}
+#countdown {
+    /* ใช้ JavaScript เพื่อจัดการแสดงผลเป็นหลัก */
+    display: none; 
+}
