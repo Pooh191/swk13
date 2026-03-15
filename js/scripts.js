@@ -7,6 +7,7 @@ function initWebsite() {
     initScrollEffects();
     initDropdownMenu();
     initPreloader();
+    initClosureNotice();
 }
 
 // ⚙️ ฟังก์ชันสำหรับตั้งค่าเว็บไซต์ให้เป็นโหมดสีปกติ (หลังจากครบกำหนด)
@@ -206,6 +207,50 @@ function initPreloader() {
             preloader.style.display = 'none';
         }
     });
+}
+
+// ⚙️ ระบบแจ้งเตือนปิดเว็บไซต์
+function initClosureNotice() {
+    const noticeClosed = sessionStorage.getItem('closureNoticeClosed');
+    
+    // Inject Banner
+    if (!document.getElementById('closure-banner')) {
+        const banner = document.createElement('div');
+        banner.id = 'closure-banner';
+        banner.innerHTML = '🎓 มัธยมศึกษาปีที่ 3/13 จบการศึกษาและปิดเว็บไซต์อย่างเป็นทางการแล้ว | ท่านยังสามารถเข้าชมข้อมูลและความทรงจำต่างๆ ได้ตามปกติ';
+        document.body.prepend(banner);
+    }
+
+    // Inject Modal if not closed in this session
+    if (!noticeClosed && !document.getElementById('closure-modal')) {
+        const modal = document.createElement('div');
+        modal.id = 'closure-modal';
+        modal.innerHTML = `
+            <div class="closure-content" style="max-width: 600px;">
+                <img src="/img/logo/SWK-LogoNoBG.png" alt="Logo" style="width: 80px; margin-bottom: 20px; opacity: 0.8;">
+                <h2 style="color: #2e7d32; font-size: 24px; margin-bottom: 15px;">ประกาศอำลาและจบการศึกษา</h2>
+                <div style="text-align: left; line-height: 1.8; color: #444; font-size: 16px;">
+                    <p style="text-indent: 2em; margin-bottom: 10px;">
+                        ขณะนี้ชั้นมัธยมศึกษาปีที่ 3/13 ปีการศึกษา 2568 ได้จบการศึกษาเป็นที่เรียบร้อยแล้ว ตอนนี้เหลือแต่ความทรงจำที่ไม่อาจลืมได้ ตลอดระยะเวลาที่ผ่านมาพวกเราได้ร่วมทุกข์ร่วมสุข เรียนรู้ และเติบโตไปด้วยกันในรั้วโรงเรียนแห่งนี้
+                    </p>
+                    <p style="text-indent: 2em; margin-bottom: 10px;">
+                        ความผูกพันและมิตรภาพที่เกิดขึ้นในห้องเรียนนี้ จะยังคงส่องสว่างอยู่ในใจของพวกเราทุกคนตลอดไป เว็บไซต์นี้ทำหน้าที่เป็นบันทึกเรื่องราว และเป็นพื้นที่แห่งความทรงจำที่พวกเราได้สร้างขึ้นร่วมกัน
+                    </p>
+                    <p style="text-indent: 2em; margin-bottom: 20px; font-weight: bold; color: #1b5e20;">
+                        สุดท้ายนี้จึงขอปิดเว็บไซต์นี้อย่างเป็นทางการ เพื่อเก็บรักษาวันเวลาอันแสนพิเศษเหล่านี้ไว้เป็นส่วนหนึ่งของประวัติศาสตร์ห้อง 3/13 ที่จะไม่มีวันจางหายไป ขอบคุณเพื่อน ๆ และครูทุกท่านที่ร่วมเดินทางมาด้วยกันจนถึงจุดหมาย
+                    </p>
+                </div>
+                <button class="closure-btn" style="margin-top: 10px;">เข้าสู่พื้นที่ความทรงจำ</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        const closeBtn = modal.querySelector('.closure-btn');
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+            sessionStorage.setItem('closureNoticeClosed', 'true');
+        };
+    }
 }
 
 // เริ่มต้นการทำงานเมื่อโหลดหน้าเว็บ
