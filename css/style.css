@@ -484,16 +484,20 @@ table tbody tr:hover {
     font-size: 1.2em;
     font-weight: bold;
     color: #333;
-    animation: scroll 13.5s linear infinite;
+    animation: scroll 25s linear infinite;
+    margin: 0;
+}
 
+.marquee:hover p {
+    animation-play-state: paused;
 }
 
 @keyframes scroll {
-    from {
-    transform: translateX(100%);
+    0% {
+        transform: translateX(0);
     }
-    to {
-    transform: translateX(-100%);
+    100% {
+        transform: translateX(-100%);
     }
 }
 #countdown {
